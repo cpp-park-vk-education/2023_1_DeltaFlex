@@ -17,11 +17,11 @@ class Physics:
         self.leftOverDeltaTime = 0
         self.constraintAccuracy = 3
 
-    def update(self, pointmasses: list[PointMass], width, height):
-        self.timeCur = time() * 1000
-        deltaTimeMS = self.timeCur - self.timePrev
+    def update(self, clock, pointmasses: list[PointMass], width, height):
+        # self.timeCur = time() * 1000
+        deltaTimeMS = 1000 / max(1, clock.get_fps())
 
-        self.timePrev = self.timeCur
+        # self.timePrev = self.timeCur
 
         timeStepAmt = int((deltaTimeMS + self.leftOverDeltaTime) / self.fixedDeltaTime)
 

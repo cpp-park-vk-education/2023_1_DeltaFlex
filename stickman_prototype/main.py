@@ -28,10 +28,12 @@ while True:
             exit(0)
     disp.fill(0)
 
-    ph.update(pointmasses, WIDTH, HEIGHT)
+    ph.update(clock, pointmasses, WIDTH, HEIGHT)
+    pointmasses[5].x, pointmasses[5].y = pg.mouse.get_pos()
     updateGraphics(pointmasses, ph, pg.Color(255, 255, 255), disp)
 
+    pg.display.set_caption(f'FPS: {clock.get_fps():.2f}')
     pg.display.flip()
-    clock.tick(60)
+    clock.tick(120)
     
     
