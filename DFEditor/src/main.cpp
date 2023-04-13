@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     w.show();
 
     // qDebug() << QStyleFactory::keys();
-    // QApplication::setStyle("Breeze");
+    // QApplication::setStyle("Oxygen");
 
     return app.exec();
 }

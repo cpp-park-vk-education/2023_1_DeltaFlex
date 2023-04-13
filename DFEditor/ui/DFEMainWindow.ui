@@ -50,54 +50,14 @@
     <property name="title">
      <string>Window</string>
     </property>
-    <addaction name="actionScene_Inspector"/>
-    <addaction name="actionProperties"/>
-    <addaction name="actionContent_Manager"/>
+    <addaction name="windowScene_Inspector"/>
+    <addaction name="windowProperties"/>
+    <addaction name="windowContent_Manager"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuWindow"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <widget class="QDockWidget" name="dockWidget_4">
-   <property name="windowTitle">
-    <string>Content Manager</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>8</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents_4">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QSplitter" name="splitter">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <widget class="QTableView" name="tableView">
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-        <property name="acceptDrops">
-         <bool>true</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::NoFrame</enum>
-        </property>
-        <attribute name="horizontalHeaderVisible">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="verticalHeaderVisible">
-         <bool>false</bool>
-        </attribute>
-       </widget>
-       <widget class="DFEDirectoryViewer" name="widget" native="true"/>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-  </widget>
   <widget class="QDockWidget" name="sceneGraphView">
    <property name="windowTitle">
     <string>Scene Inspector</string>
@@ -159,24 +119,33 @@
     <string>Save</string>
    </property>
   </action>
-  <action name="actionScene_Inspector">
+  <action name="windowScene_Inspector">
    <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
     <bool>true</bool>
    </property>
    <property name="text">
     <string>Scene Inspector</string>
    </property>
   </action>
-  <action name="actionProperties">
+  <action name="windowProperties">
    <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
     <bool>true</bool>
    </property>
    <property name="text">
     <string>Properties</string>
    </property>
   </action>
-  <action name="actionContent_Manager">
+  <action name="windowContent_Manager">
    <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
     <bool>true</bool>
    </property>
    <property name="text">
@@ -189,12 +158,6 @@
    <class>DFESceneInspector</class>
    <extends>QTreeView</extends>
    <header>DFESceneInspector.hpp</header>
-  </customwidget>
-  <customwidget>
-   <class>DFEDirectoryViewer</class>
-   <extends>QWidget</extends>
-   <header>DFEDirectoryViewer.hpp</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
