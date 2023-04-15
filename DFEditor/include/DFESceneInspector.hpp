@@ -1,10 +1,19 @@
 #pragma once
 
-#include <QtWidgets>
+#include <QWidget>
+#include <QDockWidget>
+#include "DFESceneView.hpp"
 
-class DFESceneInspector : public QTreeView
+class DFESceneInspector : public QDockWidget
 {
-    Q_OBJECT
 public:
-    explicit DFESceneInspector(QWidget *parent);
+    explicit DFESceneInspector(QWidget *parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
+    DFESceneInspector(const DFESceneInspector &other) = delete;
+    DFESceneInspector(DFESceneInspector &&other) = delete;
+    DFESceneInspector &operator=(const DFESceneInspector &other) = delete;
+    DFESceneInspector &operator=(DFESceneInspector &&other) = delete;
+    ~DFESceneInspector();
+
+private:
+    DFESceneView *m_sceneView;
 };

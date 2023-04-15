@@ -38,7 +38,7 @@
      <x>0</x>
      <y>0</y>
      <width>1315</width>
-     <height>26</height>
+     <height>34</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -50,39 +50,11 @@
     <property name="title">
      <string>Window</string>
     </property>
-    <addaction name="windowScene_Inspector"/>
-    <addaction name="windowProperties"/>
-    <addaction name="windowContent_Manager"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuWindow"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <widget class="QDockWidget" name="sceneGraphView">
-   <property name="windowTitle">
-    <string>Scene Inspector</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>2</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents_6">
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <item>
-      <widget class="DFESceneInspector" name="treeView">
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::NoFrame</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Plain</enum>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-  </widget>
   <widget class="QDockWidget" name="propertiesView">
    <property name="font">
     <font>
@@ -153,13 +125,6 @@
    </property>
   </action>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>DFESceneInspector</class>
-   <extends>QTreeView</extends>
-   <header>DFESceneInspector.hpp</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -1,8 +1,14 @@
 #include "DFESceneInspector.hpp"
-#include <iostream>
 
-DFESceneInspector::DFESceneInspector(QWidget *parent) : 
-    QTreeView(parent)
+DFESceneInspector::DFESceneInspector(QWidget *parent, Qt::WindowFlags flags)
+    : QDockWidget(parent, flags),
+      m_sceneView(new DFESceneView(this))
 {
-    // setMouseTracking(true);
+    setWidget(m_sceneView);
+    setWindowTitle("Scene Inspector");
+}
+
+DFESceneInspector::~DFESceneInspector()
+{
+    delete m_sceneView;
 }

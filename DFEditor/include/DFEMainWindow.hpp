@@ -3,6 +3,7 @@
 #include <QMainWindow>
 
 #include "DFEContentManager.hpp"
+#include "DFESceneInspector.hpp"
 
 namespace Ui
 {
@@ -16,9 +17,13 @@ class DFEMainWindow : public QMainWindow
 public:
     explicit DFEMainWindow(QWidget *parent = nullptr);
     DFEMainWindow(const DFEMainWindow &other) = delete;
+    DFEMainWindow(DFEMainWindow &&other) = delete;
+    DFEMainWindow &operator=(const DFEMainWindow &other) = delete;
+    DFEMainWindow &operator=(DFEMainWindow &&other) = delete;
     ~DFEMainWindow() override;
 
 private:
     Ui::DFEMainWindow *ui;
     DFEContentManager *m_contentManager;
+    DFESceneInspector *m_sceneInspector;
 };
