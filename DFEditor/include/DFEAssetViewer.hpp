@@ -1,7 +1,7 @@
 #pragma once
 #include <QtWidgets>
 
-class DFEAssetViewer : public QTableView
+class DFEAssetViewer : public QListWidget
 {
     Q_OBJECT
 public:

@@ -4,6 +4,7 @@
 
 #include "DFEContentManager.hpp"
 #include "DFESceneInspector.hpp"
+#include "DFEPropertiesPanel.hpp"
 
 namespace Ui
 {
@@ -23,7 +24,8 @@ public:
     ~DFEMainWindow() override;
 
 private:
-    Ui::DFEMainWindow *ui;
-    DFEContentManager *m_contentManager;
-    DFESceneInspector *m_sceneInspector;
+    Ui::DFEMainWindow  *ui;
+    DFEContentManager  *m_contentManager;
+    DFESceneInspector  *m_sceneInspector;
+    DFEPropertiesPanel *m_propertiesPanel;
 };
