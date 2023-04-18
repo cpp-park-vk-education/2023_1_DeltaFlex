@@ -22,6 +22,13 @@ DFEMainWindow::DFEMainWindow(QWidget *parent)
     ui->menuWindow->addAction(m_contentManager->toggleViewAction());
     ui->menuWindow->addAction(m_sceneInspector->toggleViewAction());
     ui->menuWindow->addAction(m_propertiesPanel->toggleViewAction());
+
+    connect(
+        ui->actionOpen_Project,
+        &QAction::triggered, 
+        m_contentManager,
+        &DFEContentManager::OpenDirectory
+    );
 }
 
 DFEMainWindow::~DFEMainWindow()

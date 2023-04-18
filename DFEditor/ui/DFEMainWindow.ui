@@ -45,6 +45,7 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionOpen_Project"/>
    </widget>
    <widget class="QMenu" name="menuWindow">
     <property name="title">
@@ -107,6 +108,14 @@
    </property>
    <property name="text">
     <string>Content Manager</string>
+   </property>
+  </action>
+  <action name="actionOpen_Project">
+   <property name="icon">
+    <iconset theme="folder-open"/>
+   </property>
+   <property name="text">
+    <string>Open Project</string>
    </property>
   </action>
  </widget>

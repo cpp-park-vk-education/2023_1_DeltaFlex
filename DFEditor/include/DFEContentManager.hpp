@@ -17,7 +17,15 @@ public:
     DFEContentManager &operator=(const DFEContentManager &&other) = delete;
     ~DFEContentManager();
 
+public slots:
+    void OpenDirectory();
+
+private:
+    void UpdateViews(const QString &dir);
+
 private:
     DFEProjectExplorer *m_projectExplorer;
     DFEAssetViewer *m_assetViewer;
+
+    QString *m_currentDirectory;
 };
