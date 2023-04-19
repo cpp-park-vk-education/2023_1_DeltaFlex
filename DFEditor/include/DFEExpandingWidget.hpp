@@ -15,10 +15,10 @@ public:
     void setContentLayout(QLayout *contentLayout);
 
 private:
-    QGridLayout *m_mainLayout;
-    QToolButton *m_toggleButton;
-    QFrame *m_headerLine;
-    QParallelAnimationGroup *m_toggleAnimation;
-    QScrollArea *m_contentArea;
+    QGridLayout *mp_mainLayout;
+    QToolButton *mp_toggleButton;
+    QFrame *mp_headerLine;
+    QParallelAnimationGroup *mp_toggleAnimation;
+    QScrollArea *mp_contentArea;
     int m_animationDuration = 300;
 };

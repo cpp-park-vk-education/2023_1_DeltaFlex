@@ -25,7 +25,7 @@ public:
 
 private:
     Ui::DFEMainWindow  *ui;
-    DFEContentManager  *m_contentManager;
-    DFESceneInspector  *m_sceneInspector;
-    DFEPropertiesPanel *m_propertiesPanel;
+    DFEContentManager  *mp_contentManager;
+    DFESceneInspector  *mp_sceneInspector;
+    DFEPropertiesPanel *mp_propertiesPanel;
 };

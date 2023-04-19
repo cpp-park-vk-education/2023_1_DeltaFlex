@@ -24,8 +24,8 @@ private:
     void UpdateViews(const QString &dir);
 
 private:
-    DFEProjectExplorer *m_projectExplorer;
-    DFEAssetViewer *m_assetViewer;
+    DFEProjectExplorer *mp_projectExplorer;
+    DFEAssetViewer *mp_assetViewer;
 
-    QString *m_currentDirectory;
+    QString *mp_currentDirectory;
 };

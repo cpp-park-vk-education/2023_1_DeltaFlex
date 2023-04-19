@@ -17,5 +17,5 @@ public:
     void UpdateView(const QString &dir);
 
 private:
-    QFileSystemModel *m_model;
+    QFileSystemModel *mp_model;
 };

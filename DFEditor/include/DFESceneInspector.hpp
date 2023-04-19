@@ -15,5 +15,5 @@ public:
     ~DFESceneInspector();
 
 private:
-    DFESceneView *m_sceneView;
+    DFESceneView *mp_sceneView;
 };

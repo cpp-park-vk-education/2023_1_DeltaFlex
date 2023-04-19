@@ -3,13 +3,13 @@
 
 DFEAssetViewer::DFEAssetViewer(QWidget *parent)
     : QListView(parent),
-      m_model(new QFileSystemModel())
+      mp_model(new QFileSystemModel())
 {
     setFrameShape(QFrame::NoFrame);
     setViewMode(QListView::IconMode);
 
-    m_model->setRootPath("");
-    setModel(m_model);
+    mp_model->setRootPath("");
+    setModel(mp_model);
     
     setStyleSheet("QListView { font: 12px }");
 
@@ -28,5 +28,5 @@ DFEAssetViewer::DFEAssetViewer(QWidget *parent)
 void DFEAssetViewer::UpdateView(const QString &dir)
 {
     qDebug() << dir;
-    setRootIndex(m_model->index(dir));
+    setRootIndex(mp_model->index(dir));
 }

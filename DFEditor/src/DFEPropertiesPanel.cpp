@@ -3,7 +3,7 @@
 
 DFEPropertiesPanel::DFEPropertiesPanel(QWidget *parent, Qt::WindowFlags flags)
     : QDockWidget(parent),
-      m_test(new DFEExpandingWidget("abober", 100, this))
+      mp_test(new DFEExpandingWidget("abober", 100, this))
 {
     setWindowTitle("Properties");
 
@@ -12,13 +12,13 @@ DFEPropertiesPanel::DFEPropertiesPanel(QWidget *parent, Qt::WindowFlags flags)
     QLineEdit *abober = new QLineEdit();
     lt->addWidget(abober);
 
-    m_test->setContentLayout(lt);
+    mp_test->setContentLayout(lt);
 
     QWidget *container = new QWidget();
     QVBoxLayout *contentLayout = new QVBoxLayout();
     contentLayout->setAlignment(Qt::AlignTop);
 
-    contentLayout->addWidget(m_test);
+    contentLayout->addWidget(mp_test);
     container->setLayout(contentLayout);
 
     setWidget(container);
@@ -26,5 +26,5 @@ DFEPropertiesPanel::DFEPropertiesPanel(QWidget *parent, Qt::WindowFlags flags)
 
 DFEPropertiesPanel::~DFEPropertiesPanel()
 {
-    delete m_test;
+    delete mp_test;
 }

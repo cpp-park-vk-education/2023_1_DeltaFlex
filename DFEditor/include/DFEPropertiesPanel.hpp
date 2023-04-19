@@ -10,5 +10,5 @@ public:
     explicit DFEPropertiesPanel(QWidget *parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
     ~DFEPropertiesPanel();
 private:
-    DFEExpandingWidget *m_test;
+    DFEExpandingWidget *mp_test;
 };

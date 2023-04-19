@@ -8,25 +8,25 @@
 DFEMainWindow::DFEMainWindow(QWidget *parent) 
     : QMainWindow(parent),
       ui(new Ui::DFEMainWindow),
-      m_contentManager(new DFEContentManager(this)),
-      m_sceneInspector(new DFESceneInspector(this)),
-      m_propertiesPanel(new DFEPropertiesPanel(this))
+      mp_contentManager(new DFEContentManager()),
+      mp_sceneInspector(new DFESceneInspector()),
+      mp_propertiesPanel(new DFEPropertiesPanel())
 
 {
     ui->setupUi(this);
 
-    addDockWidget(Qt::BottomDockWidgetArea, m_contentManager);
-    addDockWidget(Qt::RightDockWidgetArea, m_sceneInspector);
-    addDockWidget(Qt::RightDockWidgetArea, m_propertiesPanel);
+    addDockWidget(Qt::BottomDockWidgetArea, mp_contentManager);
+    addDockWidget(Qt::RightDockWidgetArea, mp_sceneInspector);
+    addDockWidget(Qt::RightDockWidgetArea, mp_propertiesPanel);
 
-    ui->menuWindow->addAction(m_contentManager->toggleViewAction());
-    ui->menuWindow->addAction(m_sceneInspector->toggleViewAction());
-    ui->menuWindow->addAction(m_propertiesPanel->toggleViewAction());
+    ui->menuWindow->addAction(mp_contentManager->toggleViewAction());
+    ui->menuWindow->addAction(mp_sceneInspector->toggleViewAction());
+    ui->menuWindow->addAction(mp_propertiesPanel->toggleViewAction());
 
     connect(
         ui->actionOpen_Project,
         &QAction::triggered, 
-        m_contentManager,
+        mp_contentManager,
         &DFEContentManager::OpenDirectory
     );
 }
@@ -34,7 +34,7 @@ DFEMainWindow::DFEMainWindow(QWidget *parent)
 DFEMainWindow::~DFEMainWindow()
 {
     delete ui;
-    delete m_contentManager;
-    delete m_sceneInspector;
-    delete m_propertiesPanel;
+    delete mp_contentManager;
+    delete mp_sceneInspector;
+    delete mp_propertiesPanel;
 }

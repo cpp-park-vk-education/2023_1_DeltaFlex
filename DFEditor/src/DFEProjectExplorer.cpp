@@ -5,17 +5,17 @@
 
 DFEProjectExplorer::DFEProjectExplorer(QWidget *parent)
     : QTreeView(parent),
-      m_model(new QFileSystemModel())
+      mp_model(new QFileSystemModel())
 {
     setFrameShape(QFrame::NoFrame);
 
     setWordWrap(true);
     setHeaderHidden(true);
 
-    m_model->setRootPath("");
-    setModel(m_model);
+    mp_model->setRootPath("");
+    setModel(mp_model);
 
-    setStyleSheet("QTreeView { font: 11px }");
+    setStyleSheet("QTreeView { font: 12px }");
 
     hideColumn(1);
     hideColumn(2);
@@ -25,5 +25,5 @@ DFEProjectExplorer::DFEProjectExplorer(QWidget *parent)
 void DFEProjectExplorer::UpdateView(const QString &dir)
 {
     qDebug() << dir;
-    setRootIndex(m_model->index(dir));
+    setRootIndex(mp_model->index(dir));
 }

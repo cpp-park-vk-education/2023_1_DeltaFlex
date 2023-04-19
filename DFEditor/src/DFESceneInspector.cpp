@@ -2,13 +2,13 @@
 
 DFESceneInspector::DFESceneInspector(QWidget *parent, Qt::WindowFlags flags)
     : QDockWidget(parent, flags),
-      m_sceneView(new DFESceneView(this))
+      mp_sceneView(new DFESceneView())
 {
-    setWidget(m_sceneView);
+    setWidget(mp_sceneView);
     setWindowTitle("Scene Inspector");
 }
 
 DFESceneInspector::~DFESceneInspector()
 {
-    delete m_sceneView;
+    delete mp_sceneView;
 }
