@@ -1,5 +1,6 @@
 {
     "files.associations": {
         "qstyle": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "enabled"
 }

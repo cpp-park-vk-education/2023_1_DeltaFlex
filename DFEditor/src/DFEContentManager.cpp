@@ -17,6 +17,8 @@ DFEContentManager::DFEContentManager(QWidget *parent, Qt::WindowFlags flags)
     setWidget(splitter);
 
     setWindowTitle("Content Manager");
+
+    connect(mp_assetViewer, &QListView::doubleClicked, this, &DFEContentManager::UpdateAssetViewer);
 }
 
 DFEContentManager::~DFEContentManager()
@@ -44,4 +46,9 @@ void DFEContentManager::OpenDirectory()
     *mp_currentDirectory = dir;
 
     UpdateViews(*mp_currentDirectory);
+}
+
+void DFEContentManager::UpdateAssetViewer(const QModelIndex &index)
+{
+    mp_assetViewer->UpdateView(mp_assetViewer->GetDirByIndex(index));
 }

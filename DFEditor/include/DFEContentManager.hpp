@@ -11,14 +11,15 @@ class DFEContentManager : public QDockWidget
     Q_OBJECT
 public:
     explicit DFEContentManager(QWidget *parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
-    DFEContentManager(const DFEContentManager &other) = delete;
-    DFEContentManager(DFEContentManager &&other) = delete;
-    DFEContentManager &operator=(const DFEContentManager &other) = delete;
-    DFEContentManager &operator=(const DFEContentManager &&other) = delete;
+    DFEContentManager(const DFEContentManager &other)               = delete;
+    DFEContentManager(DFEContentManager &&other)                    = delete;
+    DFEContentManager &operator=(const DFEContentManager &other)    = delete;
+    DFEContentManager &operator=(const DFEContentManager &&other)   = delete;
     ~DFEContentManager();
 
 public slots:
     void OpenDirectory();
+    void UpdateAssetViewer(const QModelIndex &index);
 
 private:
     void UpdateViews(const QString &dir);

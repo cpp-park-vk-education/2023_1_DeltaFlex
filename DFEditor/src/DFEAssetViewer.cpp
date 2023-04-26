@@ -8,6 +8,7 @@ DFEAssetViewer::DFEAssetViewer(QWidget *parent)
     setFrameShape(QFrame::NoFrame);
     setViewMode(QListView::IconMode);
 
+    mp_model->setFilter(QDir::QDir::AllEntries);
     mp_model->setRootPath("");
     setModel(mp_model);
     
@@ -28,5 +29,12 @@ DFEAssetViewer::DFEAssetViewer(QWidget *parent)
 void DFEAssetViewer::UpdateView(const QString &dir)
 {
     qDebug() << dir;
-    setRootIndex(mp_model->index(dir));
+
+    if (QFileInfo(dir).isDir())
+        setRootIndex(mp_model->index(dir));
+}
+
+QString DFEAssetViewer::GetDirByIndex(const QModelIndex &index)
+{
+    return mp_model->filePath(index);
 }

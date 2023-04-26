@@ -10,6 +10,7 @@ public:
 
 public:
     void UpdateView(const QString &dir);
+    QString GetDirByIndex(const QModelIndex &index);
 
 private:
     QFileSystemModel *mp_model;
