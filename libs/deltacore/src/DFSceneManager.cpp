@@ -29,8 +29,8 @@ void DFSceneManager::asyncLoadScene(const char *scene_name)
     isReadyMutex.lock();
     // TODO: scene loading
     tmpLoaded.reset(scene_allocators_map[scene_name]());
-    using namespace std::chrono_literals;
-    std::this_thread::sleep_for(1000ms);
+    // using namespace std::chrono_literals;
+    // std::this_thread::sleep_for(1000ms);
     // sleep(10000);
     isReady = true;
     isReadyMutex.unlock();

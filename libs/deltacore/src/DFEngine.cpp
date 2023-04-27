@@ -71,7 +71,7 @@ void DFEngine::EngineInit(void)
     }
     spdlog::info("SDL initialized successfuly");
 
-    render_data.window.reset(SDL_CreateWindow("ZS4", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, video_params.realWidth, video_params.realHeight, SDL_WINDOW_SHOWN));
+    render_data.window.reset(SDL_CreateWindow("Mentis Bellum", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, video_params.realWidth, video_params.realHeight, SDL_WINDOW_SHOWN));
     if (render_data.window.get() == NULL)
     {
         spdlog::critical("Window could not be created!");
@@ -108,7 +108,7 @@ void DFEngine::EngineInit(void)
     }
     // activeScene = scene_allocators["default"](ScreenParams, SdlData);
     gameIsActive = true;
-    sceneManager->initSceneManager(render_data, "test");
+    sceneManager->initSceneManager(render_data, "default");
     spdlog::info("Initialise engine successful!");
 };
 

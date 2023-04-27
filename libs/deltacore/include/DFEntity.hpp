@@ -1,19 +1,68 @@
 #pragma once
 
-#include <DFPosition.hpp>
-#include <DFCollider.hpp>
+#include <DFComponent.hpp>
 #include <DFScUpdParams.hpp>
+#include <DFTransform.hpp>
+
+#include <vector>
+#include <typeinfo>
+
+#include <iostream>
 
 class DFEntity
 {
-public:
-    DFPosition position;
-    DFCollider collider;
+private:
+    std::vector<DFComponent *> m_components;
 
-    DFEntity(): position(0, 0), collider(position, DFvec2<float>(0, 0), 0) {}
-    DFEntity(DFPosition pos, DFCollider col): position(pos), collider(col) {}
-    virtual void onRenderTextures(DFScUpdParams_t &render_data) {};
-    virtual void Update() {};
-    virtual void Draw(DFScUpdParams_t &render_data) {};
-    virtual ~DFEntity() = default;
+public:
+    DFTransform transform;
+
+    // DFEntity()
+    // {
+    //     tranf
+    // }
+
+    void onRenderTextures(DFScUpdParams_t &render_data) {};
+
+    void Update()
+    {
+        for(auto component: m_components)
+        {
+            component->Update();
+        }
+    };
+
+    void Draw(DFScUpdParams_t &render_data)
+    {
+        for(auto component: m_components)
+        {
+            component->Draw(render_data);
+        }
+    };
+
+    template<typename T> T *getComponent()
+    {
+        for (auto component : m_components)
+        {
+            if (typeid(*component) == typeid(T))
+            {
+                return dynamic_cast<T*>(component);
+            }
+        }
+        return nullptr;
+    }
+
+    void addComponent(DFComponent *component)
+    {
+        component->onInit(*this);
+        m_components.push_back(component);
+    }
+
+    ~DFEntity()
+    {
+        for(size_t i = 0; i < m_components.size(); ++i)
+        {
+            delete m_components[i];
+        }
+    }
 };

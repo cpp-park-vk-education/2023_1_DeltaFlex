@@ -8,11 +8,11 @@
 class DFCollider: public DFComponent
 {
 public:
-    DFvec2<float> &target_position;
-    DFvec2<float> min, max, halign;
+    Vector2<float> &target_position;
+    Vector2<float> min, max, halign;
     uint16_t layerMask;
 
-    DFCollider(DFvec2<float> &_target_position, DFvec2<float> halign_, uint16_t layer);
+    DFCollider(Vector2<float> &_target_position, Vector2<float> halign_, uint16_t layer);
 
     void UpdatePosition();
 

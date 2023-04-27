@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <DFInputSystem.hpp>
 
-DFCollider::DFCollider(DFvec2<float> &_target_position, DFvec2<float> halign_, uint16_t layer):
+DFCollider::DFCollider(Vector2<float> &_target_position, Vector2<float> halign_, uint16_t layer):
     target_position(_target_position),
     halign(halign_),
     layerMask(layer)
