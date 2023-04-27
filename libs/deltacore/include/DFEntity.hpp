@@ -26,7 +26,7 @@ public:
 
     void Update()
     {
-        for(auto component: m_components)
+        for (auto component : m_components)
         {
             component->Update();
         }
@@ -34,11 +34,17 @@ public:
 
     void Draw(DFScUpdParams_t &render_data)
     {
-        for(auto component: m_components)
+        for (auto component : m_components)
         {
             component->Draw(render_data);
         }
     };
+
+    void onInit()
+    {
+        for (auto component : m_components)
+            component->onInit(*this);
+    }
 
     template<typename T> T *getComponent()
     {
@@ -46,7 +52,7 @@ public:
         {
             if (typeid(*component) == typeid(T))
             {
-                return dynamic_cast<T*>(component);
+                return dynamic_cast<T *>(component);
             }
         }
         return nullptr;
@@ -54,13 +60,12 @@ public:
 
     void addComponent(DFComponent *component)
     {
-        component->onInit(*this);
         m_components.push_back(component);
     }
 
     ~DFEntity()
     {
-        for(size_t i = 0; i < m_components.size(); ++i)
+        for (size_t i = 0; i < m_components.size(); ++i)
         {
             delete m_components[i];
         }

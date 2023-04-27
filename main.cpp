@@ -58,6 +58,7 @@ DFScene *default_scene(void)
     DFEntity &stickman = sc->addNewObject();
     stickman.addComponent(new StickmanBody());
     stickman.addComponent(new PlayerControl());
+    stickman.onInit();
     return sc;
 }
 
