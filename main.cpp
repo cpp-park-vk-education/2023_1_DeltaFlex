@@ -12,15 +12,39 @@
 #include <SDL2/SDL.h>
 
 // #include <DFAudioManager.hpp>
+class PlayerControl: public DFComponent
+{
+private:
+    DFTransform *transform;
 
+    double playerSpeed;
+public:
+    int amogus;
+    void onInit(DFEntity &gameObject)
+    {
+        transform = &gameObject.transform;
+        playerSpeed = 100;
+    }
+
+    void Update()
+    {
+        spdlog::info("amogus={}", amogus);
+        transform->position.x += Input::GetAxis(AXIS_HORIZONTAL) * playerSpeed * DFEngine::deltaTime;
+        transform->position.y += Input::GetAxis(AXIS_VERTICAL) * playerSpeed * DFEngine::deltaTime;
+    }
+};
 class StickmanBody: public DFComponent
 {
 private:
     DFTransform *transform;
+    PlayerControl *contrl;
+
 public:
     void onInit(DFEntity &gameObject)
     {
         transform = &gameObject.transform;
+        contrl = gameObject.getComponent<PlayerControl>();
+        contrl->amogus = 15;
     }
 
     void Draw(DFScUpdParams_t &render_data)
@@ -32,25 +56,6 @@ public:
     }
 };
 
-class PlayerControl: public DFComponent
-{
-private:
-    DFTransform *transform;
-
-    double playerSpeed;
-public:
-    void onInit(DFEntity &gameObject)
-    {
-        transform = &gameObject.transform;
-        playerSpeed = 100;
-    }
-
-    void Update()
-    {
-        transform->position.x += Input::GetAxis(AXIS_HORIZONTAL) * playerSpeed * DFEngine::deltaTime;
-        transform->position.y += Input::GetAxis(AXIS_VERTICAL) * playerSpeed * DFEngine::deltaTime;
-    }
-};
 
 DFScene *default_scene(void)
 {
