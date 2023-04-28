@@ -11,29 +11,21 @@
 
 #include <SDL2/SDL.h>
 
-// #include <DFAudioManager.hpp>
-class PlayerControl: public DFComponent
+
+class StickmanPhysics : public DFComponent
 {
 private:
-    DFTransform *transform;
+    DFTransform *mp_transform;
+    std::vector<Vector2<float>> m_points;
 
-    double playerSpeed;
 public:
-    int amogus;
-    void onInit(DFEntity &gameObject)
+    void onInit(DFEntity &gameObject) override
     {
-        transform = &gameObject.transform;
-        playerSpeed = 100;
-    }
-
-    void Update()
-    {
-        spdlog::info("amogus={}", amogus);
-        transform->position.x += Input::GetAxis(AXIS_HORIZONTAL) * playerSpeed * DFEngine::deltaTime;
-        transform->position.y += Input::GetAxis(AXIS_VERTICAL) * playerSpeed * DFEngine::deltaTime;
+        mp_transform = &gameObject.transform;
     }
 };
-class StickmanBody: public DFComponent
+
+class StickmanBody : public DFComponent
 {
 private:
     DFTransform *transform;
@@ -55,7 +47,6 @@ public:
         SDL_SetRenderDrawColor(p_renderer, 0, 0, 0, 0);
     }
 };
-
 
 DFScene *default_scene(void)
 {
