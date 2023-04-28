@@ -1,0 +1,68 @@
+[
+{
+  "directory": "/home/daria/Документы/2023_1_DeltaFlex/build",
+  "command": "/usr/bin/g++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_QMLMODELS_LIB -DQT_QML_LIB -DQT_QUICK_LIB -DQT_WIDGETS_LIB -I/home/daria/Документы/2023_1_DeltaFlex/build/dfeditor_autogen/include -I/home/daria/Документы/2023_1_DeltaFlex/DFEditor/include -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -isystem /usr/lib/qt/mkspecs/linux-g++ -isystem /usr/include/qt/QtQuick -isystem /usr/include/qt/QtQmlModels -isystem /usr/include/qt/QtQml -isystem /usr/include/qt/QtNetwork -g -std=gnu++17 -fPIC -o CMakeFiles/dfeditor.dir/dfeditor_autogen/mocs_compilation.cpp.o -c /home/daria/Документы/2023_1_DeltaFlex/build/dfeditor_autogen/mocs_compilation.cpp",
+  "file": "/home/daria/Документы/2023_1_DeltaFlex/build/dfeditor_autogen/mocs_compilation.cpp",
+  "output": "CMakeFiles/dfeditor.dir/dfeditor_autogen/mocs_compilation.cpp.o"
+},
+{
+  "directory": "/home/daria/Документы/2023_1_DeltaFlex/build",
+  "command": "/usr/bin/g++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_QMLMODELS_LIB -DQT_QML_LIB -DQT_QUICK_LIB -DQT_WIDGETS_LIB -I/home/daria/Документы/2023_1_DeltaFlex/build/dfeditor_autogen/include -I/home/daria/Документы/2023_1_DeltaFlex/DFEditor/include -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -isystem /usr/lib/qt/mkspecs/linux-g++ -isystem /usr/include/qt/QtQuick -isystem /usr/include/qt/QtQmlModels -isystem /usr/include/qt/QtQml -isystem /usr/include/qt/QtNetwork -g -std=gnu++17 -fPIC -o CMakeFiles/dfeditor.dir/src/DFEAssetViewer.cpp.o -c /home/daria/Документы/2023_1_DeltaFlex/DFEditor/src/DFEAssetViewer.cpp",
+  "file": "/home/daria/Документы/2023_1_DeltaFlex/DFEditor/src/DFEAssetViewer.cpp",
+  "output": "CMakeFiles/dfeditor.dir/src/DFEAssetViewer.cpp.o"
+},
+{
+  "directory": "/home/daria/Документы/2023_1_DeltaFlex/build",
+  "command": "/usr/bin/g++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_QMLMODELS_LIB -DQT_QML_LIB -DQT_QUICK_LIB -DQT_WIDGETS_LIB -I/home/daria/Документы/2023_1_DeltaFlex/build/dfeditor_autogen/include -I/home/daria/Документы/2023_1_DeltaFlex/DFEditor/include -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -isystem /usr/lib/qt/mkspecs/linux-g++ -isystem /usr/include/qt/QtQuick -isystem /usr/include/qt/QtQmlModels -isystem /usr/include/qt/QtQml -isystem /usr/include/qt/QtNetwork -g -std=gnu++17 -fPIC -o CMakeFiles/dfeditor.dir/src/DFEContentManager.cpp.o -c /home/daria/Документы/2023_1_DeltaFlex/DFEditor/src/DFEContentManager.cpp",
+  "file": "/home/daria/Документы/2023_1_DeltaFlex/DFEditor/src/DFEContentManager.cpp",
+  "output": "CMakeFiles/dfeditor.dir/src/DFEContentManager.cpp.o"
+},
+{
+  "directory": "/home/daria/Документы/2023_1_DeltaFlex/build",
+  "command": "/usr/bin/g++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_QMLMODELS_LIB -DQT_QML_LIB -DQT_QUICK_LIB -DQT_WIDGETS_LIB -I/home/daria/Документы/2023_1_DeltaFlex/build/dfeditor_autogen/include -I/home/daria/Документы/2023_1_DeltaFlex/DFEditor/include -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -isystem /usr/lib/qt/mkspecs/linux-g++ -isystem /usr/include/qt/QtQuick -isystem /usr/include/qt/QtQmlModels -isystem /usr/include/qt/QtQml -isystem /usr/include/qt/QtNetwork -g -std=gnu++17 -fPIC -o CMakeFiles/dfeditor.dir/src/DFEExpandingWidget.cpp.o -c /home/daria/Документы/2023_1_DeltaFlex/DFEditor/src/DFEExpandingWidget.cpp",
+  "file": "/home/daria/Документы/2023_1_DeltaFlex/DFEditor/src/DFEExpandingWidget.cpp",
+  "output": "CMakeFiles/dfeditor.dir/src/DFEExpandingWidget.cpp.o"
+},
+{
+  "directory": "/home/daria/Документы/2023_1_DeltaFlex/build",
+  "command": "/usr/bin/g++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_QMLMODELS_LIB -DQT_QML_LIB -DQT_QUICK_LIB -DQT_WIDGETS_LIB -I/home/daria/Документы/2023_1_DeltaFlex/build/dfeditor_autogen/include -I/home/daria/Документы/2023_1_DeltaFlex/DFEditor/include -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -isystem /usr/lib/qt/mkspecs/linux-g++ -isystem /usr/include/qt/QtQuick -isystem /usr/include/qt/QtQmlModels -isystem /usr/include/qt/QtQml -isystem /usr/include/qt/QtNetwork -g -std=gnu++17 -fPIC -o CMakeFiles/dfeditor.dir/src/DFEMainWindow.cpp.o -c /home/daria/Документы/2023_1_DeltaFlex/DFEditor/src/DFEMainWindow.cpp",
+  "file": "/home/daria/Документы/2023_1_DeltaFlex/DFEditor/src/DFEMainWindow.cpp",
+  "output": "CMakeFiles/dfeditor.dir/src/DFEMainWindow.cpp.o"
+},
+{
+  "directory": "/home/daria/Документы/2023_1_DeltaFlex/build",
+  "command": "/usr/bin/g++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_QMLMODELS_LIB -DQT_QML_LIB -DQT_QUICK_LIB -DQT_WIDGETS_LIB -I/home/daria/Документы/2023_1_DeltaFlex/build/dfeditor_autogen/include -I/home/daria/Документы/2023_1_DeltaFlex/DFEditor/include -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -isystem /usr/lib/qt/mkspecs/linux-g++ -isystem /usr/include/qt/QtQuick -isystem /usr/include/qt/QtQmlModels -isystem /usr/include/qt/QtQml -isystem /usr/include/qt/QtNetwork -g -std=gnu++17 -fPIC -o CMakeFiles/dfeditor.dir/src/DFEProjectExplorer.cpp.o -c /home/daria/Документы/2023_1_DeltaFlex/DFEditor/src/DFEProjectExplorer.cpp",
+  "file": "/home/daria/Документы/2023_1_DeltaFlex/DFEditor/src/DFEProjectExplorer.cpp",
+  "output": "CMakeFiles/dfeditor.dir/src/DFEProjectExplorer.cpp.o"
+},
+{
+  "directory": "/home/daria/Документы/2023_1_DeltaFlex/build",
+  "command": "/usr/bin/g++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_QMLMODELS_LIB -DQT_QML_LIB -DQT_QUICK_LIB -DQT_WIDGETS_LIB -I/home/daria/Документы/2023_1_DeltaFlex/build/dfeditor_autogen/include -I/home/daria/Документы/2023_1_DeltaFlex/DFEditor/include -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -isystem /usr/lib/qt/mkspecs/linux-g++ -isystem /usr/include/qt/QtQuick -isystem /usr/include/qt/QtQmlModels -isystem /usr/include/qt/QtQml -isystem /usr/include/qt/QtNetwork -g -std=gnu++17 -fPIC -o CMakeFiles/dfeditor.dir/src/DFEPropertiesPanel.cpp.o -c /home/daria/Документы/2023_1_DeltaFlex/DFEditor/src/DFEPropertiesPanel.cpp",
+  "file": "/home/daria/Документы/2023_1_DeltaFlex/DFEditor/src/DFEPropertiesPanel.cpp",
+  "output": "CMakeFiles/dfeditor.dir/src/DFEPropertiesPanel.cpp.o"
+},
+{
+  "directory": "/home/daria/Документы/2023_1_DeltaFlex/build",
+  "command": "/usr/bin/g++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_QMLMODELS_LIB -DQT_QML_LIB -DQT_QUICK_LIB -DQT_WIDGETS_LIB -I/home/daria/Документы/2023_1_DeltaFlex/build/dfeditor_autogen/include -I/home/daria/Документы/2023_1_DeltaFlex/DFEditor/include -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -isystem /usr/lib/qt/mkspecs/linux-g++ -isystem /usr/include/qt/QtQuick -isystem /usr/include/qt/QtQmlModels -isystem /usr/include/qt/QtQml -isystem /usr/include/qt/QtNetwork -g -std=gnu++17 -fPIC -o CMakeFiles/dfeditor.dir/src/DFESceneInspector.cpp.o -c /home/daria/Документы/2023_1_DeltaFlex/DFEditor/src/DFESceneInspector.cpp",
+  "file": "/home/daria/Документы/2023_1_DeltaFlex/DFEditor/src/DFESceneInspector.cpp",
+  "output": "CMakeFiles/dfeditor.dir/src/DFESceneInspector.cpp.o"
+},
+{
+  "directory": "/home/daria/Документы/2023_1_DeltaFlex/build",
+  "command": "/usr/bin/g++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_QMLMODELS_LIB -DQT_QML_LIB -DQT_QUICK_LIB -DQT_WIDGETS_LIB -I/home/daria/Документы/2023_1_DeltaFlex/build/dfeditor_autogen/include -I/home/daria/Документы/2023_1_DeltaFlex/DFEditor/include -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -isystem /usr/lib/qt/mkspecs/linux-g++ -isystem /usr/include/qt/QtQuick -isystem /usr/include/qt/QtQmlModels -isystem /usr/include/qt/QtQml -isystem /usr/include/qt/QtNetwork -g -std=gnu++17 -fPIC -o CMakeFiles/dfeditor.dir/src/DFESceneView.cpp.o -c /home/daria/Документы/2023_1_DeltaFlex/DFEditor/src/DFESceneView.cpp",
+  "file": "/home/daria/Документы/2023_1_DeltaFlex/DFEditor/src/DFESceneView.cpp",
+  "output": "CMakeFiles/dfeditor.dir/src/DFESceneView.cpp.o"
+},
+{
+  "directory": "/home/daria/Документы/2023_1_DeltaFlex/build",
+  "command": "/usr/bin/g++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_QMLMODELS_LIB -DQT_QML_LIB -DQT_QUICK_LIB -DQT_WIDGETS_LIB -I/home/daria/Документы/2023_1_DeltaFlex/build/dfeditor_autogen/include -I/home/daria/Документы/2023_1_DeltaFlex/DFEditor/include -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -isystem /usr/lib/qt/mkspecs/linux-g++ -isystem /usr/include/qt/QtQuick -isystem /usr/include/qt/QtQmlModels -isystem /usr/include/qt/QtQml -isystem /usr/include/qt/QtNetwork -g -std=gnu++17 -fPIC -o CMakeFiles/dfeditor.dir/src/DFEViewport.cpp.o -c /home/daria/Документы/2023_1_DeltaFlex/DFEditor/src/DFEViewport.cpp",
+  "file": "/home/daria/Документы/2023_1_DeltaFlex/DFEditor/src/DFEViewport.cpp",
+  "output": "CMakeFiles/dfeditor.dir/src/DFEViewport.cpp.o"
+},
+{
+  "directory": "/home/daria/Документы/2023_1_DeltaFlex/build",
+  "command": "/usr/bin/g++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_QMLMODELS_LIB -DQT_QML_LIB -DQT_QUICK_LIB -DQT_WIDGETS_LIB -I/home/daria/Документы/2023_1_DeltaFlex/build/dfeditor_autogen/include -I/home/daria/Документы/2023_1_DeltaFlex/DFEditor/include -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -isystem /usr/lib/qt/mkspecs/linux-g++ -isystem /usr/include/qt/QtQuick -isystem /usr/include/qt/QtQmlModels -isystem /usr/include/qt/QtQml -isystem /usr/include/qt/QtNetwork -g -std=gnu++17 -fPIC -o CMakeFiles/dfeditor.dir/src/main.cpp.o -c /home/daria/Документы/2023_1_DeltaFlex/DFEditor/src/main.cpp",
+  "file": "/home/daria/Документы/2023_1_DeltaFlex/DFEditor/src/main.cpp",
+  "output": "CMakeFiles/dfeditor.dir/src/main.cpp.o"
+}
+]

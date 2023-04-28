@@ -1,0 +1,4 @@
+/home/daria/Документы/2023_1_DeltaFlex/build/CMakeFiles/dfeditor.dir
+/home/daria/Документы/2023_1_DeltaFlex/build/CMakeFiles/edit_cache.dir
+/home/daria/Документы/2023_1_DeltaFlex/build/CMakeFiles/rebuild_cache.dir
+/home/daria/Документы/2023_1_DeltaFlex/build/CMakeFiles/dfeditor_autogen.dir

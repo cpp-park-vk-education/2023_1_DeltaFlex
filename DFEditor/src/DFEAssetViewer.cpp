@@ -10,6 +10,7 @@ DFEAssetViewer::DFEAssetViewer(QWidget *parent)
 
     mp_model->setFilter(QDir::QDir::AllEntries);
     mp_model->setRootPath("");
+    mp_model->setFilter(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs);
     setModel(mp_model);
     
     setStyleSheet("QListView { font: 12px }");
