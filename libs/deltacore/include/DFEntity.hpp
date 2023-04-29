@@ -8,6 +8,7 @@
 #include <typeinfo>
 
 #include <iostream>
+#include <utility>
 
 class DFEntity
 {
@@ -17,10 +18,13 @@ private:
 public:
     DFTransform transform;
 
-    // DFEntity()
-    // {
-    //     tranf
-    // }
+    DFEntity() = default;
+    DFEntity(const DFEntity &other) = delete;
+
+    DFEntity(DFEntity &&other)
+    {
+        m_components = std::exchange(other.m_components, {0});
+    };
 
     void onRenderTextures(DFScUpdParams_t &render_data) {};
 
@@ -65,7 +69,6 @@ public:
 
     ~DFEntity()
     {
-        std::cout << "nigger\n";
         for (size_t i = 0; i < m_components.size(); ++i)
         {
             delete m_components[i];

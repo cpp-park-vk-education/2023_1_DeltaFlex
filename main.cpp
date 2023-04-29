@@ -17,6 +17,7 @@ class TestAbober: public DFComponent
 private:
     // DFTransform *transform;
     StickmanPhysicsComponent *comp;
+    Vector2<float> leftpos;
 
 public:
     void onInit(DFEntity &gameObject)
@@ -26,8 +27,15 @@ public:
 
     void Update()
     {
-        comp->m_stickmanCircles[0]->m_attachedPointMass->m_pos.x += Input::GetAxis(AXIS_HORIZONTAL) * 10;
-        comp->m_stickmanCircles[0]->m_attachedPointMass->m_pos.y += Input::GetAxis(AXIS_VERTICAL) * 10;
+        // comp->m_stickmanCircles[0]->m_attachedPointMass->m_pos.x += Input::GetAxis(AXIS_HORIZONTAL) * 10;
+        auto &left = comp->m_pointMasses[0];
+        leftpos.x += Input::GetAxis(AXIS_HORIZONTAL) * 10;
+        leftpos.y += Input::GetAxis(AXIS_VERTICAL) * 10;
+        left->m_pos = leftpos;
+
+        auto &right = comp->m_pointMasses[50-1];
+        right->m_pos.x = Input::GetMouseX();
+        right->m_pos.y = Input::GetMouseY();
     }
 };
 
@@ -61,12 +69,13 @@ DFScene *default_scene(void)
     DFWorldScene *sc = new DFWorldScene();
 
 
-    for(size_t i = 0; i < 200; ++i)
+    for (size_t i = 0; i < 1; ++i)
     {
         DFEntity &stickman = sc->addNewObject();
         stickman.addComponent(new StickmanPhysicsComponent());
         stickman.addComponent(new TestAbober());
-        stickman.transform.position.x += 5 * i;
+        stickman.transform.position.x = 50 + 2 * i;
+        stickman.transform.position.y = 50;
         stickman.onInit();
     }
     // DFEntity &stickman1 = sc->addNewObject();

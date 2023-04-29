@@ -10,7 +10,7 @@ private:
 public:
     DFWorldScene()
     {
-        m_gameobjects.reserve(300);
+        // m_gameobjects.reserve(300);
     }
     void onRenderTextures(DFScUpdParams_t &render_data)
     {
