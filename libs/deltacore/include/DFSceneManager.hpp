@@ -15,6 +15,8 @@ private:
     std::unique_ptr<DFScene> tmpLoaded;
 
     std::unordered_map<std::string, scene_allocator_t> scene_allocators_map;
+
+    static DFSceneManager *Instance;
     bool isReady;
     std::mutex isReadyMutex; 
 
@@ -32,4 +34,5 @@ public:
     void SwitchScene(const char *scene_name);
 
     friend class DFEngine;
+    friend class DFEntity;
 };

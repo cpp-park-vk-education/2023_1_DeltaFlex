@@ -7,11 +7,15 @@
 
 #include <SDL2/SDL_image.h>
 
+DFSceneManager * DFSceneManager::Instance = nullptr;
+
 DFSceneManager::DFSceneManager():
     activeScene(nullptr),
     loadingScreenScene(new DFLoadingScene),
     tmpLoaded(nullptr)
-{}
+{
+    Instance = this;
+}
 
 void DFSceneManager::initSceneManager(DFScUpdParams_t &render_data, const char *entrypoint)
 {
@@ -64,10 +68,11 @@ void DFSceneManager::handleFirstFrameAfterLoad(DFScUpdParams_t &render_data)
     spdlog::debug("Rendering all textures of a new scene");
     loadingScreenScene->onHandleFrame(render_data);
 
-    tmpLoaded->onRenderTextures(render_data);
-    tmpLoaded->onSceneStart(render_data);
-
     activeScene = std::move(tmpLoaded);
+
+    activeScene->onRenderTextures(render_data);
+    activeScene->onSceneStart(render_data);
+
     handleScene = std::bind(&DFSceneManager::handleGameScene, this, std::placeholders::_1);
 }
 

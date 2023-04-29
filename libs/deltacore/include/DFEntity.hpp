@@ -3,6 +3,7 @@
 #include <DFComponent.hpp>
 #include <DFScUpdParams.hpp>
 #include <DFTransform.hpp>
+#include <DFSceneManager.hpp>
 
 #include <vector>
 #include <typeinfo>
@@ -23,7 +24,7 @@ public:
 
     DFEntity(DFEntity &&other)
     {
-        m_components = std::exchange(other.m_components, {0});
+        m_components = std::exchange(other.m_components, { 0 });
     };
 
     void onRenderTextures(DFScUpdParams_t &render_data) {};
@@ -35,6 +36,14 @@ public:
             component->Update();
         }
     };
+
+    void Start()
+    {
+        for (auto component : m_components)
+        {
+            component->Start();
+        }
+    }
 
     void Draw(DFScUpdParams_t &render_data)
     {
@@ -52,6 +61,7 @@ public:
 
     template<typename T> T *getComponent()
     {
+            std::cout << m_components.size() << "\n";
         for (auto component : m_components)
         {
             if (typeid(*component) == typeid(T))
@@ -60,6 +70,11 @@ public:
             }
         }
         return nullptr;
+    }
+
+    static DFEntity *Find(std::string name)
+    {
+        return DFSceneManager::Instance->activeScene.get()->findEntity(name);
     }
 
     void addComponent(DFComponent *component)

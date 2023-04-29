@@ -3,18 +3,22 @@
 #include <DFScene.hpp>
 #include <DFEntity.hpp>
 
+#include <map>
 class DFWorldScene: public DFScene
 {
 private:
-    std::vector<DFEntity> m_gameobjects;
+    friend DFEntity;
+    std::vector<DFEntity> m_gameObjects;
+    std::map<std::string, size_t> m_gameObjAliaces;
 public:
     DFWorldScene()
     {
-        // m_gameobjects.reserve(300);
+        m_gameObjects.reserve(300);
     }
+
     void onRenderTextures(DFScUpdParams_t &render_data)
     {
-        for (auto &gameObject: m_gameobjects)
+        for (auto &gameObject : m_gameObjects)
         {
             gameObject.onRenderTextures(render_data);
         }
@@ -22,24 +26,35 @@ public:
 
     void onSceneStart(DFScUpdParams_t &render_data)
     {
+        for (auto &gameObject : m_gameObjects)
+        {
+            gameObject.Start();
+        }
     }
 
     void onHandleFrame(DFScUpdParams_t &render_data)
     {
-        for (auto &gameObject: m_gameobjects)
+        for (auto &gameObject : m_gameObjects)
         {
             gameObject.Update();
         }
 
-        for (auto &gameObject: m_gameobjects)
+        for (auto &gameObject : m_gameObjects)
         {
             gameObject.Draw(render_data);
         }
     }
 
-    DFEntity& addNewObject()
+    DFEntity &addNewObject(std::string name)
     {
-        m_gameobjects.emplace_back();
-        return m_gameobjects.back();
+        m_gameObjects.emplace_back();
+        DFEntity &to_ret = m_gameObjects.back();
+        m_gameObjAliaces[name] = m_gameObjects.size() - 1;
+        return to_ret;
+    }
+
+    DFEntity *findEntity(std::string &name)
+    {
+        return &m_gameObjects[m_gameObjAliaces[name]];
     }
 };

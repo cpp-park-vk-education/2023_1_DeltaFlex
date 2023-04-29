@@ -1,12 +1,17 @@
 #pragma once
 #include <cmath>
-
+#include <ostream>
 template<typename T>
 struct Vector2
 {
     T x, y;
     Vector2(): x(0), y(0) {}
     Vector2(T x_, T y_): x(x_), y(y_) {}
+
+    friend std::ostream &operator <<(std::ostream &os, const Vector2<T> &vec)
+    {
+        return os << "[" << vec.x << ", " << vec.y << "]";
+    }
 
     Vector2<T> operator+(const Vector2<T> &other)
     {
