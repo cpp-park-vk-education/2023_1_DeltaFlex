@@ -65,6 +65,7 @@ public:
 
     ~DFEntity()
     {
+        std::cout << "nigger\n";
         for (size_t i = 0; i < m_components.size(); ++i)
         {
             delete m_components[i];

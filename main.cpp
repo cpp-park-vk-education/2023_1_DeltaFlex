@@ -8,53 +8,74 @@
 // #include <DFPosition.hpp>
 // #include <DFSprite.hpp>
 // #include <DFCollider.hpp>
+#include "PhysicsComponent.hpp"
 
 #include <SDL2/SDL.h>
 
-
-class StickmanPhysics : public DFComponent
+class TestAbober: public DFComponent
 {
 private:
-    DFTransform *mp_transform;
-    std::vector<Vector2<float>> m_points;
+    // DFTransform *transform;
+    StickmanPhysicsComponent *comp;
 
 public:
-    void onInit(DFEntity &gameObject) override
+    void onInit(DFEntity &gameObject)
     {
-        mp_transform = &gameObject.transform;
+        comp = gameObject.getComponent<StickmanPhysicsComponent>();
+    }
+
+    void Update()
+    {
+        comp->m_stickmanCircles[0]->m_attachedPointMass->m_pos.x += Input::GetAxis(AXIS_HORIZONTAL) * 10;
+        comp->m_stickmanCircles[0]->m_attachedPointMass->m_pos.y += Input::GetAxis(AXIS_VERTICAL) * 10;
     }
 };
 
-class StickmanBody : public DFComponent
+class TestLine: public DFComponent
 {
 private:
     DFTransform *transform;
-    PlayerControl *contrl;
 
 public:
     void onInit(DFEntity &gameObject)
     {
         transform = &gameObject.transform;
-        contrl = gameObject.getComponent<PlayerControl>();
-        contrl->amogus = 15;
+    }
+
+    void Update()
+    {
+        transform->position.x += Input::GetAxis(AXIS_HORIZONTAL);
     }
 
     void Draw(DFScUpdParams_t &render_data)
     {
-        SDL_Renderer *p_renderer = render_data.renderer.get();
-        SDL_SetRenderDrawColor(p_renderer, 255, 255, 255, 255);
-        SDL_RenderDrawLine(p_renderer, transform->position.x, transform->position.y, 100, 100);
-        SDL_SetRenderDrawColor(p_renderer, 0, 0, 0, 0);
+        auto *renderer = render_data.renderer.get();
+        SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
+        SDL_RenderDrawLineF(renderer, transform->position.x, transform->position.y, 100, 100);
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
     }
 };
 
 DFScene *default_scene(void)
 {
     DFWorldScene *sc = new DFWorldScene();
-    DFEntity &stickman = sc->addNewObject();
-    stickman.addComponent(new StickmanBody());
-    stickman.addComponent(new PlayerControl());
-    stickman.onInit();
+
+
+    for(size_t i = 0; i < 200; ++i)
+    {
+        DFEntity &stickman = sc->addNewObject();
+        stickman.addComponent(new StickmanPhysicsComponent());
+        stickman.addComponent(new TestAbober());
+        stickman.transform.position.x += 5 * i;
+        stickman.onInit();
+    }
+    // DFEntity &stickman1 = sc->addNewObject();
+    // stickman1.addComponent(new StickmanPhysicsComponent());
+    // stickman1.addComponent(new TestAbober());
+    // stickman1.onInit();
+    // // stickman2.addComponent(new TestAbober());
+    // stickman2.getComponent<StickmanPhysicsComponent>()->m_stickmanCircles[0]->m_attachedPointMass->m_pos.x += 300;
+    // stickman.addComponent(new PlayerControl());
     return sc;
 }
 

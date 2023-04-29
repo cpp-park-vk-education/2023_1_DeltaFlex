@@ -8,6 +8,10 @@ class DFWorldScene: public DFScene
 private:
     std::vector<DFEntity> m_gameobjects;
 public:
+    DFWorldScene()
+    {
+        m_gameobjects.reserve(300);
+    }
     void onRenderTextures(DFScUpdParams_t &render_data)
     {
         for (auto &gameObject: m_gameobjects)

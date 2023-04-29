@@ -8,11 +8,12 @@ class DFEntity;
 class DFComponent
 {
 public:
-    DFComponent(const DFComponent &other) = delete;
-    DFComponent(DFComponent &&other) = delete;
+    // DFComponent() = default;
+    // DFComponent(const DFComponent &other) = delete;
+    // DFComponent(DFComponent &&other) = delete;
 
-    DFComponent &operator=(const DFComponent &other) = delete;
-    DFComponent &operator=(DFComponent &&other) = delete;
+    // DFComponent &operator=(const DFComponent &other) = delete;
+    // DFComponent &operator=(DFComponent &&other) = delete;
 
     virtual void onInit(DFEntity &gameObject) {}
     virtual void Start() {}

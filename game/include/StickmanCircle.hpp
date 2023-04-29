@@ -41,7 +41,7 @@ void DrawCircle(SDL_Renderer *renderer, int32_t centreX, int32_t centreY, int32_
 
 class StickmanCircle
 {
-private:
+public:
     // friend PointMass;
     float m_radius;
     PointMass *m_attachedPointMass;
