@@ -17,7 +17,6 @@ class TestAbober: public DFComponent
 private:
     // DFTransform *transform;
     StickmanPhysicsComponent *comp;
-    Vector2<float> leftpos;
 
 public:
     void onInit(DFEntity &gameObject)
@@ -28,14 +27,13 @@ public:
     void Update()
     {
         // comp->m_stickmanCircles[0]->m_attachedPointMass->m_pos.x += Input::GetAxis(AXIS_HORIZONTAL) * 10;
-        auto &left = comp->m_pointMasses[0];
-        leftpos.x += Input::GetAxis(AXIS_HORIZONTAL) * 10;
-        leftpos.y += Input::GetAxis(AXIS_VERTICAL) * 10;
-        left->m_pos = leftpos;
+        auto &left = comp->m_stickmanCircles[0];
+        left->m_attachedPointMass->m_pos.x += Input::GetAxis(AXIS_HORIZONTAL) * 10;
+        left->m_attachedPointMass->m_pos.y += Input::GetAxis(AXIS_VERTICAL) * 10;
 
-        auto &right = comp->m_pointMasses[50-1];
-        right->m_pos.x = Input::GetMouseX();
-        right->m_pos.y = Input::GetMouseY();
+        // auto &right = comp->m_pointMasses[50-1];
+        // right->m_pos.x = Input::GetMouseX();
+        // right->m_pos.y = Input::GetMouseY();
     }
 };
 

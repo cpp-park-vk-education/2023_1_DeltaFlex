@@ -90,11 +90,11 @@ float DFInputSystem::GetAxis(AxisCode axis)
     switch (axis)
     {
         case AXIS_HORIZONTAL:
-            res = keys_active[KEYCODE_D] - keys_active[KEYCODE_A];
+            res = (keys_active[KEYCODE_D] | keys_active[KEYCODE_RIGHT]) - (keys_active[KEYCODE_A] | keys_active[KEYCODE_LEFT]);
             break;
 
         case AXIS_VERTICAL:
-            res = keys_active[KEYCODE_S] - keys_active[KEYCODE_W];
+            res = (keys_active[KEYCODE_S] | keys_active[KEYCODE_DOWN]) - (keys_active[KEYCODE_W] | keys_active[KEYCODE_UP]);
             break;
 
         default:

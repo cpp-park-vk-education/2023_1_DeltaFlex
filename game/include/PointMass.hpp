@@ -6,7 +6,7 @@
 
 #include <vector>
 
-constexpr float GRAVITY = 980.0f / 1000;
+constexpr float GRAVITY = 980.0f;
 
 constexpr std::size_t INITIAL_LINKS = 10;
 class Link;

@@ -36,69 +36,46 @@ public:
         PointMass *head = new PointMass(pos + Vector2<float>(0, 20));
         head->m_mass = 4;
 
+        PointMass *shoulder = new PointMass(pos+Vector2<float>(0, 0));
+        shoulder->m_mass = 26;
 
-        const size_t n = 50, m = 50;
-        PointMass *cloth[n][m];
-        for (int i = 0; i < n; ++i)
-        {
-            for (int j = 0; j < m; ++j)
-            {
-                cloth[i][j] = new PointMass(Vector2<float>(i * 5., j * 5.), 100);
-                m_pointMasses.push_back(cloth[i][j]);
-            }
-        }
+        head->attachTo(*shoulder, 5 / 4 * headLength, 1);
 
-        for (int i = 0; i < n; ++i)
-        {
-            for (int j = 1; j < m; ++j)
-            {
-                cloth[i][j-1]->attachTo(*cloth[i][j], 1, 0.7);
-                cloth[j-1][i]->attachTo(*cloth[j][i], 1, 0.7);
-            }
-        }
+        PointMass *elbowL = new PointMass(pos+Vector2<float>(-10, 0));
+        PointMass *elbowR = new PointMass(pos+Vector2<float>(+10, 0));
+        elbowL->m_mass = 2;
+        elbowR->m_mass = 2;
+        elbowL->attachTo(*shoulder, headLength * 3 / 2, 1);
+        elbowR->attachTo(*shoulder, headLength * 3 / 2, 1);
 
-        // cloth[0][0]->attachTo(*head, 0, 1);
+        PointMass *handL = new PointMass(pos+Vector2<float>(-10, -20));
+        PointMass *handR = new PointMass(pos+Vector2<float>(+10, +20));
+        handL->m_mass = 2;
+        handR->m_mass = 2;
+        handL->attachTo(*elbowL, headLength * 2, 1);
+        handR->attachTo(*elbowR, headLength * 2, 1);
 
-        // PointMass *shoulder = new PointMass(pos+Vector2<float>(0, 0));
-        // shoulder->m_mass = 26;
+        PointMass *pelvis = new PointMass(pos+Vector2<float>(0, -40));
+        pelvis->m_mass = 15;
+        pelvis->attachTo(*shoulder, headLength * 3.5, 0.8);
+        pelvis->attachTo(*head, headLength * 4.75, 0.02, false);
 
-        // head->attachTo(*shoulder, 5 / 4 * headLength, 1);
+        PointMass *kneeL = new PointMass(pos+Vector2<float>(-10, -40));
+        PointMass *kneeR = new PointMass(pos+Vector2<float>(+10, -40));
+        kneeL->m_mass = 10;
+        kneeR->m_mass = 10;
+        kneeL->attachTo(*pelvis, headLength * 2, 1);
+        kneeR->attachTo(*pelvis, headLength * 2, 1);
 
-        // PointMass *elbowL = new PointMass(pos+Vector2<float>(-10, 0));
-        // PointMass *elbowR = new PointMass(pos+Vector2<float>(+10, 0));
-        // elbowL->m_mass = 2;
-        // elbowR->m_mass = 2;
-        // elbowL->attachTo(*shoulder, headLength * 3 / 2, 1);
-        // elbowR->attachTo(*shoulder, headLength * 3 / 2, 1);
+        PointMass *footL = new PointMass(pos+Vector2<float>(10, 20));
+        PointMass *footR = new PointMass(pos+Vector2<float>(10, 20));
+        footL->m_mass = 5;
+        footR->m_mass = 5;
+        footL->attachTo(*kneeL, headLength * 2, 1);
+        footR->attachTo(*kneeR, headLength * 2, 1);
 
-        // PointMass *handL = new PointMass(pos+Vector2<float>(-10, -20));
-        // PointMass *handR = new PointMass(pos+Vector2<float>(+10, +20));
-        // handL->m_mass = 2;
-        // handR->m_mass = 2;
-        // handL->attachTo(*elbowL, headLength * 2, 1);
-        // handR->attachTo(*elbowR, headLength * 2, 1);
-
-        // PointMass *pelvis = new PointMass(pos+Vector2<float>(0, -40));
-        // pelvis->m_mass = 15;
-        // pelvis->attachTo(*shoulder, headLength * 3.5, 0.8);
-        // pelvis->attachTo(*head, headLength * 4.75, 0.02, false);
-
-        // PointMass *kneeL = new PointMass(pos+Vector2<float>(-10, -40));
-        // PointMass *kneeR = new PointMass(pos+Vector2<float>(+10, -40));
-        // kneeL->m_mass = 10;
-        // kneeR->m_mass = 10;
-        // kneeL->attachTo(*pelvis, headLength * 2, 1);
-        // kneeR->attachTo(*pelvis, headLength * 2, 1);
-
-        // PointMass *footL = new PointMass(pos+Vector2<float>(10, 20));
-        // PointMass *footR = new PointMass(pos+Vector2<float>(10, 20));
-        // footL->m_mass = 5;
-        // footR->m_mass = 5;
-        // footL->attachTo(*kneeL, headLength * 2, 1);
-        // footR->attachTo(*kneeR, headLength * 2, 1);
-
-        // footL->attachTo(*shoulder, headLength * 7.5, 1e-3, false);
-        // footR->attachTo(*shoulder, headLength * 7.5, 1e-3, false);
+        footL->attachTo(*shoulder, headLength * 7.5, 1e-3, false);
+        footR->attachTo(*shoulder, headLength * 7.5, 1e-3, false);
 
         StickmanCircle *headCircle = new StickmanCircle(headLength * .75, { 40, 40 });
         headCircle->attachToPointMass(head);
@@ -107,16 +84,16 @@ public:
         addStickmanCircle(*headCircle);
 
         m_pointMasses.push_back(head);
-        // m_pointMasses.push_back(shoulder);
-        // m_pointMasses.push_back(pelvis);
-        // m_pointMasses.push_back(elbowL);
-        // m_pointMasses.push_back(elbowR);
-        // m_pointMasses.push_back(handL);
-        // m_pointMasses.push_back(handR);
-        // m_pointMasses.push_back(kneeL);
-        // m_pointMasses.push_back(kneeR);
-        // m_pointMasses.push_back(footL);
-        // m_pointMasses.push_back(footR);
+        m_pointMasses.push_back(shoulder);
+        m_pointMasses.push_back(pelvis);
+        m_pointMasses.push_back(elbowL);
+        m_pointMasses.push_back(elbowR);
+        m_pointMasses.push_back(handL);
+        m_pointMasses.push_back(handR);
+        m_pointMasses.push_back(kneeL);
+        m_pointMasses.push_back(kneeR);
+        m_pointMasses.push_back(footL);
+        m_pointMasses.push_back(footR);
     }
 
     ~StickmanPhysicsComponent()
