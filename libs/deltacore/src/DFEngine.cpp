@@ -122,8 +122,8 @@ void DFEngine::EngineCycle(void)
         cur_time = microseconds_now();
         deltaTime = ((double)(cur_time - was_time)) / 1000000.;
         currentFrameRate = (deltaTime != 0) ? (int)(1 / deltaTime) : INFINITY;
-        char tmp[10] = { 0 };
-        SDL_SetWindowTitle(render_data.window.get(), SDL_itoa((int)currentFrameRate, tmp, 10));
+        // char tmp[10] = { 0 };
+        // SDL_SetWindowTitle(render_data.window.get(), SDL_itoa((int)currentFrameRate, tmp, 10));
 
         DFInputSystem::InputSystemOnFrameStart();
         HandleEvents();

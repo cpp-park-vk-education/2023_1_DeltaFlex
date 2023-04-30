@@ -30,5 +30,7 @@ public:
 
     void SwitchScene(const char *scene_name);
     void AppendSceneAllocator(std::string key, scene_allocator_t allocator) { sceneManager->AppendSceneAllocator(key, allocator); };
-    static DFScene* GetActiveScene(void) { return Instance->sceneManager->activeScene.get(); };
+    static DFScene *GetActiveScene(void) { return Instance->sceneManager->activeScene.get(); };
+
+    static void setWindowTitle(std::string title) { SDL_SetWindowTitle(Instance->render_data.window.get(), title.c_str()); }
 };

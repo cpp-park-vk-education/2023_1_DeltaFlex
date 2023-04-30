@@ -65,29 +65,32 @@ public:
 //         self.b2 = np.random.uniform(-1, 1, size=(OUT_DIM))
 //         self.active_func = active_func
 //         self.best_record = 0
-    
+
 //     def set_stickman(self, stickman):
 //         self.best_record = 0
 //         self.stickman = stickman
-    
+
 //     def predict(self):
 //         input_layout = stickman.get_coords()
 //         inv_layout1 = self.active_func(input_layout @ self.w1 + self.b1)
 //         result = self.active_func(inv_layout1 @ self.w2 + self.b2) / 10
 //         stickman.move_all(result)
-    
+
 //     def update_record(self):
 //         self.best_record += 100/self.stickman.pointmasses[0].y
 
 template <typename T, size_t N, size_t M, size_t L>
 std::array<std::array<T, L>, N> matrixMultiplication(
-    std::array<std::array<T, M>, N>& a,
-    std::array<std::array<T, L>, M>& b)
+    std::array<std::array<T, M>, N> &a,
+    std::array<std::array<T, L>, M> &b)
 {
     std::array<std::array<T, L>, N> result{};
-    for (size_t i = 0; i < N; ++i) {
-        for (size_t j = 0; j < L; ++j) {
-            for (size_t k = 0; k < M; ++k) {
+    for (size_t i = 0; i < N; ++i)
+    {
+        for (size_t j = 0; j < L; ++j)
+        {
+            for (size_t k = 0; k < M; ++k)
+            {
                 result[i][j] += a[i][k] * b[k][j];
             }
         }
@@ -97,12 +100,14 @@ std::array<std::array<T, L>, N> matrixMultiplication(
 
 template <typename T, size_t M, size_t L>
 std::array<T, L> matrixMultiplication(
-    std::array<T, M>& a,
-    std::array<std::array<T, L>, M>& b)
+    std::array<T, M> &a,
+    std::array<std::array<T, L>, M> &b)
 {
     std::array<T, L> result{};
-    for (size_t j = 0; j < L; ++j) {
-        for (size_t k = 0; k < M; ++k) {
+    for (size_t j = 0; j < L; ++j)
+    {
+        for (size_t k = 0; k < M; ++k)
+        {
             result[j] += a[k] * b[k][j];
         }
     }
@@ -111,12 +116,14 @@ std::array<T, L> matrixMultiplication(
 
 template <typename T, size_t N, size_t M>
 std::array<T, N> matrixMultiplication(
-    std::array<std::array<T, M>, N>& a,
-    std::array<T, M>& b)
+    std::array<std::array<T, M>, N> &a,
+    std::array<T, M> &b)
 {
     std::array<T, N> result{};
-    for (size_t i = 0; i < N; ++i) {
-        for (size_t k = 0; k < M; ++k) {
+    for (size_t i = 0; i < N; ++i)
+    {
+        for (size_t k = 0; k < M; ++k)
+        {
             result[i] += a[i][k] * b[k];
         }
     }
@@ -125,10 +132,12 @@ std::array<T, N> matrixMultiplication(
 
 template <typename T, size_t N, size_t M>
 std::array<std::array<T, M>, N> activeFunc(
-    std::array<std::array<T, M>, N>& matrix)
+    std::array<std::array<T, M>, N> &matrix)
 {
-    for (size_t i = 0; i < N; i++) {
-        for (size_t j = 0; j < M; j++) {
+    for (size_t i = 0; i < N; i++)
+    {
+        for (size_t j = 0; j < M; j++)
+        {
             matrix[i][j] = tanh(matrix[i][j]);
         }
     }
@@ -136,10 +145,11 @@ std::array<std::array<T, M>, N> activeFunc(
 
 template <typename T, size_t N>
 std::array<T, N> activeFunc(
-    std::array<T, N>& matrix)
+    std::array<T, N> &matrix)
 {
-     std::array<T, N> result{};
-    for (size_t i = 0; i < N; i++) {
+    std::array<T, N> result{};
+    for (size_t i = 0; i < N; i++)
+    {
         result[i] = tanh(matrix[i]);
     }
     return result;
@@ -147,12 +157,14 @@ std::array<T, N> activeFunc(
 
 template <typename T, size_t N, size_t M>
 std::array<std::array<T, M>, N> matrixAddition(
-    std::array<std::array<T, M>, N>& a,
-    std::array<std::array<T, M>, N>& b)
+    std::array<std::array<T, M>, N> &a,
+    std::array<std::array<T, M>, N> &b)
 {
     std::array<std::array<T, M>, N> result{};
-    for (size_t i = 0; i < N; ++i) {
-        for (size_t j = 0; j < M; ++j) {
+    for (size_t i = 0; i < N; ++i)
+    {
+        for (size_t j = 0; j < M; ++j)
+        {
             result[i][j] = a[i][j] + b[i][j];
         }
     }
@@ -161,11 +173,12 @@ std::array<std::array<T, M>, N> matrixAddition(
 
 template <typename T, size_t N>
 std::array<T, N> matrixAddition(
-    std::array<T, N>& a,
-    std::array<T, N>& b)
+    std::array<T, N> &a,
+    std::array<T, N> &b)
 {
     std::array<T, N> result{};
-    for (size_t i = 0; i < N; ++i) {
+    for (size_t i = 0; i < N; ++i)
+    {
         result[i] = a[i] + b[i];
     }
     return result;
@@ -188,14 +201,14 @@ public:
         for (int i = 0; i < INPUT_DIM; i++)
             for (int j = 0; j < H_DIM; j++)
                 w1[i][j] = dis(gen);
-        
+
         for (int i = 0; i < H_DIM; i++)
             b1[i] = dis(gen);
-        
+
         for (int i = 0; i < H_DIM; i++)
             for (int j = 0; j < OUT_DIM; j++)
                 w2[i][j] = dis(gen);
-        
+
         for (int i = 0; i < OUT_DIM; i++)
             b2[i] = dis(gen);
 
@@ -234,6 +247,7 @@ private:
 public:
     void onInit(DFEntity &gameObject)
     {
+        DFEngine::setWindowTitle("I HATE NEGATIVE, BE MORE POSITIVE");
         my_stickman = gameObject.getComponent<StickmanPhysicsComponent>();
         model = new Model(my_stickman);
     }
