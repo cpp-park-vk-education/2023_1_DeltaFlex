@@ -12,6 +12,8 @@
 
 #include <SDL2/SDL.h>
 #include <string>
+#include <array>
+#include <random>
 
 class StickmanRestarter: public DFComponent
 {
@@ -54,20 +56,191 @@ public:
     }
 };
 
+// class Model():
+//     def __init__(self, stickman, active_func):
+//         self.stickman = stickman
+//         self.w1 = np.random.uniform(-1, 1, size=(INPUT_DIM, H_DIM))
+//         self.b1 = np.random.uniform(-1, 1, size=(H_DIM))
+//         self.w2 = np.random.uniform(-1, 1, size=(H_DIM, OUT_DIM))
+//         self.b2 = np.random.uniform(-1, 1, size=(OUT_DIM))
+//         self.active_func = active_func
+//         self.best_record = 0
+    
+//     def set_stickman(self, stickman):
+//         self.best_record = 0
+//         self.stickman = stickman
+    
+//     def predict(self):
+//         input_layout = stickman.get_coords()
+//         inv_layout1 = self.active_func(input_layout @ self.w1 + self.b1)
+//         result = self.active_func(inv_layout1 @ self.w2 + self.b2) / 10
+//         stickman.move_all(result)
+    
+//     def update_record(self):
+//         self.best_record += 100/self.stickman.pointmasses[0].y
+
+template <typename T, size_t N, size_t M, size_t L>
+std::array<std::array<T, L>, N> matrixMultiplication(
+    std::array<std::array<T, M>, N>& a,
+    std::array<std::array<T, L>, M>& b)
+{
+    std::array<std::array<T, L>, N> result{};
+    for (size_t i = 0; i < N; ++i) {
+        for (size_t j = 0; j < L; ++j) {
+            for (size_t k = 0; k < M; ++k) {
+                result[i][j] += a[i][k] * b[k][j];
+            }
+        }
+    }
+    return result;
+}
+
+template <typename T, size_t M, size_t L>
+std::array<T, L> matrixMultiplication(
+    std::array<T, M>& a,
+    std::array<std::array<T, L>, M>& b)
+{
+    std::array<T, L> result{};
+    for (size_t j = 0; j < L; ++j) {
+        for (size_t k = 0; k < M; ++k) {
+            result[j] += a[k] * b[k][j];
+        }
+    }
+    return result;
+}
+
+template <typename T, size_t N, size_t M>
+std::array<T, N> matrixMultiplication(
+    std::array<std::array<T, M>, N>& a,
+    std::array<T, M>& b)
+{
+    std::array<T, N> result{};
+    for (size_t i = 0; i < N; ++i) {
+        for (size_t k = 0; k < M; ++k) {
+            result[i] += a[i][k] * b[k];
+        }
+    }
+    return result;
+}
+
+template <typename T, size_t N, size_t M>
+std::array<std::array<T, M>, N> activeFunc(
+    std::array<std::array<T, M>, N>& matrix)
+{
+    for (size_t i = 0; i < N; i++) {
+        for (size_t j = 0; j < M; j++) {
+            matrix[i][j] = tanh(matrix[i][j]);
+        }
+    }
+}
+
+template <typename T, size_t N>
+std::array<T, N> activeFunc(
+    std::array<T, N>& matrix)
+{
+     std::array<T, N> result{};
+    for (size_t i = 0; i < N; i++) {
+        result[i] = tanh(matrix[i]);
+    }
+    return result;
+}
+
+template <typename T, size_t N, size_t M>
+std::array<std::array<T, M>, N> matrixAddition(
+    std::array<std::array<T, M>, N>& a,
+    std::array<std::array<T, M>, N>& b)
+{
+    std::array<std::array<T, M>, N> result{};
+    for (size_t i = 0; i < N; ++i) {
+        for (size_t j = 0; j < M; ++j) {
+            result[i][j] = a[i][j] + b[i][j];
+        }
+    }
+    return result;
+}
+
+template <typename T, size_t N>
+std::array<T, N> matrixAddition(
+    std::array<T, N>& a,
+    std::array<T, N>& b)
+{
+    std::array<T, N> result{};
+    for (size_t i = 0; i < N; ++i) {
+        result[i] = a[i] + b[i];
+    }
+    return result;
+}
+
+const size_t INPUT_DIM = 22;
+const size_t H_DIM = 16;
+const size_t OUT_DIM = 11;
+
+class Model
+{
+
+public:
+    Model(StickmanPhysicsComponent *stickman): best_record(0), stickman(stickman)
+    {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_real_distribution<> dis(-1.0, 1.0);
+
+        for (int i = 0; i < INPUT_DIM; i++)
+            for (int j = 0; j < H_DIM; j++)
+                w1[i][j] = dis(gen);
+        
+        for (int i = 0; i < H_DIM; i++)
+            b1[i] = dis(gen);
+        
+        for (int i = 0; i < H_DIM; i++)
+            for (int j = 0; j < OUT_DIM; j++)
+                w2[i][j] = dis(gen);
+        
+        for (int i = 0; i < OUT_DIM; i++)
+            b2[i] = dis(gen);
+
+    }
+
+    void predict()
+    {
+        auto input_layout = stickman->GetCoords();
+        auto inv_layout1 = matrixMultiplication(input_layout, w1);
+        auto inv_layout2 = matrixAddition(inv_layout1, b1);
+        auto inv_layout3 = activeFunc(inv_layout2);
+        auto inv_layout4 = matrixMultiplication(inv_layout3, w2);
+        auto inv_layout5 = matrixAddition(inv_layout4, b2);
+        auto result = activeFunc(inv_layout5);
+
+        stickman->MoveAll(result);
+    }
+
+private:
+    std::array<std::array<float, H_DIM>, INPUT_DIM> w1;
+    std::array<float, H_DIM> b1;
+    std::array<std::array<float, OUT_DIM>, H_DIM> w2;
+    std::array<float, OUT_DIM> b2;
+
+    StickmanPhysicsComponent *stickman;
+    float best_record;
+
+};
+
 class StickmanAI: public DFComponent
 {
 private:
     StickmanPhysicsComponent *my_stickman;
+    Model *model;
 
+public:
     void onInit(DFEntity &gameObject)
     {
         my_stickman = gameObject.getComponent<StickmanPhysicsComponent>();
+        model = new Model(my_stickman);
     }
 
     void Update()
     {
-        my_stickman->MoveAll({1,1,1,1,1,1,1,1,1,1,1});
-        my_stickman->m_pointMasses[0]->m_pos.y -= 2.7;
+        model->predict();
     }
 };
 
@@ -115,7 +288,7 @@ DFScene *default_scene(void)
 {
     DFWorldScene *sc = new DFWorldScene();
 
-    for (int i = 0; i < 1; i++)
+    for (int i = 0; i < 10; i++)
     {
         DFEntity &stickman = sc->addNewObject("stickman_" + std::to_string(i));
         stickman.addComponent(new StickmanPhysicsComponent());

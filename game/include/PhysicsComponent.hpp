@@ -175,14 +175,26 @@ public:
         m_pointMasses[limb]->m_pos.y = sin(angle) * (x - x_c) + cos(angle) * (y - y_c) + y_c;
     }
 
-    void MoveAll(std::vector<double> angles)
+    void MoveAll(std::array<float, 11> angles)
     {
         int i = 0;
-        for (auto angle: angles)
+        for (float angle: angles)
         {
             Move(i, angle);
             i++;
         }
         
     }
+
+    std::array<float, 22> GetCoords()
+    {
+        std::array<float, 22> coords;
+        for (size_t i = 0; i < 11; i++)
+        {
+            coords[i*2] = (m_pointMasses[i]->m_pos.x - m_pointMasses[0]->m_pos.x);
+            coords[i*2+1] = m_pointMasses[i]->m_pos.y;
+        }
+        return coords;
+    }
+
 };
