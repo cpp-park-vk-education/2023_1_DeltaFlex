@@ -159,14 +159,11 @@ int main(void)
     // int a = 4;
     // std::cout << (typeid(int) == typeid(a));
 
-    // spdlog::set_level(spdlog::level::trace);
-    // std::unique_ptr<DFEngine> engine = std::make_unique<DFEngine>();
+    spdlog::set_level(spdlog::level::trace);
+    std::unique_ptr<DFEngine> engine = std::make_unique<DFEngine>();
 
-    // engine->AppendSceneAllocator("default", default_scene);
+    engine->AppendSceneAllocator("default", default_scene);
 
-    // engine->EngineInit();
-    // engine->EngineCycle();
-
-    auto test = default_scene();
-    delete test;
+    engine->EngineInit();
+    engine->EngineCycle();
 }
