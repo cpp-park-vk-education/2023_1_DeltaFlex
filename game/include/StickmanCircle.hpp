@@ -44,18 +44,13 @@ class StickmanCircle
 public:
     // friend PointMass;
     float m_radius;
-    PointMass *m_attachedPointMass;
+    std::shared_ptr<PointMass> m_attachedPointMass;
 
 public:
     StickmanCircle(float radius, Vector2<float> pmLocation)
         : m_radius(radius),
           m_attachedPointMass(new PointMass(pmLocation))
     {
-    }
-
-    ~StickmanCircle()
-    {
-        delete m_attachedPointMass;
     }
 
     void solveConstraints(float width, float height)
@@ -84,9 +79,8 @@ public:
         m_attachedPointMass->m_pos = {x, y};
     }
 
-    void attachToPointMass(PointMass *p)
+    void attachToPointMass(std::shared_ptr<PointMass> &p)
     {
-        delete m_attachedPointMass;
         m_attachedPointMass = p;
     }
 

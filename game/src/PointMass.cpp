@@ -10,14 +10,6 @@ PointMass::PointMass(Vector2<float> &pos, float mass, float damping)
     links.reserve(INITIAL_LINKS);
 }
 
-PointMass::~PointMass()
-{
-    for (auto &link : links)
-    {
-        // delete *link;
-    }
-}
-
 void PointMass::applyForce(Vector2<float> &force)
 {
     m_acceleration += force / m_mass;
@@ -75,7 +67,7 @@ void PointMass::solveConstraints(float width, float height)
 
 void PointMass::attachTo(PointMass &p, float restingDist, float stiffness, bool draw)
 {
-    links.push_back(new Link(*this, p, restingDist, stiffness, draw)); // TODO
+    links.emplace_back(std::make_shared<Link>(*this, p, restingDist, stiffness, draw)); // TODO
 }
 
 void PointMass::draw(const SDL_Color &color, DFScUpdParams_t &render_data)

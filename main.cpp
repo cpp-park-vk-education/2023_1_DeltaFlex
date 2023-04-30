@@ -76,7 +76,7 @@ public:
     {
         // std::cout << stickmans[0]<< std::endl;
         // comp->m_stickmanCircles[0]->m_attachedPointMass->m_pos.x += Input::GetAxis(AXIS_HORIZONTAL) * 10;
-        StickmanCircle *left = stickmans_physics[0]->m_stickmanCircles[0];
+        StickmanCircle *left = stickmans_physics[0]->m_stickmanCircles[0].get();
         left->m_attachedPointMass->m_pos.x += Input::GetAxis(AXIS_HORIZONTAL) * 10;
         left->m_attachedPointMass->m_pos.y += Input::GetAxis(AXIS_VERTICAL) * 10;
 
@@ -158,10 +158,15 @@ int main(void)
     // entity.addComponent()
     // int a = 4;
     // std::cout << (typeid(int) == typeid(a));
-    spdlog::set_level(spdlog::level::trace);
-    std::unique_ptr<DFEngine> engine = std::make_unique<DFEngine>();
-    engine->AppendSceneAllocator("default", default_scene);
 
-    engine->EngineInit();
-    engine->EngineCycle();
+    // spdlog::set_level(spdlog::level::trace);
+    // std::unique_ptr<DFEngine> engine = std::make_unique<DFEngine>();
+
+    // engine->AppendSceneAllocator("default", default_scene);
+
+    // engine->EngineInit();
+    // engine->EngineCycle();
+
+    auto test = default_scene();
+    delete test;
 }

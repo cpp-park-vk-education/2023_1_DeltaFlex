@@ -20,13 +20,11 @@ public:
     float m_mass;
     float m_damping;
 
-    std::vector<Link *> links;
+    std::vector<std::shared_ptr<Link>> links;
 
 public:
     PointMass(Vector2<float> &pos, float mass = 1, float damping = 20);
     PointMass(Vector2<float> &&pos, float mass = 1, float damping = 20): PointMass(pos, mass, damping) {}
-
-    ~PointMass();
 
     void applyForce(Vector2<float> &force);
 
