@@ -1,5 +1,7 @@
 #include <PointMass.hpp>
 #include <Link.hpp>
+#include <iostream>
+
 PointMass::PointMass(Vector2<float> &pos, float mass, float damping)
     : m_pos(pos),
     m_oldPos(pos),
@@ -68,6 +70,11 @@ void PointMass::solveConstraints(float width, float height)
 void PointMass::attachTo(PointMass &p, float restingDist, float stiffness, bool draw)
 {
     links.emplace_back(std::make_shared<Link>(*this, p, restingDist, stiffness, draw)); // TODO
+}
+
+PointMass &PointMass::getLinkPoint()
+{
+    return links[0]->m_p2;
 }
 
 void PointMass::draw(const SDL_Color &color, DFScUpdParams_t &render_data)

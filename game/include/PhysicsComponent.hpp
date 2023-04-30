@@ -6,6 +6,7 @@
 #include <vector>
 #include <iostream>
 #include <memory>
+#include <math.h>
 constexpr int WIDTH = 1280;
 constexpr int HEIGHT = 720;
 
@@ -154,4 +155,34 @@ public:
     // {
 
     // }
+
+    void Move(int limb, double angle)
+    {
+        if (limb == 1)
+            return;
+        
+        angle = angle * (M_PI / 180);
+
+        float x = m_pointMasses[limb]->m_pos.x;
+        float y = m_pointMasses[limb]->m_pos.y;
+
+        PointMass &point_c = m_pointMasses[limb]->getLinkPoint();
+
+        float x_c = point_c.m_pos.x;
+        float y_c = point_c.m_pos.y;
+
+        m_pointMasses[limb]->m_pos.x = cos(angle) * (x - x_c) - sin(angle) * (y - y_c) + x_c;
+        m_pointMasses[limb]->m_pos.y = sin(angle) * (x - x_c) + cos(angle) * (y - y_c) + y_c;
+    }
+
+    void MoveAll(std::vector<double> angles)
+    {
+        int i = 0;
+        for (auto angle: angles)
+        {
+            Move(i, angle);
+            i++;
+        }
+        
+    }
 };

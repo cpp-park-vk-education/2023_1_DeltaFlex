@@ -43,7 +43,7 @@ void Link::draw(const SDL_Color &color, DFScUpdParams_t &render_data)
         thickLineRGBA(renderer,
             m_p1.m_pos.x, m_p1.m_pos.y,
             m_p2.m_pos.x, m_p2.m_pos.y,
-            2, color.r, color.g, color.g, color.a);
+            1, color.r, color.g, color.g, color.a);
             // std::cout << m_p1.m_pos.x << "\n";
             // SDL_RenderDrawLineF(
             //     renderer,

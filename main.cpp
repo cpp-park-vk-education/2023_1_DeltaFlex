@@ -33,7 +33,7 @@ public:
     void RestartStickman()
     {
         // std::cout << "Nigger\n";
-        Vector2<float> align(0, 475.873 - 20);
+        Vector2<float> align(0, 475.873 - 100);
         // std::cout << my_stickman->m_stickmanCircles.size();
         my_stickman->m_pointMasses[0]->m_pos = align + Vector2<float>(619.665, 23.703);
         my_stickman->m_pointMasses[1]->m_pos = align + Vector2<float>(619.665, 43.6235);
@@ -53,91 +53,86 @@ public:
         }
     }
 };
-class TestAbober: public DFComponent
+
+class StickmanAI: public DFComponent
 {
 private:
-    // DFTransform *transform;
-    std::vector<StickmanPhysicsComponent *> stickmans_physics;
-    std::vector<StickmanRestarter *> stickmans_restarters;
+    StickmanPhysicsComponent *my_stickman;
 
-public:
-    void Start()
-    {
-        stickmans_physics.reserve(10);
-        stickmans_restarters.reserve(10);
-        for (size_t i = 0; i < 1; ++i)
-        {
-            stickmans_physics[i] = DFEntity::Find("stickman_" + std::to_string(i))->getComponent<StickmanPhysicsComponent>();
-            stickmans_restarters[i] = DFEntity::Find("stickman_" + std::to_string(i))->getComponent<StickmanRestarter>();
-        }
-    }
-
-    void Update()
-    {
-        // std::cout << stickmans[0]<< std::endl;
-        // comp->m_stickmanCircles[0]->m_attachedPointMass->m_pos.x += Input::GetAxis(AXIS_HORIZONTAL) * 10;
-        StickmanCircle *left = stickmans_physics[0]->m_stickmanCircles[0].get();
-        left->m_attachedPointMass->m_pos.x += Input::GetAxis(AXIS_HORIZONTAL) * 10;
-        left->m_attachedPointMass->m_pos.y += Input::GetAxis(AXIS_VERTICAL) * 10;
-
-        // stickmans_restarters[0]->RestartStickman();
-
-        // left = comp2->m_stickmanCircles[0];
-        // left->m_attachedPointMass->m_pos.x += Input::GetAxis(AXIS_HORIZONTAL) * 10;
-        // left->m_attachedPointMass->m_pos.y += Input::GetAxis(AXIS_VERTICAL) * 10;
-
-        // auto &right = comp->m_pointMasses[50-1];
-        // right->m_pos.x = Input::GetMouseX();
-        // right->m_pos.y = Input::GetMouseY();
-    }
-};
-
-
-class TestLine: public DFComponent
-{
-private:
-    DFTransform *transform;
-
-public:
     void onInit(DFEntity &gameObject)
     {
-        transform = &gameObject.transform;
+        my_stickman = gameObject.getComponent<StickmanPhysicsComponent>();
     }
 
     void Update()
     {
-        transform->position.x += Input::GetAxis(AXIS_HORIZONTAL);
-    }
-
-    void Draw(DFScUpdParams_t &render_data)
-    {
-        auto *renderer = render_data.renderer.get();
-        SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
-        SDL_RenderDrawLineF(renderer, transform->position.x, transform->position.y, 100, 100);
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+        my_stickman->MoveAll({1,1,1,1,1,1,1,1,1,1,1});
+        my_stickman->m_pointMasses[0]->m_pos.y -= 2.7;
     }
 };
+
+// class TestAbober: public DFComponent
+// {
+// private:
+//     // DFTransform *transform;
+//     std::vector<StickmanPhysicsComponent *> stickmans_physics;
+//     std::vector<StickmanRestarter *> stickmans_restarters;
+
+// public:
+//     void Start()
+//     {
+//         stickmans_physics.reserve(10);
+//         stickmans_restarters.reserve(10);
+//         for (size_t i = 0; i < 1; ++i)
+//         {
+//             stickmans_physics[i] = DFEntity::Find("stickman_" + std::to_string(i))->getComponent<StickmanPhysicsComponent>();
+//             stickmans_restarters[i] = DFEntity::Find("stickman_" + std::to_string(i))->getComponent<StickmanRestarter>();
+//         }
+//     }
+
+//     void Update()
+//     {
+//         // std::cout << stickmans[0]<< std::endl;
+//         // comp->m_stickmanCircles[0]->m_attachedPointMass->m_pos.x += Input::GetAxis(AXIS_HORIZONTAL) * 10;
+//         StickmanCircle *left = stickmans_physics[0]->m_stickmanCircles[0].get();
+//         left->m_attachedPointMass->m_pos.x += Input::GetAxis(AXIS_HORIZONTAL) * 10;
+//         left->m_attachedPointMass->m_pos.y += Input::GetAxis(AXIS_VERTICAL) * 10;
+
+//         // stickmans_restarters[0]->RestartStickman();
+
+//         // left = comp2->m_stickmanCircles[0];
+//         // left->m_attachedPointMass->m_pos.x += Input::GetAxis(AXIS_HORIZONTAL) * 10;
+//         // left->m_attachedPointMass->m_pos.y += Input::GetAxis(AXIS_VERTICAL) * 10;
+
+//         // auto &right = comp->m_pointMasses[50-1];
+//         // right->m_pos.x = Input::GetMouseX();
+//         // right->m_pos.y = Input::GetMouseY();
+//     }
+// };
+
 
 DFScene *default_scene(void)
 {
     DFWorldScene *sc = new DFWorldScene();
 
-
+    for (int i = 0; i < 1; i++)
     {
-        DFEntity &stickman = sc->addNewObject("stickman_0");
+        DFEntity &stickman = sc->addNewObject("stickman_" + std::to_string(i));
         stickman.addComponent(new StickmanPhysicsComponent());
         stickman.addComponent(new StickmanRestarter());
-        stickman.transform.position.x = 50;
-        stickman.transform.position.y = 50;
+        stickman.addComponent(new StickmanAI());
+        // stickman.transform.position.x = 50;
+        // stickman.transform.position.y = 50;
         stickman.onInit();
+        stickman.getComponent<StickmanRestarter>()->RestartStickman();
         // std::cout << "after construction" << &stickman;
     }
 
-    {
-        DFEntity &stickman = sc->addNewObject("controller");
-        stickman.addComponent(new TestAbober());
-        stickman.onInit();
-    }
+    // {
+    //     DFEntity &stickman = sc->addNewObject("controller");
+    //     stickman.addComponent(new TestAbober());
+    //     stickman.onInit();
+    // }
 
     // DFEntity &stickman1 = sc->addNewObject();
     // stickman1.addComponent(new StickmanPhysicsComponent());

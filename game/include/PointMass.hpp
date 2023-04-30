@@ -36,4 +36,6 @@ public:
     void attachTo(PointMass &p, float restingDist, float stiffness, bool draw = true);
 
     void draw(const SDL_Color &color, DFScUpdParams_t &render_data);
+    PointMass &getLinkPoint();
+
 };
