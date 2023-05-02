@@ -1,4 +1,5 @@
 build
 .vscode
 .cache
-.
+mentis_bellum/*
+test.cpp

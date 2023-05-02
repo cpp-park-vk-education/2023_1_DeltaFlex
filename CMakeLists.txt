@@ -14,6 +14,21 @@ add_subdirectory(game)
 
 add_executable(app.exe ./main.cpp)
 
+# set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+# set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ../mentis_bellum/lib)
+# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY mentis_bellum/)
+set_target_properties(app.exe PROPERTIES 
+    RUNTIME_OUTPUT_DIRECTORY "../mentis_bellum/"
+)
+
+set_target_properties(deltacore PROPERTIES 
+    LIBRARY_OUTPUT_DIRECTORY "../../../mentis_bellum/lib/"
+)
+
+set_target_properties(game PROPERTIES 
+    LIBRARY_OUTPUT_DIRECTORY "../../mentis_bellum/lib/"
+)
+
 target_link_libraries(app.exe game)
 target_link_libraries(app.exe deltacore)
 target_link_libraries(app.exe spdlog::spdlog)
