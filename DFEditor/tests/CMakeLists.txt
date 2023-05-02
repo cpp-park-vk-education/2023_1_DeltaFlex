@@ -7,7 +7,8 @@ set(CMAKE_AUTOMOC ON)
 
 enable_testing(true)
 
-add_executable(testing ../src/DFEAssetViewer.cpp test_DFEAssetViewer.cpp)
+file(GLOB DFEDITOR_HEADERS ../include/DFEAssetViewer.hpp)
+add_executable(testing ../src/DFEAssetViewer.cpp test_DFEAssetViewer.cpp ${DFEDITOR_HEADERS})
 
 target_include_directories(testing PUBLIC ../include)
 target_link_libraries(testing PUBLIC Qt::Widgets Qt::Test)
