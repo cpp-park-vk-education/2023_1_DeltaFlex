@@ -10,7 +10,7 @@
 class DFEExpandingWidget : public QWidget
 {
 public:
-    explicit DFEExpandingWidget(const QString &title = "", const int animationDuration = 100, QWidget *parent = nullptr);
+    DFEExpandingWidget(const QString &title = "", const int animationDuration = 100, QWidget *parent = nullptr);
     ~DFEExpandingWidget();
     void setContentLayout(QLayout *contentLayout);
 

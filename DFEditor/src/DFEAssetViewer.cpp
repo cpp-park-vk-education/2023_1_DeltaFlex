@@ -8,7 +8,7 @@ DFEAssetViewer::DFEAssetViewer(QWidget *parent)
     setFrameShape(QFrame::NoFrame);
     setViewMode(QListView::IconMode);
 
-    mp_model->setFilter(QDir::QDir::AllEntries);
+    mp_model->setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
     mp_model->setRootPath("");
     setModel(mp_model);
     
@@ -18,7 +18,7 @@ DFEAssetViewer::DFEAssetViewer(QWidget *parent)
     setMovement(QListView::Static);
     setGridSize(QSize(100, 100));
     setResizeMode(QListView::Adjust);
-    // setLayoutMode(QListView::Batched);
+
     setUniformItemSizes(true);
     setWrapping(true);
     setWordWrap(true);
@@ -28,8 +28,6 @@ DFEAssetViewer::DFEAssetViewer(QWidget *parent)
 
 void DFEAssetViewer::UpdateView(const QString &dir)
 {
-    qDebug() << dir;
-
     if (QFileInfo(dir).isDir())
         setRootIndex(mp_model->index(dir));
 }
