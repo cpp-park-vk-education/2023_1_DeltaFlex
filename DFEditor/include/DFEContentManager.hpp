@@ -21,10 +21,10 @@ public slots:
     void OpenDirectory();
     void UpdateAssetViewer(const QModelIndex &index);
 
-private:
+protected:
     void UpdateViews(const QString &dir);
 
-private:
+protected:
     DFEProjectExplorer *mp_projectExplorer;
     DFEAssetViewer *mp_assetViewer;
 

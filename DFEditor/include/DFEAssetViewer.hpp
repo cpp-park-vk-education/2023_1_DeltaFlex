@@ -12,6 +12,6 @@ public:
     void UpdateView(const QString &dir);
     QString GetDirByIndex(const QModelIndex &index);
 
-private:
+protected:
     QFileSystemModel *mp_model;
 };

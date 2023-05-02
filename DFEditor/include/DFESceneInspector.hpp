@@ -14,6 +14,6 @@ public:
     DFESceneInspector &operator=(DFESceneInspector &&other)         = delete;
     ~DFESceneInspector();
 
-private:
+protected:
     DFESceneView *mp_sceneView;
 };

@@ -20,11 +20,14 @@ private slots:
         QListView *tstView = new QListView();
         QFileSystemModel *tstModel = new QFileSystemModel();
 
-        tstModel->setRootPath("/home");
+        tstModel->setRootPath("");
         tstView->setModel(tstModel);
+        tstView->setRootIndex(tstModel->index("/home"));
 
         viewer->UpdateView("/home");
-        QCOMPARE(viewer->rootIndex(), tstView->rootIndex());
+
+        QVERIFY2(viewer->rootIndex().isValid(), "Viewer root index is not valid");
+        QCOMPARE(viewer->GetDirByIndex(viewer->rootIndex()), tstModel->filePath(tstView->rootIndex()));
 
         delete viewer;
         delete tstView;

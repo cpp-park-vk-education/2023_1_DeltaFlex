@@ -9,6 +9,6 @@ class DFEPropertiesPanel : public QDockWidget
 public:
     explicit DFEPropertiesPanel(QWidget *parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
     ~DFEPropertiesPanel();
-private:
+protected:
     DFEExpandingWidget *mp_test;
 };

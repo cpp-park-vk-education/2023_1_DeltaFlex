@@ -14,7 +14,7 @@ public:
     ~DFEExpandingWidget();
     void setContentLayout(QLayout *contentLayout);
 
-private:
+protected:
     QGridLayout *mp_mainLayout;
     QToolButton *mp_toggleButton;
     QFrame *mp_headerLine;

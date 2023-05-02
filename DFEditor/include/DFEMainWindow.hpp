@@ -23,7 +23,7 @@ public:
     DFEMainWindow &operator=(DFEMainWindow &&other)         = delete;
     ~DFEMainWindow();
 
-private:
+protected:
     Ui::DFEMainWindow  *ui;
     DFEContentManager  *mp_contentManager;
     DFESceneInspector  *mp_sceneInspector;
