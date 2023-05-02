@@ -61,7 +61,6 @@ public:
 
     template<typename T> T *getComponent()
     {
-            std::cout << m_components.size() << "\n";
         for (auto component : m_components)
         {
             if (typeid(*component) == typeid(T))

@@ -158,7 +158,7 @@ public:
 
     void Move(int limb, double angle)
     {
-        if (limb == 1)
+        if (limb == 1 || limb == 2)
             return;
         
         angle = angle * (M_PI / 180);
@@ -191,7 +191,7 @@ public:
         std::array<float, 22> coords;
         for (size_t i = 0; i < 11; i++)
         {
-            coords[i*2] = (m_pointMasses[i]->m_pos.x - m_pointMasses[0]->m_pos.x);
+            coords[i*2] = (m_pointMasses[i]->m_pos.x - m_pointMasses[1]->m_pos.x);
             coords[i*2+1] = m_pointMasses[i]->m_pos.y;
         }
         return coords;

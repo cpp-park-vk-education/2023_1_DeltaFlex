@@ -5,6 +5,7 @@
 #include <DFComponent.hpp>
 #include <spdlog/spdlog.h>
 #include <DFTransform.hpp>
+#include <iomanip>
 // #include <DFPosition.hpp>
 // #include <DFSprite.hpp>
 // #include <DFCollider.hpp>
@@ -34,9 +35,7 @@ public:
 
     void RestartStickman()
     {
-        // std::cout << "Nigger\n";
-        Vector2<float> align(0, 475.873 - 100);
-        // std::cout << my_stickman->m_stickmanCircles.size();
+        Vector2<float> align(-500, 475.873 - 20);
         my_stickman->m_pointMasses[0]->m_pos = align + Vector2<float>(619.665, 23.703);
         my_stickman->m_pointMasses[1]->m_pos = align + Vector2<float>(619.665, 43.6235);
         my_stickman->m_pointMasses[2]->m_pos = align + Vector2<float>(619.659, 137.391);
@@ -55,29 +54,6 @@ public:
         }
     }
 };
-
-// class Model():
-//     def __init__(self, stickman, active_func):
-//         self.stickman = stickman
-//         self.w1 = np.random.uniform(-1, 1, size=(INPUT_DIM, H_DIM))
-//         self.b1 = np.random.uniform(-1, 1, size=(H_DIM))
-//         self.w2 = np.random.uniform(-1, 1, size=(H_DIM, OUT_DIM))
-//         self.b2 = np.random.uniform(-1, 1, size=(OUT_DIM))
-//         self.active_func = active_func
-//         self.best_record = 0
-
-//     def set_stickman(self, stickman):
-//         self.best_record = 0
-//         self.stickman = stickman
-
-//     def predict(self):
-//         input_layout = stickman.get_coords()
-//         inv_layout1 = self.active_func(input_layout @ self.w1 + self.b1)
-//         result = self.active_func(inv_layout1 @ self.w2 + self.b2) / 10
-//         stickman.move_all(result)
-
-//     def update_record(self):
-//         self.best_record += 100/self.stickman.pointmasses[0].y
 
 template <typename T, size_t N, size_t M, size_t L>
 std::array<std::array<T, L>, N> matrixMultiplication(
@@ -185,11 +161,16 @@ std::array<T, N> matrixAddition(
 }
 
 const size_t INPUT_DIM = 22;
-const size_t H_DIM = 16;
+const size_t H_DIM1 = 20;
+const size_t H_DIM2 = 16;
 const size_t OUT_DIM = 11;
+
+class Evolution;
 
 class Model
 {
+
+friend Evolution;
 
 public:
     Model(StickmanPhysicsComponent *stickman): best_record(0), stickman(stickman)
@@ -199,18 +180,25 @@ public:
         std::uniform_real_distribution<> dis(-1.0, 1.0);
 
         for (int i = 0; i < INPUT_DIM; i++)
-            for (int j = 0; j < H_DIM; j++)
+            for (int j = 0; j < H_DIM1; j++)
                 w1[i][j] = dis(gen);
 
-        for (int i = 0; i < H_DIM; i++)
+        for (int i = 0; i < H_DIM1; i++)
             b1[i] = dis(gen);
 
-        for (int i = 0; i < H_DIM; i++)
-            for (int j = 0; j < OUT_DIM; j++)
+        for (int i = 0; i < H_DIM1; i++)
+            for (int j = 0; j < H_DIM2; j++)
                 w2[i][j] = dis(gen);
 
-        for (int i = 0; i < OUT_DIM; i++)
+        for (int i = 0; i < H_DIM2; i++)
             b2[i] = dis(gen);
+        
+        for (int i = 0; i < H_DIM2; i++)
+            for (int j = 0; j < OUT_DIM; j++)
+                w3[i][j] = dis(gen);
+
+        for (int i = 0; i < OUT_DIM; i++)
+            b3[i] = dis(gen);
 
     }
 
@@ -222,24 +210,208 @@ public:
         auto inv_layout3 = activeFunc(inv_layout2);
         auto inv_layout4 = matrixMultiplication(inv_layout3, w2);
         auto inv_layout5 = matrixAddition(inv_layout4, b2);
-        auto result = activeFunc(inv_layout5);
+        auto inv_layout6 = activeFunc(inv_layout5);
+        auto inv_layout7 = matrixMultiplication(inv_layout6, w3);
+        auto inv_layout8 = matrixAddition(inv_layout7, b3);
+        auto result = activeFunc(inv_layout8);
 
         stickman->MoveAll(result);
     }
 
+    void updateRecord()
+    {
+        best_record += 300/(stickman->m_pointMasses[0]->m_pos.x) - 100/(stickman->m_pointMasses[10]->m_pos.x) - 100/(stickman->m_pointMasses[9]->m_pos.x);
+    }
+
+    float getRecord() const
+    {
+        return best_record;
+    }
+
+    void resetRecord()
+    {
+        best_record = 0;
+    }
+
 private:
-    std::array<std::array<float, H_DIM>, INPUT_DIM> w1;
-    std::array<float, H_DIM> b1;
-    std::array<std::array<float, OUT_DIM>, H_DIM> w2;
-    std::array<float, OUT_DIM> b2;
+    std::array<std::array<float, H_DIM1>, INPUT_DIM> w1;
+    std::array<float, H_DIM1> b1;
+    std::array<std::array<float, H_DIM2>, H_DIM1> w2;
+    std::array<float, H_DIM2> b2;
+    std::array<std::array<float, OUT_DIM>, H_DIM2> w3;
+    std::array<float, OUT_DIM> b3;
 
     StickmanPhysicsComponent *stickman;
     float best_record;
 
 };
 
+class Evolution
+{
+
+private:
+    std::vector<Model*> models;
+    size_t best_count;
+
+    void Crossing_One(Model *child, Model *parent1, Model *parent2)
+    {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        // std::uniform_real_distribution<> dis(-10.0, 10.0);
+        std::uniform_int_distribution<> dist(0, 1000);
+
+        int i_c = dist(gen) % parent1->w1.size();
+        int j_c = dist(gen) % parent1->w1[0].size();
+        for (size_t i = 0; i < parent1->w1.size(); i++)
+        {
+            for (size_t j = 0; j < parent1->w1[0].size(); j++)
+            {
+                child->w1[i][j] = (i < i_c || j < j_c) ? parent1->w1[i][j] : parent2->w1[i][j];
+            }
+        }
+
+        i_c = dist(gen) % parent1->b1.size();
+        for (size_t i = 0; i < parent1->b1.size(); i++)
+        {
+            child->b1[i] = (i < i_c) ? parent1->b1[i] : parent2->b1[i];
+        }
+
+        i_c = dist(gen) % parent1->w2.size();
+        j_c = dist(gen) % parent1->w2[0].size();
+        for (size_t i = 0; i < parent1->w2.size(); i++)
+        {
+            for (size_t j = 0; j < parent1->w2[0].size(); j++)
+            {
+                child->w2[i][j] = (i < i_c || j < j_c) ? parent1->w2[i][j] : parent2->w2[i][j];
+            }
+        }
+
+        i_c = dist(gen) % parent1->b2.size();
+        for (size_t i = 0; i < parent1->b2.size(); i++)
+        {
+            child->b2[i] = (i < i_c) ? parent1->b2[i] : parent2->b2[i];
+        }
+
+        i_c = dist(gen) % parent1->w3.size();
+        j_c = dist(gen) % parent1->w3[0].size();
+        for (size_t i = 0; i < parent1->w3.size(); i++)
+        {
+            for (size_t j = 0; j < parent1->w3[0].size(); j++)
+            {
+                child->w3[i][j] = (i < i_c || j < j_c) ? parent1->w3[i][j] : parent2->w3[i][j];
+            }
+        }
+
+        i_c = dist(gen) % parent1->b3.size();
+        for (size_t i = 0; i < parent1->b3.size(); i++)
+        {
+            child->b3[i] = (i < i_c) ? parent1->b3[i] : parent2->b3[i];
+        }
+    }
+
+public:
+    Evolution(std::vector<Model*> models): models(models), best_count(0) {}
+
+    void Selection()
+    {
+        best_count = static_cast<size_t>(std::ceil(sqrt(models.size())));
+        std::sort(models.begin(), models.end(), [](Model* a, Model* b){
+            return a->best_record > b->best_record;
+        });
+    }
+
+    void Crossing()
+    {
+        size_t k = 0;
+        for (size_t i = 0; i < best_count - 1; i++)
+        {
+            for (size_t j = i + 1; j < best_count; j++)
+            {
+                Crossing_One(models[best_count+k], models[i], models[j]);
+                k++;
+                if (best_count + k >= models.size())
+                    return;
+                Crossing_One(models[best_count+k], models[j], models[i]);
+                k++;
+                if (best_count + k >= models.size())
+                    return;
+            }
+        }
+        
+    }
+
+    void Mutation()
+    {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dist(0, 10000);
+        std::uniform_real_distribution<> dis(-100.0, 100.0);
+        int count = dist(gen) % (models.size() - 10);
+        int procent = 50;
+
+        for (size_t i = 10; i < count; i++)
+        {
+            if (dist(gen) % 100 < procent)
+            {
+                int i_c = dist(gen) % models[i]->w1.size();
+                int j_c = dist(gen) % models[i]->w1[0].size();
+                models[i]->w1[i_c][j_c] = dis(gen);
+            }
+
+            if (dist(gen) % 100 <= procent)
+            {
+                int i_c = dist(gen) % models[i]->b1.size();
+                models[i]->b1[i_c] = dis(gen);
+            }
+
+            if (dist(gen) % 100 <= procent)
+            {
+                int i_c = dist(gen) % models[i]->w2.size();
+                int j_c = dist(gen) % models[i]->w2[0].size();
+                models[i]->w2[i_c][j_c] = dis(gen);
+            }
+
+            if (dist(gen) % 100 <= procent)
+            {
+                int i_c = dist(gen) % models[i]->b2.size();
+                models[i]->b2[i_c] = dis(gen);
+            }
+
+            if (dist(gen) % 100 <= procent)
+            {
+                int i_c = dist(gen) % models[i]->w3.size();
+                int j_c = dist(gen) % models[i]->w3[0].size();
+                models[i]->w3[i_c][j_c] = dis(gen);
+            }
+
+            if (dist(gen) % 100 <= procent)
+            {
+                int i_c = dist(gen) % models[i]->b3.size();
+                models[i]->b3[i_c] = dis(gen);
+            }
+        }
+        
+    }
+
+    std::vector<Model*> getModels(int k)
+    {
+        std::vector<Model*> models_k;
+        for (size_t i = 0; i < k; i++)
+        {
+            models_k.push_back(models[i]);
+        }
+        return models_k;
+    }
+
+};
+
+class EraComponent;
+
 class StickmanAI: public DFComponent
 {
+
+friend EraComponent;
+
 private:
     StickmanPhysicsComponent *my_stickman;
     Model *model;
@@ -247,7 +419,6 @@ private:
 public:
     void onInit(DFEntity &gameObject)
     {
-        DFEngine::setWindowTitle("I HATE NEGATIVE, BE MORE POSITIVE");
         my_stickman = gameObject.getComponent<StickmanPhysicsComponent>();
         model = new Model(my_stickman);
     }
@@ -255,6 +426,7 @@ public:
     void Update()
     {
         model->predict();
+        model->updateRecord();
     }
 };
 
@@ -297,23 +469,86 @@ public:
 //     }
 // };
 
+class EraComponent: public DFComponent
+{
+private:
+    std::vector<DFEntity*> stickmans;
+    int era;
+    int time;
+    int best;
+
+public:
+    EraComponent(std::vector<DFEntity*> stickmans): stickmans(stickmans){}
+
+    void onInit(DFEntity &gameObject)
+    {
+        era = 1;
+        time = 0;
+        best = 0;
+        Restart();
+    }
+
+    void Restart()
+    {
+        for (size_t i = 0; i < stickmans.size(); i++)
+        {
+            stickmans[i]->getComponent<StickmanRestarter>()->RestartStickman();
+            stickmans[i]->getComponent<StickmanAI>()->model->resetRecord();
+        }
+    }
+
+    std::vector<Model*> GetModels()
+    {
+        std::vector<Model*> models;
+        for (size_t i = 0; i < stickmans.size(); i++)
+        {
+            models.push_back(stickmans[i]->getComponent<StickmanAI>()->model);
+        }
+        return models;
+    }
+
+    void Update()
+    {
+        time++;
+        if (time > 180)
+        {
+            Evolution evo(GetModels());
+            evo.Selection();
+            int current =  evo.getModels(1)[0]->getRecord();
+            if (current > best)
+                best = current;
+            DFEngine::setWindowTitle(std::to_string(era) +
+            " " + std::to_string(current) +
+            " " + std::to_string(best));
+            evo.Crossing();
+            evo.Mutation();
+            Restart();
+            time = 0;
+            era++;
+        }
+    }
+};
 
 DFScene *default_scene(void)
 {
     DFWorldScene *sc = new DFWorldScene();
-
-    for (int i = 0; i < 10; i++)
+    std::vector<DFEntity*> stickmans;
+    for (int i = 0; i < 100; i++)
     {
         DFEntity &stickman = sc->addNewObject("stickman_" + std::to_string(i));
         stickman.addComponent(new StickmanPhysicsComponent());
         stickman.addComponent(new StickmanRestarter());
         stickman.addComponent(new StickmanAI());
+        stickmans.push_back(&stickman);
         // stickman.transform.position.x = 50;
         // stickman.transform.position.y = 50;
         stickman.onInit();
-        stickman.getComponent<StickmanRestarter>()->RestartStickman();
         // std::cout << "after construction" << &stickman;
     }
+
+    DFEntity &era = sc->addNewObject("era");
+    era.addComponent(new EraComponent(stickmans));
+    era.onInit();
 
     // {
     //     DFEntity &stickman = sc->addNewObject("controller");
