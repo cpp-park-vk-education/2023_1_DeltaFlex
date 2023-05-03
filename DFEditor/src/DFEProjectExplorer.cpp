@@ -13,7 +13,6 @@ DFEProjectExplorer::DFEProjectExplorer(QWidget *parent)
     setHeaderHidden(true);
 
     mp_model->setRootPath("");
-    mp_model->setNameFilters(QStringList({".", ".."}));
     setModel(mp_model);
 
     setStyleSheet("QTreeView { font: 12px }");
@@ -25,7 +24,6 @@ DFEProjectExplorer::DFEProjectExplorer(QWidget *parent)
 
 void DFEProjectExplorer::UpdateView(const QString &dir)
 {
-    qDebug() << dir;
     setRootIndex(mp_model->index(dir));
 }
 

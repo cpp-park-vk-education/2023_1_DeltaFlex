@@ -1,5 +1,6 @@
-#include <DFEAssetViewer.hpp>
+#pragma once
 
+#include "DFEAssetViewer.hpp"
 #include <QObject>
 #include <QtTest>
 
@@ -33,8 +34,4 @@ private slots:
         delete tstView;
         delete tstModel;
     }
-};  
-
-QTEST_MAIN(test_DFEAssetViewer)
-
-#include "test_DFEAssetViewer.moc"
+};

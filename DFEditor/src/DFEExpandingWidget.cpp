@@ -6,7 +6,8 @@ DFEExpandingWidget::DFEExpandingWidget(const QString &title, const int animation
       mp_toggleButton(new QToolButton(this)),
       mp_contentArea(new QScrollArea(this)),
       mp_mainLayout(new QGridLayout(this)),
-      mp_headerLine(new QFrame(this))
+      mp_headerLine(new QFrame(this)),
+      m_animationDuration(animationDuration)
 {
     mp_toggleButton->setStyleSheet("QToolButton { border: none; }");
     mp_toggleButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
