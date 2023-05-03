@@ -5,6 +5,11 @@
 class TestDFEExpandingWidget : public DFEExpandingWidget
 {
 public:
+    TestDFEExpandingWidget(const QString &title = "", const int animationDuration = 100, QWidget *parent = nullptr)
+        : DFEExpandingWidget(title, animationDuration, parent)
+    {
+    }
+
     QGridLayout *GetMainLayout()
     {
         return mp_mainLayout;
