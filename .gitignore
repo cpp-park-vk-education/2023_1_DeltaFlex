@@ -1,10 +1,9 @@
 DFEditor/build**
-DFEditor/.vscode**
-DFEditor/CMakeFiles
-DFEditor/Makefile
-DFEditor/CMakeCache.txt
-DFEditor/cmake_install.cmake
-DFEditor/dfeditor
-DFEditor/dfeditor_autogen
+DFEditor/**/.vscode**
+DFEditor/**/CMakeFiles
+DFEditor/**/Makefile
+DFEditor/**/CMakeCache.txt
+DFEditor/**/*.cmake
+DFEditor/**/dfeditor*
 
 .vscode

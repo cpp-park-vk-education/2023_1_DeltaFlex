@@ -3,6 +3,7 @@
 #include <QWidget>
 #include <QDockWidget>
 #include "DFESceneView.hpp"
+#include "DFESceneObject.hpp"
 
 class DFESceneInspector : public QDockWidget
 {
