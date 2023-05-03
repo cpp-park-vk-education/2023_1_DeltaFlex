@@ -1,5 +1,5 @@
 DFEditor/**/build*
-DFEditor/**/.vscode
+DFEditor/**/.vscode/*
 DFEditor/**/CMakeFiles
 DFEditor/**/Makefile
 DFEditor/**/CMakeCache.txt
