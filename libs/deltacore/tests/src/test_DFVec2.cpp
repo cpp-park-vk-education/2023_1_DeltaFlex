@@ -70,3 +70,43 @@ TEST(Vector2Test, len_calc)
     auto res = a.length();
     EXPECT_EQ(res, 5);
 }
+
+TEST(VectorTest, add_to_this)
+{
+    float a = 12, b = 14;
+    float c = 14, d = 13;
+    Vector2<float> test(a, b);
+    test += {c, d};
+    EXPECT_EQ(test.x, a + c);
+    EXPECT_EQ(test.y, b + d);
+}
+
+TEST(VectorTest, mul_to_this)
+{
+    float a = 12, b = 14;
+    float c = 14, d = 13;
+    Vector2<float> test(a, b);
+    test *= {c, d};
+    EXPECT_EQ(test.x, a * c);
+    EXPECT_EQ(test.y, b * d);
+}
+
+TEST(VectorTest, div_to_this)
+{
+    float a = 12, b = 14;
+    float c = 14, d = 13;
+    Vector2<float> test(a, b);
+    test /= {c, d};
+    EXPECT_EQ(test.x, a / c);
+    EXPECT_EQ(test.y, b / d);
+}
+
+TEST(VectorTest, sub_to_this)
+{
+    float a = 12, b = 14;
+    float c = 14, d = 13;
+    Vector2<float> test(a, b);
+    test -= {c, d};
+    EXPECT_EQ(test.x, a - c);
+    EXPECT_EQ(test.y, b - d);
+}
