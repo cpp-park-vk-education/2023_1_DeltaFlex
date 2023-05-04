@@ -2,26 +2,26 @@
 
 // #include "DFESceneExporter.hpp"
 
-TEST(CollectData, test_CollectData)
+TEST(DFESceneExporterTest, test_CollectData)
 {
 }
 
-TEST(CollectData, test_nothingToCollect)
+TEST(DFESceneExporterTest, test_nothingToCollect)
 {
 }
 
-TEST(ConvertComponent, test_ConvertComponent)
+TEST(DFESceneExporterTest, test_ConvertComponent)
 {
 }
 
-TEST(ConvertComponent, test_nothingToConvert)
+TEST(DFESceneExporterTest, test_nothingToConvert)
 {
 }
 
-TEST(AssembleComponents, test_AssembleComponents)
+TEST(DFESceneExporterTest, test_AssembleComponents)
 {
 }
 
-TEST(ConvertComponent, test_nothingToAssemble)
+TEST(DFESceneExporterTest, test_nothingToAssemble)
 {
 }
