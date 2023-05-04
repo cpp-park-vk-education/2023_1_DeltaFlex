@@ -61,4 +61,45 @@ private slots:
 
         delete scene_tree;
     }
+
+    void testMakeHierarchyThreeChilds()
+    {
+        DFESceneInspectorTree *scene_tree = new DFESceneInspectorTree();
+
+        scene_tree->AddObject("Item");
+        scene_tree->AddChildObject("Item", "Item child 1");
+        scene_tree->AddChildObject("Item", "Item child 2");
+        scene_tree->AddChildObject("Item", "Item child 3");
+
+        QCOMPARE(scene_tree->SearchObjectRec("Item")->text(), "Item");
+        QCOMPARE(scene_tree->SearchObjectRec("Item child 1")->text(), "Item child 1");
+        QCOMPARE(scene_tree->SearchObjectRec("Item child 2")->text(), "Item child 2");
+        QCOMPARE(scene_tree->SearchObjectRec("Item child 3")->text(), "Item child 3");
+
+        QCOMPARE(scene_tree->SearchObjectRec("Item")->parent(), nullptr);
+        QCOMPARE(scene_tree->SearchObjectRec("Item child 1")->parent(), scene_tree->SearchObjectRec("Item"));
+        QCOMPARE(scene_tree->SearchObjectRec("Item child 2")->parent(), scene_tree->SearchObjectRec("Item"));
+        QCOMPARE(scene_tree->SearchObjectRec("Item child 3")->parent(), scene_tree->SearchObjectRec("Item"));
+
+        delete scene_tree;
+    }
+
+    void testMakeHierarchyThreeLevels()
+    {
+        DFESceneInspectorTree *scene_tree = new DFESceneInspectorTree();
+
+        scene_tree->AddObject("Item");
+        scene_tree->AddChildObject("Item", "Item child");
+        scene_tree->AddChildObject("Item child", "Item child child");
+
+        QCOMPARE(scene_tree->SearchObjectRec("Item")->text(), "Item");
+        QCOMPARE(scene_tree->SearchObjectRec("Item child")->text(), "Item child");
+        QCOMPARE(scene_tree->SearchObjectRec("Item child child")->text(), "Item child child");
+
+        QCOMPARE(scene_tree->SearchObjectRec("Item")->parent(), nullptr);
+        QCOMPARE(scene_tree->SearchObjectRec("Item child")->parent(), scene_tree->SearchObjectRec("Item"));
+        QCOMPARE(scene_tree->SearchObjectRec("Item child child")->parent(), scene_tree->SearchObjectRec("Item child"));
+
+        delete scene_tree;
+    }
 };
