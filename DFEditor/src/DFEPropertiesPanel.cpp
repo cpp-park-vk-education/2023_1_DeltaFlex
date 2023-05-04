@@ -20,7 +20,7 @@ void DFEPropertiesPanel::ChangeProperties(std::shared_ptr<IDFESceneObject> &obje
 
     QVBoxLayout *lt = new QVBoxLayout();
     QLineEdit *line_edit = new QLineEdit();
-    line_edit->setText(mp_object->get_name());
+    line_edit->setText(mp_object->GetName());
     lt->addWidget(line_edit);
 
     m_properties.push_back(new DFEExpandingWidget("Name"));

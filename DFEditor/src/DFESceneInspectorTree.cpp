@@ -1,7 +1,6 @@
-#include "DFESceneView.hpp"
-#include <iostream>
+#include "DFESceneInspectorTree.hpp"
 
-DFESceneView::DFESceneView(QWidget *parent) : 
+DFESceneInspectorTree::DFESceneInspectorTree(QWidget *parent) : 
     QTreeView(parent),
     mp_model(new QStandardItemModel(this))
 {
@@ -14,7 +13,7 @@ DFESceneView::DFESceneView(QWidget *parent) :
     mp_model->setHorizontalHeaderItem(0, empty_label_item);
 }
 
-DFESV_ERR DFESceneView::AddObject(QString object_name)
+DFESV_ERR DFESceneInspectorTree::AddObject(const QString &object_name)
 {
     if (SearchObjectRec(object_name))
         return DFESV_ERR::ELEM_ALREADY_EXIST;
@@ -26,7 +25,7 @@ DFESV_ERR DFESceneView::AddObject(QString object_name)
     return DFESV_ERR::SUCCESS;
 }
 
-DFESV_ERR DFESceneView::AddChildObject(QString parent_object_name, QString child_object_name)
+DFESV_ERR DFESceneInspectorTree::AddChildObject(const QString &parent_object_name, const QString &child_object_name)
 {
     if (SearchObjectRec(child_object_name))
         return DFESV_ERR::ELEM_ALREADY_EXIST;
@@ -43,7 +42,7 @@ DFESV_ERR DFESceneView::AddChildObject(QString parent_object_name, QString child
     return DFESV_ERR::SUCCESS;
 }
 
-DFESV_ERR DFESceneView::RemoveObject(QString object_name)
+DFESV_ERR DFESceneInspectorTree::RemoveObject(const QString &object_name)
 {
     QStandardItem *search_item = SearchObject(object_name);
 
@@ -64,7 +63,7 @@ DFESV_ERR DFESceneView::RemoveObject(QString object_name)
     return DFESV_ERR::SUCCESS;
 }
 
-QStandardItem *DFESceneView::SearchObject(QString object_name)
+QStandardItem *DFESceneInspectorTree::SearchObject(const QString &object_name)
 {
     QList<QStandardItem *>items = mp_model->findItems(object_name);
 
@@ -74,7 +73,7 @@ QStandardItem *DFESceneView::SearchObject(QString object_name)
     return nullptr;
 }
 
-QStandardItem *DFESceneView::SearchObjectRec(QString object_name)
+QStandardItem *DFESceneInspectorTree::SearchObjectRec(const QString &object_name)
 {
     QList<QStandardItem *>items = mp_model->findItems(object_name, Qt::MatchRecursive);
 

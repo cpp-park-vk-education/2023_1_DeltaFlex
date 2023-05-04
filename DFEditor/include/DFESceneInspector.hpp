@@ -5,7 +5,7 @@
 #include <QStandardItemModel>
 #include <memory>
 #include <unordered_map>
-#include "DFESceneView.hpp"
+#include "DFESceneInspectorTree.hpp"
 #include "DFESceneObject.hpp"
 
 enum class DFESI_ERR
@@ -29,6 +29,6 @@ public slots:
 signals:
     void ChangedProperties(std::shared_ptr<IDFESceneObject> &object);
 protected:
-    DFESceneView *mp_sceneView;
+    DFESceneInspectorTree *mp_sceneTree;
     std::unordered_map<QString, std::shared_ptr<IDFESceneObject>> m_objects;
 };

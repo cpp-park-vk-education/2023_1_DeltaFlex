@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include <QString>
 
 enum class IDFESO_ERR
 {
@@ -13,9 +13,9 @@ class IDFESceneObject
 public:
     IDFESceneObject() = default;
 
-    QString get_name() { return m_name; }
+    QString GetName() { return m_name; }
     
-    virtual IDFESO_ERR rename(QString new_name)
+    virtual IDFESO_ERR Rename(QString new_name)
     {
         if (new_name.isEmpty())
             return IDFESO_ERR::ERR_EMPTY_NAME;
