@@ -1,12 +1,13 @@
 #include "Evolution.hpp"
 
+
 Evolution::Evolution(std::vector<Model*> models): models(models), best_count(0) {}
 
 void Evolution::Crossing_One(Model *child, Model *parent1, Model *parent2)
 {
-    std::random_device rd;
-    std::mt19937 gen(rd());
+    // std::random_device rd;
     // std::uniform_real_distribution<> dis(-10.0, 10.0);
+    std::mt19937 gen(232);
     std::uniform_int_distribution<> dist(0, 1000);
 
     int i_c = dist(gen) % parent1->w1.size();
@@ -88,8 +89,9 @@ void Evolution::Crossing()
 
 void Evolution::Mutation()
 {
-    std::random_device rd;
-    std::mt19937 gen(rd());
+    // std::random_device rd;
+    // std::mt19937 gen(rd());
+    std::mt19937 gen(232);
     std::uniform_int_distribution<> dist(0, 10000);
     std::uniform_real_distribution<> dis(-100.0, 100.0);
     int count = dist(gen) % (models.size() - 10);
@@ -147,4 +149,10 @@ std::vector<Model*> Evolution::getModels(int k)
         models_k.push_back(models[i]);
     }
     return models_k;
+}
+
+
+size_t Evolution::getBestCount()
+{
+    return best_count;
 }

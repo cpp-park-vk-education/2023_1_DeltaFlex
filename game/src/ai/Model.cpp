@@ -1,9 +1,9 @@
 #include "Model.hpp"
 
+std::mt19937 gen(43);
+
 Model::Model(StickmanPhysicsComponent *stickman): best_record(0), stickman(stickman)
 {
-    std::random_device rd;
-    std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(-1.0, 1.0);
 
     for (int i = 0; i < INPUT_DIM; i++)
@@ -29,7 +29,7 @@ Model::Model(StickmanPhysicsComponent *stickman): best_record(0), stickman(stick
 
 }
 
-void Model::predict()
+std::array<float, OUT_DIM> Model::predict()
 {
     auto input_layout = stickman->GetCoords();
     auto inv_layout1 = matrixMultiplication(input_layout, w1);
@@ -42,7 +42,7 @@ void Model::predict()
     auto inv_layout8 = matrixAddition(inv_layout7, b3);
     auto result = activeFunc(inv_layout8);
 
-    stickman->MoveAll(result);
+    return result;
 }
 
 void Model::updateRecord()

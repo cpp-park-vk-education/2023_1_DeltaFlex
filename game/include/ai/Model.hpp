@@ -20,7 +20,7 @@ friend class Evolution;
 
 public:
     Model(StickmanPhysicsComponent *stickman);
-    void predict();
+    std::array<float, OUT_DIM> predict();
     void updateRecord();
     float getRecord() const;
     void resetRecord();

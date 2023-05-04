@@ -19,6 +19,7 @@ public:
     void Selection();
     void Crossing();
     void Mutation();
+    size_t getBestCount();
     std::vector<Model*> getModels(int k);
 
 };

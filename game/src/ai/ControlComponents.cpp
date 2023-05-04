@@ -42,7 +42,8 @@ void StickmanAI::onInit(DFEntity &gameObject)
 
 void StickmanAI::Update()
 {
-    model->predict();
+    auto result = model->predict();
+    my_stickman->MoveAll(result);
     model->updateRecord();
 }
 

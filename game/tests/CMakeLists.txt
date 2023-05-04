@@ -6,9 +6,8 @@ file(GLOB physics_test_srcs
 )
 
 file(GLOB ai_test_srcs
-    "src/test_ControlComponent.cpp",
-    "src/test_Evolution.cpp",
-    "src/test_Model.cpp"
+    "src/test_Model.cpp",
+    "src/test_Evolution.cpp"
 )
 
 add_executable(physics_test ${physics_test_srcs})
