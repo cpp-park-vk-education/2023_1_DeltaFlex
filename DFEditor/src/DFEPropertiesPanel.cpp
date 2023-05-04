@@ -3,28 +3,35 @@
 
 DFEPropertiesPanel::DFEPropertiesPanel(QWidget *parent, Qt::WindowFlags flags)
     : QDockWidget(parent),
-      mp_test(new DFEExpandingWidget("abober", 100, this))
+    mp_object()
 {
     setWindowTitle("Properties");
+}
+
+void DFEPropertiesPanel::ChangeProperties(std::shared_ptr<IDFESceneObject> &object)
+{
+    mp_object = object;
+
+    while (!m_properties.empty())
+    {
+        delete m_properties.back();
+        m_properties.pop_back();
+    }
 
     QVBoxLayout *lt = new QVBoxLayout();
-    qDebug() << "aboba";
-    QLineEdit *abober = new QLineEdit();
-    lt->addWidget(abober);
+    QLineEdit *line_edit = new QLineEdit();
+    line_edit->setText(mp_object->get_name());
+    lt->addWidget(line_edit);
 
-    mp_test->setContentLayout(lt);
+    m_properties.push_back(new DFEExpandingWidget("Name"));
+    m_properties.back()->setContentLayout(lt);
 
     QWidget *container = new QWidget();
     QVBoxLayout *contentLayout = new QVBoxLayout();
     contentLayout->setAlignment(Qt::AlignTop);
 
-    contentLayout->addWidget(mp_test);
+    contentLayout->addWidget(m_properties.back());
     container->setLayout(contentLayout);
 
     setWidget(container);
-}
-
-DFEPropertiesPanel::~DFEPropertiesPanel()
-{
-    delete mp_test;
 }

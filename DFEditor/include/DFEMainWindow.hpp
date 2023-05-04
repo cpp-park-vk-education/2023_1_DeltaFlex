@@ -22,7 +22,8 @@ public:
     DFEMainWindow &operator=(const DFEMainWindow &other)    = delete;
     DFEMainWindow &operator=(DFEMainWindow &&other)         = delete;
     ~DFEMainWindow();
-
+public slots:
+    void ChangePropertiesHandler(std::shared_ptr<IDFESceneObject> &object);
 protected:
     Ui::DFEMainWindow  *ui;
     DFEContentManager  *mp_contentManager;

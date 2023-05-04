@@ -13,11 +13,11 @@ class IDFESceneObject
 public:
     IDFESceneObject() = default;
 
-    std::string get_name() { return m_name; }
+    QString get_name() { return m_name; }
     
-    virtual IDFESO_ERR rename(std::string new_name)
+    virtual IDFESO_ERR rename(QString new_name)
     {
-        if (new_name.empty())
+        if (new_name.isEmpty())
             return IDFESO_ERR::ERR_EMPTY_NAME;
         
         m_name = new_name;
@@ -25,11 +25,11 @@ public:
         return IDFESO_ERR::SUCCESS;
     }
 protected:
-    std::string m_name;
+    QString m_name;
 };
 
 class MocSceneObject: public IDFESceneObject
 {
 public:
-    MocSceneObject(std::string name) { m_name = name; }
+    MocSceneObject(QString name) { m_name = name; }
 };
