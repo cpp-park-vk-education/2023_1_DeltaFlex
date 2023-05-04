@@ -5,6 +5,13 @@ set(CMAKE_CXX_STANDARD 17)
 add_compile_options("-fPIC")
 project(CringeEngine VERSION 0.1.0)
 
+option(BUILD_TESTS "build tests")
+if(BUILD_TESTS)
+  enable_testing()
+  find_package(GTest REQUIRED)
+endif()
+
+set(BUILD_TESTS ON)
 
 # FIND_PACKAGE(Boost COMPONENTS program_options REQUIRED)
 # INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )

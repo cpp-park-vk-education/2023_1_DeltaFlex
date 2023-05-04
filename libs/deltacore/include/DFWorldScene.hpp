@@ -2,9 +2,9 @@
 
 #include <DFScene.hpp>
 #include <DFEntity.hpp>
-
+#include <algorithm>
 #include <map>
-class DFWorldScene: public DFScene
+class DFWorldScene : public DFScene
 {
 private:
     friend DFEntity;
@@ -53,8 +53,18 @@ public:
         return to_ret;
     }
 
+    DFEntity *findEntity(std::string &&name)
+    {
+        return findEntity(name);
+    }
+
     DFEntity *findEntity(std::string &name)
     {
+        if(std::count_if(m_gameObjAliaces.begin(), m_gameObjAliaces.end(), [&](auto &x){return x.first == name;}) == 0)
+        {
+            return nullptr;
+        }
         return &m_gameObjects[m_gameObjAliaces[name]];
     }
+
 };

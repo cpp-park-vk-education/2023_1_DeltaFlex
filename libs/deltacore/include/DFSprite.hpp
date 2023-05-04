@@ -6,7 +6,7 @@
 #include <DFTransform.hpp>
 #include <DFScUpdParams.hpp>
 
-class DFSprite:public DFComponent
+class DFSprite: public DFComponent
 {
 private:
     SDL_Rect sprite_rect;

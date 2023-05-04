@@ -106,7 +106,7 @@ struct Vector2
 
     Vector2<T> operator/(const Vector2<T> &other)
     {
-        return Vector2<T>(x / other.x, y * other.y);
+        return Vector2<T>(x / other.x, y / other.y);
     }
 
     Vector2<T> &operator/=(const Vector2<T> &other)

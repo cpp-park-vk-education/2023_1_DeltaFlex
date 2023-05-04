@@ -56,7 +56,9 @@ public:
     void onInit()
     {
         for (auto component : m_components)
+        {
             component->onInit(*this);
+        }
     }
 
     template<typename T> T *getComponent()

@@ -15,24 +15,20 @@ public:
     }
 
     template <typename T>
-    T Deserialize()
+    void Deserialize(T &data)
     {
-        T data;
         m_file.read((char *)&data, sizeof(T));
-        return data;
     }
 };
 
 template<>
-std::string DFBinaryDeserializer::Deserialize()
+void DFBinaryDeserializer::Deserialize(std::string &data)
 {
-    std::string to_ret;
     char cur_char;
     m_file.read(&cur_char, sizeof(char));
     while (cur_char != '\0')
     {
-        to_ret += cur_char;
+        data += cur_char;
         m_file.read(&cur_char, sizeof(char));
     }
-    return to_ret;
 }
