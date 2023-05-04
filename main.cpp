@@ -11,49 +11,15 @@
 // #include <DFCollider.hpp>
 #include "PhysicsComponent.hpp"
 
+#include "ControlComponents.hpp"
+#include "Evolution.hpp"
+#include "MatrixActions.hpp"
+#include "Model.hpp"
+
 #include <SDL2/SDL.h>
 #include <string>
 #include <array>
 #include <random>
-
-// class TestAbober: public DFComponent
-// {
-// private:
-//     // DFTransform *transform;
-//     std::vector<StickmanPhysicsComponent *> stickmans_physics;
-//     std::vector<StickmanRestarter *> stickmans_restarters;
-
-// public:
-//     void Start()
-//     {
-//         stickmans_physics.reserve(10);
-//         stickmans_restarters.reserve(10);
-//         for (size_t i = 0; i < 1; ++i)
-//         {
-//             stickmans_physics[i] = DFEntity::Find("stickman_" + std::to_string(i))->getComponent<StickmanPhysicsComponent>();
-//             stickmans_restarters[i] = DFEntity::Find("stickman_" + std::to_string(i))->getComponent<StickmanRestarter>();
-//         }
-//     }
-
-//     void Update()
-//     {
-//         // std::cout << stickmans[0]<< std::endl;
-//         // comp->m_stickmanCircles[0]->m_attachedPointMass->m_pos.x += Input::GetAxis(AXIS_HORIZONTAL) * 10;
-//         StickmanCircle *left = stickmans_physics[0]->m_stickmanCircles[0].get();
-//         left->m_attachedPointMass->m_pos.x += Input::GetAxis(AXIS_HORIZONTAL) * 10;
-//         left->m_attachedPointMass->m_pos.y += Input::GetAxis(AXIS_VERTICAL) * 10;
-
-//         // stickmans_restarters[0]->RestartStickman();
-
-//         // left = comp2->m_stickmanCircles[0];
-//         // left->m_attachedPointMass->m_pos.x += Input::GetAxis(AXIS_HORIZONTAL) * 10;
-//         // left->m_attachedPointMass->m_pos.y += Input::GetAxis(AXIS_VERTICAL) * 10;
-
-//         // auto &right = comp->m_pointMasses[50-1];
-//         // right->m_pos.x = Input::GetMouseX();
-//         // right->m_pos.y = Input::GetMouseY();
-//     }
-// };
 
 DFScene *default_scene(void)
 {
