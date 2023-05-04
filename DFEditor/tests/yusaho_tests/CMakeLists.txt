@@ -1,2 +1,2 @@
 add_subdirectory(GUITests)
-# add_subdirectory(GoogleTests)
+add_subdirectory(GoogleTests)
