@@ -1,7 +1,7 @@
 file(GLOB physics_test_srcs
-    "src/test_Link.cpp",
-    "src/test_PhysicsComponent.cpp",
-    "src/test_PointMass.cpp",
+    "src/test_Link.cpp" ,
+    "src/test_PhysicsComponent.cpp" ,
+    "src/test_PointMass.cpp" ,
     "src/test_StickmanCircle.cpp"
 )
 
