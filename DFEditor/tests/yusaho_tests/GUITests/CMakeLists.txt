@@ -15,12 +15,14 @@ set(DFEDITOR_HEADERS
     ${ROOTPATH}/include/DFEAssetViewer.hpp
     ${ROOTPATH}/include/DFEExpandingWidget.hpp
     ${ROOTPATH}/include/DFEProjectExplorer.hpp
+    ${ROOTPATH}/include/DFEContentManager.hpp
 )
 
 set(DFEDITOR_SRCS 
     ${ROOTPATH}/src/DFEAssetViewer.cpp
     ${ROOTPATH}/src/DFEExpandingWidget.cpp
     ${ROOTPATH}/src/DFEProjectExplorer.cpp
+    ${ROOTPATH}/src/DFEContentManager.cpp
 )
 
 file(GLOB DFEDITOR_TESTS tests/*)

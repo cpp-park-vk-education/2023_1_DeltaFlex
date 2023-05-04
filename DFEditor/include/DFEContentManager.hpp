@@ -27,6 +27,4 @@ protected:
 protected:
     DFEProjectExplorer *mp_projectExplorer;
     DFEAssetViewer *mp_assetViewer;
-
-    QString *mp_currentDirectory;
 };

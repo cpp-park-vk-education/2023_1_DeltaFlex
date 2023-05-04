@@ -7,8 +7,7 @@
 DFEContentManager::DFEContentManager(QWidget *parent, Qt::WindowFlags flags)
     : QDockWidget(parent, flags),
       mp_assetViewer(new DFEAssetViewer()),
-      mp_projectExplorer(new DFEProjectExplorer()),
-      mp_currentDirectory(new QString())
+      mp_projectExplorer(new DFEProjectExplorer())
 {
     QSplitter *splitter = new QSplitter(Qt::Horizontal, this);
     splitter->addWidget(mp_projectExplorer);
@@ -30,7 +29,6 @@ DFEContentManager::~DFEContentManager()
 {
     delete mp_assetViewer;
     delete mp_projectExplorer;
-    delete mp_currentDirectory;
 }
 
 void DFEContentManager::UpdateViews(const QString &dir)
@@ -48,9 +46,7 @@ void DFEContentManager::OpenDirectory()
         QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks
     );
 
-    *mp_currentDirectory = dir;
-
-    UpdateViews(*mp_currentDirectory);
+    UpdateViews(dir);
 }
 
 void DFEContentManager::UpdateAssetViewer(const QModelIndex &index)
