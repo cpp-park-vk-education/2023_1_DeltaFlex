@@ -53,11 +53,11 @@ private slots:
         scene_tree->AddObject("Item");
         scene_tree->AddChildObject("Item", "Item child");
 
-        QCOMPARE(scene_tree->SearchObject("Item")->text(), "Item");
-        QCOMPARE(scene_tree->SearchObject("Item child")->text(), "Item child");
+        QCOMPARE(scene_tree->SearchObjectRec("Item")->text(), "Item");
+        QCOMPARE(scene_tree->SearchObjectRec("Item child")->text(), "Item child");
 
         QCOMPARE(scene_tree->SearchObjectRec("Item")->parent(), nullptr);
-        QCOMPARE(scene_tree->SearchObjectRec("ItemChild")->parent(), scene_tree->SearchObjectRec("Item"));
+        QCOMPARE(scene_tree->SearchObjectRec("Item child")->parent(), scene_tree->SearchObjectRec("Item"));
 
         delete scene_tree;
     }
