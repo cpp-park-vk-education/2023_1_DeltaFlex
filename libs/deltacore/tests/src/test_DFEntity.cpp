@@ -44,20 +44,9 @@ public:
     int &update_counter;
     TestComponentWithCounter(int &a, int &b, int &c) : init_counter(a), start_counter(b), update_counter(c) {}
 
-    void onInit(DFEntity &gameObject)
-    {
-        ++init_counter;
-    }
-
-    void Start()
-    {
-        ++start_counter;
-    }
-
-    void Update()
-    {
-        ++update_counter;
-    }
+    void onInit(DFEntity &gameObject) { ++init_counter; }
+    void Start() { ++start_counter; }
+    void Update() { ++update_counter; }
 };
 
 TEST(DFEntityTest, init_components)
