@@ -5,13 +5,20 @@ set(CMAKE_CXX_STANDARD 17)
 add_compile_options("-fPIC")
 project(CringeEngine VERSION 0.1.0)
 
+set(BUILD_TESTS ON)
+
 option(BUILD_TESTS "build tests")
 if(BUILD_TESTS)
-  enable_testing()
-  find_package(GTest REQUIRED)
+    include(FetchContent)
+    FetchContent_Declare(
+      GTest
+      GIT_REPOSITORY https://github.com/google/googletest.git
+      GIT_TAG        release-1.11.0
+      )
+      FetchContent_MakeAvailable(GTest)
+      enable_testing()
 endif()
 
-set(BUILD_TESTS ON)
 
 # FIND_PACKAGE(Boost COMPONENTS program_options REQUIRED)
 # INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
@@ -35,7 +42,7 @@ set_target_properties(deltacore PROPERTIES
 set_target_properties(game PROPERTIES 
     LIBRARY_OUTPUT_DIRECTORY "../../mentis_bellum/lib/"
 )
-
+# include(FetchContent)
 target_link_libraries(app.exe game)
 target_link_libraries(app.exe deltacore)
 target_link_libraries(app.exe spdlog::spdlog)
