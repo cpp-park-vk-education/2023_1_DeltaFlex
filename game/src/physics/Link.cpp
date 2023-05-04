@@ -10,6 +10,12 @@ Link::Link(PointMass &pm1, PointMass &pm2, float restingDist, float stiffness, b
 {
 }
 
+float Link::length() const
+{
+    Vector2<float> delta = m_p1.m_pos - m_p2.m_pos;
+    return delta.length();
+}
+
 void Link::solve()
 {
     Vector2<float> delta = m_p1.m_pos - m_p2.m_pos;

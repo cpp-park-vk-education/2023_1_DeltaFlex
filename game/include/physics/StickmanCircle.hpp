@@ -20,6 +20,9 @@ public:
 
     void solveConstraints(float width, float height)
     {
+        if (!m_attachedPointMass)
+            throw std::runtime_error("Attached mass not specified");
+            
         float x = m_attachedPointMass->m_pos.x;
         float y = m_attachedPointMass->m_pos.y;
 
