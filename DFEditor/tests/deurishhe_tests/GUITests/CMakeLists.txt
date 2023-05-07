@@ -9,14 +9,16 @@ set(CMAKE_AUTOMOC ON)
 
 enable_testing(true)
 
-set(ROOTPATH ../../..)
+set(ROOTPATH ../../../)
 
 set(DFEDITOR_HEADERS 
     ${ROOTPATH}/include/DFESceneInspectorTree.hpp
+    ${ROOTPATH}/include/DFESceneInspector.hpp
 )
 
 set(DFEDITOR_SRCS 
     ${ROOTPATH}/src/DFESceneInspectorTree.cpp
+    ${ROOTPATH}/src/DFESceneInspector.cpp
 )
 
 file(GLOB DFEDITOR_TESTS tests/*)
@@ -24,7 +26,7 @@ file(GLOB DFEDITOR_TESTS tests/*)
 add_executable(deurishhe_gui_testing
     ${DFEDITOR_HEADERS} 
     ${DFEDITOR_SRCS} 
-    ${DFEDITOR_TESTS} 
+    ${DFEDITOR_TESTS}
     main.cpp
 )
 
