@@ -13,7 +13,7 @@ class IDFESceneObject
 public:
     IDFESceneObject() = default;
 
-    QString GetName() { return m_name; }
+    QString GetName() const { return m_name; }
     
     virtual IDFESO_ERR Rename(QString new_name)
     {
@@ -32,4 +32,13 @@ class MocSceneObject: public IDFESceneObject
 {
 public:
     MocSceneObject(QString name) { m_name = name; }
+};
+
+template<>
+struct std::hash<IDFESceneObject>
+{
+    std::size_t operator()(const IDFESceneObject *&object)
+    {
+        return std::hash<std::string>{}(object->GetName().toStdString());
+    }
 };

@@ -8,6 +8,7 @@
 DFEMainWindow::DFEMainWindow(QWidget *parent) 
     : QMainWindow(parent),
       ui(new Ui::DFEMainWindow),
+      // mp_viewport(new DFEViewport()),
       mp_contentManager(new DFEContentManager()),
       mp_sceneInspector(new DFESceneInspector()),
       mp_propertiesPanel(new DFEPropertiesPanel())
@@ -62,6 +63,7 @@ DFEMainWindow::DFEMainWindow(QWidget *parent)
 DFEMainWindow::~DFEMainWindow()
 {
     delete ui;
+    // delete mp_viewport;
     delete mp_contentManager;
     delete mp_sceneInspector;
     delete mp_propertiesPanel;
