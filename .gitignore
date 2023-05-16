@@ -1,0 +1,6 @@
+build
+.vscode
+.cache
+mentis_bellum/*
+!mentis_bellum/settings.ini
+test.cpp
