@@ -1,0 +1,2 @@
+add_subdirectory(yusaho_tests)
+add_subdirectory(deurishhe_tests)
