@@ -1,3 +1,4 @@
+#include <DFSceneLoader.hpp>
 #include <DFInputSystem.hpp>
 #include <DFScene.hpp>
 #include <DFWorldScene.hpp>
@@ -6,6 +7,7 @@
 #include <spdlog/spdlog.h>
 #include <DFTransform.hpp>
 #include <iomanip>
+#include <SDL2/SDL_ttf.h>
 // #include <DFPosition.hpp>
 // #include <DFSprite.hpp>
 // #include <DFCollider.hpp>
@@ -20,6 +22,7 @@
 #include <string>
 #include <array>
 #include <random>
+#include <MainMenuBack.hpp>
 
 DFScene *default_scene(void)
 {
@@ -57,21 +60,22 @@ DFScene *default_scene(void)
     // stickman.addComponent(new PlayerControl());
     return sc;
 }
+DFScene *menu_scene(void)
+{
+    DFSceneLoader example("./scenes/test.scene");
+    return example.Load();
+}
 
 int main(void)
 {
-    // DFEntity entity;
-    // entity.addComponent(new DFSprite("./gears.png", entity.transform));
-    // entity.addComponent(new DFCollider(entity.transform.position, Vector2<float>(12, 12), 1));
-    // std::cout << entity.getComponent<DFCollider>() << std::endl;
-    // entity.addComponent()
-    // int a = 4;
-    // std::cout << (typeid(int) == typeid(a));
-
+    TTF_Init();
     spdlog::set_level(spdlog::level::trace);
+    // std::cout << __TIMESTAMP__ << std::endl;
+
     std::unique_ptr<DFEngine> engine = std::make_unique<DFEngine>();
 
-    engine->AppendSceneAllocator("default", default_scene);
+    engine->AppendSceneAllocator("default", menu_scene);
+    engine->AppendSceneAllocator("game", default_scene);
 
     engine->EngineInit();
     engine->EngineCycle();
