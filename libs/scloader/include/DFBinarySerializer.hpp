@@ -14,15 +14,21 @@ public:
     }
 
     template <typename T>
-    void Serialize(T data)
+    void Serialize(T &data)
     {
         m_file.write((char *)&data, sizeof(T));
     }
 
+    template <typename T>
+    DFBinarySerializer &operator<<(T &data)
+    {
+        Serialize(data);
+        return *this;
+    }
 };
 
 template<>
-void DFBinarySerializer::Serialize<std::string>(std::string data)
+void DFBinarySerializer::Serialize<std::string>(std::string &data)
 {
     m_file.write(data.c_str(), data.size() * sizeof(char));
     char zero = 0;

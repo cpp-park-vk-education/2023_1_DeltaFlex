@@ -8,14 +8,16 @@ struct DFMusicFile
 {
     std::unique_ptr<Mix_Music, void(*)(Mix_Music *)> mix_music_inner;
 
-    DFMusicFile(const char *resoursePath): mix_music_inner(Mix_LoadMUS(resoursePath), Mix_FreeMusic) {}
+    DFMusicFile(const char *resoursePath) : mix_music_inner(Mix_LoadMUS(resoursePath), Mix_FreeMusic) {}
+    DFMusicFile() : mix_music_inner(NULL, Mix_FreeMusic) {}
 };
 
 struct DFAudioFile
 {
     std::unique_ptr<Mix_Chunk, void(*)(Mix_Chunk *)> mix_audio_inner;
 
-    DFAudioFile(const char *resoursePath): mix_audio_inner(Mix_LoadWAV(resoursePath), Mix_FreeChunk) {}
+    DFAudioFile(const char *resoursePath) : mix_audio_inner(Mix_LoadWAV(resoursePath), Mix_FreeChunk) {}
+    DFAudioFile(): mix_audio_inner(NULL, Mix_FreeChunk) {}
 };
 
 class DFAudioManager
@@ -31,6 +33,6 @@ public:
         Mix_CloseAudio();
     }
 
-    static void PlayMusic(DFMusicFile &music, int loops=0) { Mix_PlayMusic(music.mix_music_inner.get(), loops); }
-    static void PlayAudio(DFAudioFile &audio, int loops=0) { Mix_PlayChannel(-1, audio.mix_audio_inner.get(), loops); }
+    static void PlayMusic(DFMusicFile &music, int loops = 0) { Mix_PlayMusic(music.mix_music_inner.get(), loops); }
+    static void PlayAudio(DFAudioFile &audio, int loops = 0) { Mix_PlayChannel(-1, audio.mix_audio_inner.get(), loops); }
 };

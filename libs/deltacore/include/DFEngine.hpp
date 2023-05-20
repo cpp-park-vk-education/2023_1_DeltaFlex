@@ -33,4 +33,5 @@ public:
     static DFScene *GetActiveScene(void) { return Instance->sceneManager->activeScene.get(); };
 
     static void setWindowTitle(std::string title) { SDL_SetWindowTitle(Instance->render_data.window.get(), title.c_str()); }
+    static void exitGame() { Instance->gameIsActive = false; }
 };

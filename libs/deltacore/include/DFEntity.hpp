@@ -27,7 +27,18 @@ public:
         m_components = std::exchange(other.m_components, { 0 });
     };
 
-    void onRenderTextures(DFScUpdParams_t &render_data) {};
+    void onRenderTextures(DFScUpdParams_t &render_data)
+    {
+        // std::cout << "initing nigga" << m_components.size() << "\n";
+        for (auto component : m_components)
+        {
+            // std::cout << (void *)component << " " << "\n";
+            // MainMenuBack *test = (MainMenuBack*)component;
+            // std::cout << test->img_path << "\n";
+            // std::cout << typeid(*component).name() << "\n";
+            component->onRenderTextures(render_data);
+        }
+    };
 
     void Update()
     {

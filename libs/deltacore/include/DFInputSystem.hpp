@@ -388,6 +388,14 @@ enum AxisCode
     AXIS_VERTICAL
 };
 
+enum MouseCode
+{
+    MOUSE_LEFT = 1,
+    MOUSE_MIDDLE,
+    MOUSE_RIGHT,
+    MOUSE_X1,
+    MOUSE_X2
+};
 
 class DFInputSystem
 {
@@ -424,6 +432,12 @@ public:
     static float GetAxisRaw(AxisCode axis);
 
     static bool GetMouseButtonDown() {return mouse_active != 0;}
+
+
+    static uint32_t GetMouseRaw(MouseCode code) { return mouse_active; }
+    static bool GetMouseButton(MouseCode code) {return (mouse_active >> code) & 1;}
+    static bool GetMouseButtonDown(MouseCode code) {return (mouse_down >> code) & 1;}
+    static bool GetMouseButtonUp(MouseCode code) {return (mouse_up >> code) & 1;}
 
     friend DFEngine;
 };

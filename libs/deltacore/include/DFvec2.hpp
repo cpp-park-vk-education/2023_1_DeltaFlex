@@ -5,8 +5,8 @@ template<typename T>
 struct Vector2
 {
     T x, y;
-    Vector2(): x(0), y(0) {}
-    Vector2(T x_, T y_): x(x_), y(y_) {}
+    Vector2() : x(0), y(0) {}
+    Vector2(T x_, T y_) : x(x_), y(y_) {}
 
     friend std::ostream &operator <<(std::ostream &os, const Vector2<T> &vec)
     {
@@ -123,6 +123,31 @@ struct Vector2
         y /= other.y;
 
         return *this;
+    }
+    // ---------------- сравнения -------------
+    bool operator<(const Vector2<T> &other)
+    {
+        return x < other.x && y < other.y;
+    }
+
+    bool operator>(const Vector2<T> &other)
+    {
+        return x > other.x && y > other.y;
+    }
+
+    bool operator<=(const Vector2<T> &other)
+    {
+        return x <= other.x && y <= other.y;
+    }
+
+    bool operator>=(const Vector2<T> &other)
+    {
+        return x >= other.x && y >= other.y;
+    }
+
+    bool operator==(const Vector2<T> &other)
+    {
+        return x == other.x && y == other.y;
     }
 
     float lengthSquared()

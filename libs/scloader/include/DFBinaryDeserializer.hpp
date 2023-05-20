@@ -19,6 +19,13 @@ public:
     {
         m_file.read((char *)&data, sizeof(T));
     }
+
+    template <typename T>
+    DFBinaryDeserializer &operator>>(T &data)
+    {
+        Deserialize(data);
+        return *this;
+    }
 };
 
 template<>
