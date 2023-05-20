@@ -2,9 +2,12 @@
 
 #include <array>
 #include "DFEntity.hpp"
+#include <cmath>
 
 void StickmanPhysicsComponent::onInit(DFEntity &gameObject)
 {
+    ai = gameObject.getComponent<StickmanAI>();
+
     Vector2<float> &pos = gameObject.transform.position;
 
     m_pointMasses.reserve(INITIAL_POINTMASSES);
@@ -15,10 +18,10 @@ void StickmanPhysicsComponent::onInit(DFEntity &gameObject)
     float headWidth = headLength * .75f;
 
     std::shared_ptr<PointMass> head = std::make_shared<PointMass>(pos + Vector2<float>(0, 20));
-    head->m_mass = 4;
+    head->m_mass = 2;
 
     std::shared_ptr<PointMass> shoulder = std::make_shared<PointMass>(pos + Vector2<float>(0, 0));
-    shoulder->m_mass = 26;
+    shoulder->m_mass = 2;
 
     head->attachTo(*shoulder, 5 / 4 * headLength, 1);
 
@@ -37,21 +40,21 @@ void StickmanPhysicsComponent::onInit(DFEntity &gameObject)
     handR->attachTo(*elbowR, headLength * 2, 1);
 
     std::shared_ptr<PointMass> pelvis = std::make_shared<PointMass>(pos + Vector2<float>(0, -40));
-    pelvis->m_mass = 15;
+    pelvis->m_mass = 2;
     pelvis->attachTo(*shoulder, headLength * 3.5, 0.8);
     pelvis->attachTo(*head, headLength * 4.f, 0.02, false);
 
     std::shared_ptr<PointMass> kneeL = std::make_shared<PointMass>(pos + Vector2<float>(-10, -40));
     std::shared_ptr<PointMass> kneeR = std::make_shared<PointMass>(pos + Vector2<float>(+10, -40));
-    kneeL->m_mass = 10;
-    kneeR->m_mass = 10;
+    kneeL->m_mass = 2;
+    kneeR->m_mass = 2;
     kneeL->attachTo(*pelvis, headLength * 2, 1);
     kneeR->attachTo(*pelvis, headLength * 2, 1);
 
     std::shared_ptr<PointMass> footL = std::make_shared<PointMass>(pos + Vector2<float>(10, 20));
     std::shared_ptr<PointMass> footR = std::make_shared<PointMass>(pos + Vector2<float>(10, 20));
-    footL->m_mass = 5;
-    footR->m_mass = 5;
+    footL->m_mass = 2;
+    footR->m_mass = 2;
     footL->attachTo(*kneeL, headLength * 2, 1);
     footR->attachTo(*kneeR, headLength * 2, 1);
 
@@ -113,6 +116,9 @@ void StickmanPhysicsComponent::Draw(DFScUpdParams_t &render_data)
     // auto *r = render_data.renderer.get();
     // SDL_RenderDrawLine(r, 0, 0, 100, 100);
     // std::cout << "MINI RYR PISHE)\n";
+    if (!ai->getActive())
+        return;
+
     for (auto &pm : m_pointMasses)
     {
         pm->draw(m_color, render_data);
@@ -137,7 +143,7 @@ void StickmanPhysicsComponent::addStickmanCircle(std::shared_ptr<StickmanCircle>
 
 void StickmanPhysicsComponent::Move(int limb, double angle)
 {
-    if (limb == 1 || limb == 2)
+    if (limb == 1)
         return;
 
     angle = angle * (M_PI / 180);
@@ -150,6 +156,17 @@ void StickmanPhysicsComponent::Move(int limb, double angle)
     float x_c = point_c.m_pos.x;
     float y_c = point_c.m_pos.y;
 
+    if (limb == 2)
+    {
+        limb = 1;
+        int tmp = x;
+        x = x_c;
+        x_c = tmp;
+        tmp = y;
+        y = y_c;
+        y_c = tmp;
+    }
+
     m_pointMasses[limb]->m_pos.x = cos(angle) * (x - x_c) - sin(angle) * (y - y_c) + x_c;
     m_pointMasses[limb]->m_pos.y = sin(angle) * (x - x_c) + cos(angle) * (y - y_c) + y_c;
 }
@@ -159,7 +176,7 @@ void StickmanPhysicsComponent::MoveAll(std::array<float, 11> angles)
     int i = 0;
     for (float angle : angles)
     {
-        Move(i, angle);
+        Move(i, angle/1.7);
         i++;
     }
 
@@ -171,7 +188,14 @@ std::array<float, 22> StickmanPhysicsComponent::GetCoords()
     for (size_t i = 0; i < 11; i++)
     {
         coords[i * 2] = (m_pointMasses[i]->m_pos.x - m_pointMasses[1]->m_pos.x);
-        coords[i * 2 + 1] = m_pointMasses[i]->m_pos.y;
+        coords[i * 2 + 1] = m_pointMasses[i]->m_pos.y - m_pointMasses[1]->m_pos.y;
     }
+
+    float min = *std::min(coords.begin(), coords.end());
+    float max = *std::max(coords.begin(), coords.end());
+
+    for (size_t i = 0; i < 22; i++)
+        coords[i] = (coords[i] - min) / (max - min);
+    
     return coords;
 }

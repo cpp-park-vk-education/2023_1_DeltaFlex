@@ -4,6 +4,9 @@
 #include "Evolution.hpp"
 #include "PhysicsComponent.hpp"
 
+class Model;
+class StickmanPhysicsComponent;
+
 class StickmanRestarter: public DFComponent
 {
 private:
@@ -11,17 +14,18 @@ private:
 
 public:
     void onInit(DFEntity &gameObject);
-    void Update();
     void RestartStickman();
 };
 
 class EraComponent: public DFComponent
 {
+
 private:
     std::vector<DFEntity*> stickmans;
     int era;
     int time;
     int best;
+    int multi;
 
 public:
     EraComponent(std::vector<DFEntity*> stickmans): stickmans(stickmans){}
@@ -43,4 +47,5 @@ private:
 public:
     void onInit(DFEntity &gameObject);
     void Update();
+    bool getActive();
 };

@@ -7,15 +7,9 @@ void StickmanRestarter::onInit(DFEntity &gameObject)
     my_stickman = gameObject.getComponent<StickmanPhysicsComponent>();
 }
 
-void StickmanRestarter::Update()
-{
-    if (Input::GetKeyDown(KEYCODE_R))
-        RestartStickman();
-}
-
 void StickmanRestarter::RestartStickman()
 {
-    Vector2<float> align(-500, 475.873 - 20);
+    Vector2<float> align(0, 475.873 - 20);
     my_stickman->m_pointMasses[0]->m_pos = align + Vector2<float>(619.665, 23.703);
     my_stickman->m_pointMasses[1]->m_pos = align + Vector2<float>(619.665, 43.6235);
     my_stickman->m_pointMasses[2]->m_pos = align + Vector2<float>(619.659, 137.391);
@@ -47,11 +41,17 @@ void StickmanAI::Update()
     model->updateRecord();
 }
 
+bool StickmanAI::getActive()
+{
+    return model->getActive();
+}
+
 void EraComponent::onInit(DFEntity &gameObject)
 {
     era = 1;
     time = 0;
     best = 0;
+    multi = 1;
     Restart();
 }
 
@@ -76,19 +76,41 @@ std::vector<Model*> EraComponent::GetModels()
 
 void EraComponent::Update()
 {
+    auto models = GetModels();
+    bool active = false;
+    for (auto &model: models)
+        if (model->getActive())
+        {
+            active = true;
+            break;
+        }
+    
+    
+    if (!active)
+        time = 3600;
+    
     time++;
-    if (time > 180)
+    if (time > 3600)
     {
-        Evolution evo(GetModels());
-        evo.Selection();
-        int current =  evo.getModels(1)[0]->getRecord();
+        auto models = GetModels();
+        int current = models[0]->getRecord();
+        for (size_t i = 0; i < models.size(); i++)
+            current = std::max(static_cast<int>(models[i]->getRecord()), current);
+        if (current > best || (current / static_cast<float>(best) > 0.4))
+        {
+            Evolution evo(models);
+            evo.Selection_Tournament(2, 5);
+            evo.Crossing();
+            evo.Mutation(10, 60);
+        }
         if (current > best)
             best = current;
+
+        std::cout << current << std::endl;
+
         DFEngine::setWindowTitle(std::to_string(era) +
         " " + std::to_string(current) +
         " " + std::to_string(best));
-        evo.Crossing();
-        evo.Mutation();
         Restart();
         time = 0;
         era++;
