@@ -3,4 +3,6 @@ build
 .cache
 mentis_bellum/*
 !mentis_bellum/settings.ini
+!mentis_bellum/resources
+!mentis_bellum/scenes
 test.cpp
