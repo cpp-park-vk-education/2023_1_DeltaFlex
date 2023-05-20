@@ -17,12 +17,12 @@ DFEContentManager::DFEContentManager(QWidget *parent, Qt::WindowFlags flags)
 
     setWindowTitle("Content Manager");
 
-    // connect(
-    //     mp_assetViewer, 
-    //     &QListView::doubleClicked, 
-    //     this, 
-    //     &DFEContentManager::UpdateAssetViewer
-    // );
+    connect(
+        mp_assetViewer, 
+        &QListView::doubleClicked, 
+        this, 
+        &DFEContentManager::UpdateAssetViewer
+    );
 
     connect(
         mp_projectExplorer,

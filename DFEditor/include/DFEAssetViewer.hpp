@@ -11,14 +11,15 @@ public:
 public:
     void UpdateView(const QString &dir);
     QString GetDirByIndex(const QModelIndex &index);
-    
+
 public slots:
-    // void CreateGenericFile();
+    void CreateFile();
     void CreateFolder();
 
 protected:
     void ContextMenuRequested(const QPoint &pos);
-    void handleFolderRenamed();
+    void HandleElementRenamed();
+    void HandleElementDeleted();
 
 protected:
     QFileSystemModel *mp_model;
