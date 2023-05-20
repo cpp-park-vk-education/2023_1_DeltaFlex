@@ -1,0 +1,8 @@
+/home/daria/Документы/2023_1_DeltaFlex/EditorQt/build-DFEditor-Desktop-Debug/CMakeFiles/DFEditor.dir
+/home/daria/Документы/2023_1_DeltaFlex/EditorQt/build-DFEditor-Desktop-Debug/CMakeFiles/edit_cache.dir
+/home/daria/Документы/2023_1_DeltaFlex/EditorQt/build-DFEditor-Desktop-Debug/CMakeFiles/rebuild_cache.dir
+/home/daria/Документы/2023_1_DeltaFlex/EditorQt/build-DFEditor-Desktop-Debug/CMakeFiles/list_install_components.dir
+/home/daria/Документы/2023_1_DeltaFlex/EditorQt/build-DFEditor-Desktop-Debug/CMakeFiles/install.dir
+/home/daria/Документы/2023_1_DeltaFlex/EditorQt/build-DFEditor-Desktop-Debug/CMakeFiles/install/local.dir
+/home/daria/Документы/2023_1_DeltaFlex/EditorQt/build-DFEditor-Desktop-Debug/CMakeFiles/install/strip.dir
+/home/daria/Документы/2023_1_DeltaFlex/EditorQt/build-DFEditor-Desktop-Debug/CMakeFiles/DFEditor_autogen.dir

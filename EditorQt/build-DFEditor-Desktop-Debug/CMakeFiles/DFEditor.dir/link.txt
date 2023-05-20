@@ -1,0 +1,1 @@
+/usr/bin/g++ -DQT_QML_DEBUG -g CMakeFiles/DFEditor.dir/DFEditor_autogen/mocs_compilation.cpp.o CMakeFiles/DFEditor.dir/main.cpp.o CMakeFiles/DFEditor.dir/dfemainwindow.cpp.o -o DFEditor  /usr/lib/libQt5Widgets.so.5.15.9 /usr/lib/libQt5Gui.so.5.15.9 /usr/lib/libQt5Core.so.5.15.9 

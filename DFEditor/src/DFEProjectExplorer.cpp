@@ -1,7 +1,9 @@
 #include "DFEProjectExplorer.hpp"
+
 #include <QFrame>
 #include <QIcon>
 #include <QDebug>
+#include <QErrorMessage>
 
 DFEProjectExplorer::DFEProjectExplorer(QWidget *parent)
     : QTreeView(parent),
@@ -14,6 +16,9 @@ DFEProjectExplorer::DFEProjectExplorer(QWidget *parent)
 
     mp_model->setRootPath("");
     setModel(mp_model);
+    
+    mp_model->setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
+    setRootIndex(mp_model->index("/"));
 
     setStyleSheet("QTreeView { font: 12px }");
 
@@ -24,7 +29,20 @@ DFEProjectExplorer::DFEProjectExplorer(QWidget *parent)
 
 void DFEProjectExplorer::UpdateView(const QString &dir)
 {
-    setRootIndex(mp_model->index(dir));
+    QDir directory(dir);
+    if (directory.exists() && directory.isReadable())
+    {
+        setRootIndex(mp_model->index(dir));
+    }
+    else
+    {
+        QErrorMessage *err_msgbox = new QErrorMessage();
+        QString msg = "Error accessing " + dir + ": permission denied";
+        err_msgbox->showMessage(msg);
+        err_msgbox->exec();
+        qDebug() << msg;
+        delete err_msgbox;
+    }
 }
 
 QString DFEProjectExplorer::GetDirByIndex(const QModelIndex &index)

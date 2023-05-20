@@ -17,11 +17,18 @@ DFEContentManager::DFEContentManager(QWidget *parent, Qt::WindowFlags flags)
 
     setWindowTitle("Content Manager");
 
+    // connect(
+    //     mp_assetViewer, 
+    //     &QListView::doubleClicked, 
+    //     this, 
+    //     &DFEContentManager::UpdateAssetViewer
+    // );
+
     connect(
-        mp_assetViewer, 
-        &QListView::doubleClicked, 
-        this, 
-        &DFEContentManager::UpdateAssetViewer
+        mp_projectExplorer,
+        &QTreeView::doubleClicked,
+        mp_assetViewer,
+        [&](const QModelIndex &index){ mp_assetViewer->UpdateView(mp_assetViewer->GetDirByIndex(index)); }
     );
 }
 
