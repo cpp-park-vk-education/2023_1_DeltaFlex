@@ -28,7 +28,7 @@ DFScene *default_scene(void)
 {
     DFWorldScene *sc = new DFWorldScene();
     std::vector<DFEntity*> stickmans;
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 200; i++)
     {
         DFEntity &stickman = sc->addNewObject("stickman_" + std::to_string(i));
         stickman.addComponent(new StickmanPhysicsComponent());

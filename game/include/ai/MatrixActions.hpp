@@ -2,6 +2,7 @@
 
 #include <array>
 #include <iostream>
+#include <math.h>
 
 template <typename T, size_t N, size_t M, size_t L>
 std::array<std::array<T, L>, N> matrixMultiplication(

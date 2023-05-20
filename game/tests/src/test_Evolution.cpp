@@ -23,7 +23,7 @@ TEST(EvolutionTest, test_selectionCountOne)
 
     Evolution evo(stickmans);
 
-    evo.Selection();
+    evo.Selection_Best();
     evo.getBestCount();
 
     EXPECT_EQ(evo.getBestCount(), 1);
@@ -47,7 +47,7 @@ TEST(EvolutionTest, test_selectionCountNotSquare)
 
     Evolution evo(stickmans);
 
-    evo.Selection();
+    evo.Selection_Best();
     evo.getBestCount();
 
     EXPECT_EQ(evo.getBestCount(), 7);
@@ -71,7 +71,7 @@ TEST(EvolutionTest, test_selectionCountSquare)
 
     Evolution evo(stickmans);
 
-    evo.Selection();
+    evo.Selection_Best();
     evo.getBestCount();
 
     EXPECT_EQ(evo.getBestCount(), 10);
@@ -98,7 +98,7 @@ TEST(EvolutionTest, test_selectionBest)
     }
 
     Evolution evo(stickmans);
-    evo.Selection();
+    evo.Selection_Best();
     auto res = evo.getModels(1)[0]->getRecord();
 
     EXPECT_NEAR(res, 0.835581, 1e-5);
@@ -125,7 +125,7 @@ TEST(EvolutionTest, test_crossingBest)
     }
 
     Evolution evo(stickmans);
-    evo.Selection();
+    evo.Selection_Best();
     auto models1 = evo.getModels(10);
     evo.Crossing();
     auto models2 = evo.getModels(10);
@@ -157,7 +157,7 @@ TEST(EvolutionTest, test_crossingAll)
     }
 
     Evolution evo(stickmans);
-    evo.Selection();
+    evo.Selection_Best();
     int k = evo.getBestCount();
     evo.Crossing();
     auto models = evo.getModels(k*k);

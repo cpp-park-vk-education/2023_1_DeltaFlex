@@ -7,6 +7,8 @@
 #include <iostream>
 #include <memory>
 #include <math.h>
+#include "ControlComponents.hpp"
+
 constexpr int WIDTH = 1280;
 constexpr int HEIGHT = 720;
 
@@ -14,9 +16,12 @@ constexpr float BODY_HEIGHT = 50;
 
 constexpr std::size_t INITIAL_POINTMASSES = 10;
 
+class StickmanAI;
+
 class StickmanPhysicsComponent : public DFComponent
 {
 public:
+    StickmanAI *ai;
     std::vector<std::shared_ptr<PointMass>> m_pointMasses;
     std::vector<std::shared_ptr<StickmanCircle>> m_stickmanCircles;
 
