@@ -38,27 +38,12 @@ void Link::draw(const SDL_Color &color, DFRenderSystem &render_system)
 {
     if (m_draw)
     {
-        SDL_Renderer *renderer = render_system.getRenderer();
-        // SDL_SetRenderDrawColor(
-        //     renderer,
-        //     color.r,
-        //     color.g,
-        //     color.b,
-        //     color.a
-        // );
-        thickLineRGBA(renderer,
-            m_p1.m_pos.x, m_p1.m_pos.y,
-            m_p2.m_pos.x, m_p2.m_pos.y,
-            1, color.r, color.g, color.g, color.a);
-            // std::cout << m_p1.m_pos.x << "\n";
-            // SDL_RenderDrawLineF(
-            //     renderer,
-            //     m_p1.m_pos.x,
-            //     m_p1.m_pos.y,
-            //     m_p2.m_pos.x,
-            //     m_p2.m_pos.y
-            // );
-
-        // SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        // render_system.SetColor(color.r, color.g, color.b, color.a);
+        render_system.SetColor(color);
+        render_system.RenderLine(m_p1.m_pos, m_p2.m_pos);
+        // thickLineRGBA(renderer,
+        //     m_p1.m_pos.x, m_p1.m_pos.y,
+        //     m_p2.m_pos.x, m_p2.m_pos.y,
+        //     1, color.r, color.g, color.g, color.a);
     }
 }

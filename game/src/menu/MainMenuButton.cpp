@@ -34,6 +34,10 @@ void MainMenuButton::Draw(DFRenderSystem &render_system)
         .w = (int)halign.x * 2,
         .h = (int)halign.y * 2
     };
+    // if(is_active)
+    // {
+    //     render_system.SetOrigin({-100, -100});
+    // }
     // SDL_RenderCopy(render_data.renderer.get(), m_tex, NULL, &pos);
     render_system.RenderTexture(m_tex, NULL, &pos);
 }

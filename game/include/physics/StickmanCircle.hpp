@@ -14,7 +14,7 @@ public:
 public:
     StickmanCircle(float radius, Vector2<float> pmLocation)
         : m_radius(radius),
-          m_attachedPointMass(new PointMass(pmLocation))
+        m_attachedPointMass(new PointMass(pmLocation))
     {
     }
 
@@ -22,7 +22,7 @@ public:
     {
         if (!m_attachedPointMass)
             throw std::runtime_error("Attached mass not specified");
-            
+
         float x = m_attachedPointMass->m_pos.x;
         float y = m_attachedPointMass->m_pos.y;
 
@@ -44,7 +44,7 @@ public:
             x = 2 * (width - m_radius) - x;
         }
 
-        m_attachedPointMass->m_pos = {x, y};
+        m_attachedPointMass->m_pos = { x, y };
     }
 
     void attachToPointMass(std::shared_ptr<PointMass> &p)
@@ -54,22 +54,21 @@ public:
 
     void draw(const SDL_Color &color, DFRenderSystem &render_system)
     {
-        SDL_Renderer *renderer = render_system.getRenderer();
-        SDL_SetRenderDrawColor(
-            renderer,
-            color.r,
-            color.g,
-            color.b,
-            color.a
-        );
-
-        DrawCircle(
-            renderer, 
+        // SDL_Renderer *renderer = render_system.getRenderer();
+        // SDL_SetRenderDrawColor(
+        //     renderer,
+        //     color.r,
+        //     color.g,
+        //     color.b,
+        //     color.a
+        // );
+        render_system.SetColor(color);
+        render_system.RenderCircle(
             m_attachedPointMass->m_pos.x,
             m_attachedPointMass->m_pos.y,
             m_radius
         );
-
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        render_system.SetColor(0, 0, 0);
+        // SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     }
 };

@@ -89,16 +89,8 @@ void PointMass::draw(const SDL_Color &color, DFRenderSystem &render_system)
     }
     else
     {
-        SDL_Renderer *renderer = render_system.getRenderer();
-        SDL_SetRenderDrawColor(
-            renderer,
-            color.r,
-            color.g,
-            color.b,
-            color.a
-        );
-
-        SDL_RenderDrawPointF(renderer, m_pos.x, m_pos.y);
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+        render_system.SetColor(color);
+        render_system.RenderPoint(m_pos);
+        render_system.SetColor(0, 0, 0);
     }
 }
