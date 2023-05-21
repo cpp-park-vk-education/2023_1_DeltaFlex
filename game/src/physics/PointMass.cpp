@@ -1,13 +1,16 @@
 #include <PointMass.hpp>
 #include <Link.hpp>
 #include <iostream>
+#include <utility>
 
 PointMass::PointMass(Vector2<float> &pos, float mass, float damping)
     : m_pos(pos),
     m_oldPos(pos),
     m_acceleration(),
     m_mass(mass),
-    m_damping(damping)
+    m_damping(damping),
+    m_pinned(false),
+    m_pinPos{}
 {
     links.reserve(INITIAL_LINKS);
 }
@@ -41,6 +44,18 @@ void PointMass::updatePhysics()
     m_acceleration = { 0, 0 };
 }
 
+void PointMass::pinTo(Vector2<float> &&pinPoint)
+{
+    m_pinned = true;
+    m_pinPos = std::exchange(pinPoint, nullptr);
+}
+
+void PointMass::pinTo(const Vector2<float> &pinPoint)
+{
+    m_pinned = true;
+    m_pinPos = pinPoint;
+}
+
 void PointMass::solveConstraints(float width, float height)
 {
     for (auto &link : links)
@@ -65,6 +80,11 @@ void PointMass::solveConstraints(float width, float height)
     {
         m_pos.x = 2 * (width - 1) - m_pos.x;
     }
+
+    if (m_pinned)
+    {
+        m_pos = m_pinPos;
+    }
 }
 
 void PointMass::attachTo(PointMass &p, float restingDist, float stiffness, bool draw)
@@ -77,28 +97,20 @@ PointMass &PointMass::getLinkPoint()
     return links[0]->m_p2;
 }
 
-void PointMass::draw(const SDL_Color &color, DFScUpdParams_t &render_data)
+void PointMass::draw(const SDL_Color &color, DFRenderSystem &render_system)
 {
     if (!links.empty())
     {
         // std::cout << "minigyg)\n";
         for (auto &link : links)
         {
-            link->draw(color, render_data);
+            link->draw(color, render_system);
         }
     }
     else
     {
-        SDL_Renderer *renderer = render_data.renderer.get();
-        SDL_SetRenderDrawColor(
-            renderer,
-            color.r,
-            color.g,
-            color.b,
-            color.a
-        );
-
-        SDL_RenderDrawPointF(renderer, m_pos.x, m_pos.y);
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+        render_system.SetColor(color);
+        render_system.RenderPoint(m_pos);
+        render_system.SetColor(0, 0, 0);
     }
 }

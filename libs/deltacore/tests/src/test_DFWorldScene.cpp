@@ -54,7 +54,7 @@ TEST(TestDFWorldScene, scene_start)
     obj4.addComponent(new TestComponentWithCounter(init_counter, start_counter, update_counter));
 
     DFScUpdParams_t render_data;
-    test.onSceneStart(render_data);
+    test.onSceneStart(render_data.render_system);
     EXPECT_EQ(init_counter, 0);
     EXPECT_EQ(start_counter, 4);
     EXPECT_EQ(update_counter, 0);
@@ -74,8 +74,8 @@ TEST(TestDFWorldScene, scene_update)
     obj4.addComponent(new TestComponentWithCounter(init_counter, start_counter, update_counter));
 
     DFScUpdParams_t render_data;
-    test.onSceneStart(render_data);
-    test.onHandleFrame(render_data);
+    test.onSceneStart(render_data.render_system);
+    test.onHandleFrame(render_data.render_system);
     EXPECT_EQ(init_counter, 0);
     EXPECT_EQ(start_counter, 4);
     EXPECT_EQ(update_counter, 4);

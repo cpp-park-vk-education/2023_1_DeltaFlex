@@ -5,4 +5,5 @@ mentis_bellum/*
 !mentis_bellum/settings.ini
 !mentis_bellum/resources
 !mentis_bellum/scenes
+experimental/*
 test.cpp

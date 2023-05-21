@@ -19,7 +19,7 @@ DFSceneManager::DFSceneManager():
 
 void DFSceneManager::initSceneManager(DFScUpdParams_t &render_data, const char *entrypoint)
 {
-    loadingScreenScene->onRenderTextures(render_data);
+    loadingScreenScene->onRenderTextures(render_data.render_system);
     SwitchScene(entrypoint);
 }
 
@@ -51,7 +51,7 @@ void DFSceneManager::SwitchScene(const char *scene_name)
 
 void DFSceneManager::handleLoadingScene(DFScUpdParams_t &render_data)
 {
-    loadingScreenScene->onHandleFrame(render_data);
+    loadingScreenScene->onHandleFrame(render_data.render_system);
     if (isReadyMutex.try_lock())
     {
         if (isReady)
@@ -66,17 +66,17 @@ void DFSceneManager::handleLoadingScene(DFScUpdParams_t &render_data)
 void DFSceneManager::handleFirstFrameAfterLoad(DFScUpdParams_t &render_data)
 {
     spdlog::debug("Rendering all textures of a new scene");
-    loadingScreenScene->onHandleFrame(render_data);
+    loadingScreenScene->onHandleFrame(render_data.render_system);
 
     activeScene = std::move(tmpLoaded);
 
-    activeScene->onRenderTextures(render_data);
-    activeScene->onSceneStart(render_data);
+    activeScene->onRenderTextures(render_data.render_system);
+    activeScene->onSceneStart(render_data.render_system);
 
     handleScene = std::bind(&DFSceneManager::handleGameScene, this, std::placeholders::_1);
 }
 
 void DFSceneManager::handleGameScene(DFScUpdParams_t &render_data)
 {
-    activeScene->onHandleFrame(render_data);
+    activeScene->onHandleFrame(render_data.render_system);
 }

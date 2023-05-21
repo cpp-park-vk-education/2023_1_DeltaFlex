@@ -26,14 +26,15 @@ public:
     std::vector<std::shared_ptr<StickmanCircle>> m_stickmanCircles;
 
 public:
-    SDL_Color m_color{.r = 0xFF, .g = 0xFF, .b = 0xFF, .a = 0xFF};
+    // SDL_Color m_color{.r = 0xFF, .g = 0xFF, .b = 0xFF, .a = 0xFF};
+    SDL_Color m_color{.r = 0x00, .g = 0x00, .b = 0x00, .a = 0xFF};
 
 public:
     void onInit(DFEntity &gameObject) override;
 
     void Update() override;
 
-    void Draw(DFScUpdParams_t &render_data) override;
+    void Draw(DFRenderSystem &render_system) override;
 
     void addStickmanCircle(std::shared_ptr<StickmanCircle> &c);
 

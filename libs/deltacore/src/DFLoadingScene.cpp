@@ -14,15 +14,15 @@ DFLoadingScene::DFLoadingScene()
     dst.h = 720;
 }
 
-void DFLoadingScene::onRenderTextures(DFScUpdParams_t &render_data)
+void DFLoadingScene::onRenderTextures(DFRenderSystem &render_system)
 {
     // texture = SDL_CreateTextureFromSurface(render_data.renderer.get(), surf);
 }
 
-void DFLoadingScene::onSceneStart(DFScUpdParams_t &render_data)
+void DFLoadingScene::onSceneStart(DFRenderSystem &render_system)
 {}
 
-void DFLoadingScene::onHandleFrame(DFScUpdParams_t &render_data)
+void DFLoadingScene::onHandleFrame(DFRenderSystem &render_system)
 {
     // SDL_RenderCopy(render_data.renderer.get(), texture, &src, &dst);
     // SDL_RenderCopy(render_data.renderer.get(), texture, NULL, &dst);

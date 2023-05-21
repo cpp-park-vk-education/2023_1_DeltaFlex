@@ -23,10 +23,14 @@
 #include <array>
 #include <random>
 #include <MainMenuBack.hpp>
+#include <BattleController.hpp>
 
 DFScene *default_scene(void)
 {
     DFWorldScene *sc = new DFWorldScene();
+    DFEntity &tmp = sc->addNewObject("BattleController");
+    tmp.addComponent(new BattleController());
+    tmp.onInit();
     std::vector<DFEntity*> stickmans;
     for (int i = 0; i < 200; i++)
     {
@@ -44,6 +48,7 @@ DFScene *default_scene(void)
     DFEntity &era = sc->addNewObject("era");
     era.addComponent(new EraComponent(stickmans));
     era.onInit();
+
 
     // {
     //     DFEntity &stickman = sc->addNewObject("controller");

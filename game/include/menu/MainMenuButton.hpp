@@ -17,13 +17,13 @@ public:
 
     void onInit(DFEntity &gameObject);
 
-    void onRenderTextures(DFScUpdParams_t &render_data);
+    void onRenderTextures(DFRenderSystem &render_system);
 
     void Start();
 
     void Update();
 
-    void Draw(DFScUpdParams_t &render_data);
+    void Draw(DFRenderSystem &render_system);
 
     virtual void onClick()
     {

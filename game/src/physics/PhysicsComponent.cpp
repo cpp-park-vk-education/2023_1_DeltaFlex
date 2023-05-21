@@ -111,7 +111,7 @@ void StickmanPhysicsComponent::Update()
     }
 }
 
-void StickmanPhysicsComponent::Draw(DFScUpdParams_t &render_data)
+void StickmanPhysicsComponent::Draw(DFRenderSystem &render_system)
 {
     // auto *r = render_data.renderer.get();
     // SDL_RenderDrawLine(r, 0, 0, 100, 100);
@@ -121,14 +121,15 @@ void StickmanPhysicsComponent::Draw(DFScUpdParams_t &render_data)
 
     for (auto &pm : m_pointMasses)
     {
-        pm->draw(m_color, render_data);
+        pm->draw(m_color, render_system);
     }
 
     for (auto &c : m_stickmanCircles)
     {
-        c->draw(m_color, render_data);
+        c->draw(m_color, render_system);
     }
-    SDL_SetRenderDrawColor(render_data.renderer.get(), 0, 0, 0, 255);
+    // SDL_SetRenderDrawColor(render_data.renderer.get(), 0, 0, 0, 255);
+    render_system.SetColor(0, 0, 0);
 }
 
 void StickmanPhysicsComponent::addStickmanCircle(std::shared_ptr<StickmanCircle> &c)

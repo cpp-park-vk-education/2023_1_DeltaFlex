@@ -15,7 +15,7 @@ private:
     SDL_Rect dst;
 public:
     DFLoadingScene();
-    void onRenderTextures(DFScUpdParams_t &render_data);
-    void onSceneStart(DFScUpdParams_t &render_data);
-    void onHandleFrame(DFScUpdParams_t &render_data);
+    void onRenderTextures(DFRenderSystem &render_system);
+    void onSceneStart(DFRenderSystem &render_system);
+    void onHandleFrame(DFRenderSystem &render_system);
 };
