@@ -35,6 +35,11 @@ DFESI_ERR DFESceneInspector::AddChildSceneObject(std::shared_ptr<IDFESceneObject
     return DFESI_ERR::SUCCESS;
 }
 
+bool DFESceneInspector::HasObject(const QString &object_name) const
+{
+    return static_cast<bool>(m_objects.count(object_name));
+}
+
 void DFESceneInspector::ChangePropertiesHandler(const QModelIndex &index)
 {
     emit ChangedProperties(m_objects[index.data().toString()]);

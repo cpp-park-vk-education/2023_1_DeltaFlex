@@ -24,6 +24,7 @@ public:
 
     DFESI_ERR AddSceneObject(std::shared_ptr<IDFESceneObject> &new_object);
     DFESI_ERR AddChildSceneObject(std::shared_ptr<IDFESceneObject> &parent_object, std::shared_ptr<IDFESceneObject> &child_object);
+    bool HasObject(const QString &object_name) const;
 public slots:
     void ChangePropertiesHandler(const QModelIndex &index);
 signals:
