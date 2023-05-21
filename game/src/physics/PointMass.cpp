@@ -1,13 +1,16 @@
 #include <PointMass.hpp>
 #include <Link.hpp>
 #include <iostream>
+#include <utility>
 
 PointMass::PointMass(Vector2<float> &pos, float mass, float damping)
     : m_pos(pos),
     m_oldPos(pos),
     m_acceleration(),
     m_mass(mass),
-    m_damping(damping)
+    m_damping(damping),
+    m_pinned(false),
+    m_pinPos{}
 {
     links.reserve(INITIAL_LINKS);
 }
@@ -41,6 +44,18 @@ void PointMass::updatePhysics()
     m_acceleration = { 0, 0 };
 }
 
+void PointMass::pinTo(Vector2<float> &&pinPoint)
+{
+    m_pinned = true;
+    m_pinPos = std::exchange(pinPoint, nullptr);
+}
+
+void PointMass::pinTo(const Vector2<float> &pinPoint)
+{
+    m_pinned = true;
+    m_pinPos = pinPoint;
+}
+
 void PointMass::solveConstraints(float width, float height)
 {
     for (auto &link : links)
@@ -64,6 +79,11 @@ void PointMass::solveConstraints(float width, float height)
     if (m_pos.x > width - 1)
     {
         m_pos.x = 2 * (width - 1) - m_pos.x;
+    }
+
+    if (m_pinned)
+    {
+        m_pos = m_pinPos;
     }
 }
 

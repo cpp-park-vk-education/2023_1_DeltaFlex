@@ -20,6 +20,9 @@ public:
     float m_mass;
     float m_damping;
 
+    bool m_pinned;
+    Vector2<float> m_pinPos;
+
     std::vector<std::shared_ptr<Link>> links;
 
 public:
@@ -32,6 +35,9 @@ public:
 
     void updatePhysics();
 
+    void pinTo(Vector2<float> &&pinPoint);
+    void pinTo(const Vector2<float> &pinPoint);
+    
     void solveConstraints(float width, float height);
     void attachTo(PointMass &p, float restingDist, float stiffness, bool draw = true);
 
