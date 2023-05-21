@@ -21,12 +21,14 @@ public:
     void onInit(DFEntity &gameObject)
     {
         menu_music = std::move(DFMusicFile("./resources/music/main-menu.mp3"));
-        game_ver_rect.x = 1000;
+        game_ver_rect.x = 700;
         game_ver_rect.y = 700;
     }
+    
     void onRenderTextures(DFRenderSystem &render_system)
     {
-        auto *fnt = TTF_OpenFont("./resources/fonts/sf-mono.otf", 15);
+        // ./resources/fonts/sf-mono.otf
+        auto *fnt = TTF_OpenFont("./resources/fonts/corruptor.clean-ldr-regular.ttf", 15);
         std::cout << TTF_GetError() << "\n";
         SDL_Color textColor = {255, 255, 255, 0};
         auto *surf = TTF_RenderText_Solid(fnt, "build: " __TIMESTAMP__, textColor);
