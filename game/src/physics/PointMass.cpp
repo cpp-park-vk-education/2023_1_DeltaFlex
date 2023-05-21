@@ -47,7 +47,7 @@ void PointMass::updatePhysics()
 void PointMass::pinTo(Vector2<float> &&pinPoint)
 {
     m_pinned = true;
-    m_pinPos = std::exchange(pinPoint, nullptr);
+    m_pinPos = std::exchange(pinPoint, {0,0});
 }
 
 void PointMass::pinTo(const Vector2<float> &pinPoint)

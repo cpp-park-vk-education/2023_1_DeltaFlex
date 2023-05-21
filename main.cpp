@@ -25,13 +25,16 @@
 #include <MainMenuBack.hpp>
 #include <BattleController.hpp>
 
+#include "game/include/options_volume/OptionsVolumeBack.hpp"
+#include "game/include/options_volume/OptionsVolumeButton.hpp"
+
 DFScene *default_scene(void)
 {
     DFWorldScene *sc = new DFWorldScene();
     DFEntity &tmp = sc->addNewObject("BattleController");
     tmp.addComponent(new BattleController());
     tmp.onInit();
-    std::vector<DFEntity*> stickmans;
+    std::vector<DFEntity *> stickmans;
     for (int i = 0; i < 200; i++)
     {
         DFEntity &stickman = sc->addNewObject("stickman_" + std::to_string(i));
@@ -49,7 +52,6 @@ DFScene *default_scene(void)
     era.addComponent(new EraComponent(stickmans));
     era.onInit();
 
-
     // {
     //     DFEntity &stickman = sc->addNewObject("controller");
     //     stickman.addComponent(new TestAbober());
@@ -65,10 +67,31 @@ DFScene *default_scene(void)
     // stickman.addComponent(new PlayerControl());
     return sc;
 }
+
 DFScene *menu_scene(void)
 {
     DFSceneLoader example("./scenes/test.scene");
     return example.Load();
+}
+
+DFScene *options_volume_control(void)
+{
+    DFWorldScene *sc = new DFWorldScene();
+    DFEntity &bg = sc->addNewObject("OptionsVolume");
+    bg.addComponent(new OptionsVolumeBack());
+    bg.onInit();
+
+    DFEntity &next_button = sc->addNewObject("OptionsButtonNext");
+    next_button.transform.position = {1280 - 255, 720 - 71};
+    
+    next_button.addComponent(new OptionsNextButton());
+    auto *tmp = next_button.getComponent<OptionsNextButton>();
+    tmp->img_path = "./resources/images/menu-next-button.png";
+    tmp->halign = {245 / 2, 61 / 2};
+
+    next_button.onInit();
+
+    return sc;
 }
 
 int main(void)
@@ -81,6 +104,7 @@ int main(void)
 
     engine->AppendSceneAllocator("default", menu_scene);
     engine->AppendSceneAllocator("game", default_scene);
+    engine->AppendSceneAllocator("options-volume", options_volume_control);
 
     engine->EngineInit();
     engine->EngineCycle();

@@ -15,7 +15,7 @@ class MainMenuOptions : public MainMenuButton
 public:
     void onClick()
     {
-
+        DFEngine::Instance->SwitchScene("options-volume");
     }
 };
 
