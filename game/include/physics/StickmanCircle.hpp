@@ -52,9 +52,9 @@ public:
         m_attachedPointMass = p;
     }
 
-    void draw(const SDL_Color &color, DFScUpdParams_t &render_data)
+    void draw(const SDL_Color &color, DFRenderSystem &render_system)
     {
-        SDL_Renderer *renderer = render_data.renderer.get();
+        SDL_Renderer *renderer = render_system.getRenderer();
         SDL_SetRenderDrawColor(
             renderer,
             color.r,

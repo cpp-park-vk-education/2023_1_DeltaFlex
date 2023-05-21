@@ -5,9 +5,10 @@ void MainMenuButton::onInit(DFEntity &gameObject)
     m_gameObjPos = &gameObject.transform.position;
 }
 
-void MainMenuButton::onRenderTextures(DFScUpdParams_t &render_data)
+void MainMenuButton::onRenderTextures(DFRenderSystem &render_system)
 {
-    m_tex = IMG_LoadTexture(render_data.renderer.get(), img_path.c_str());
+    // m_tex = IMG_LoadTexture(render_data.renderer.get(), img_path.c_str());
+    m_tex = render_system.CreateTextureFromFile(img_path);
 }
 
 void MainMenuButton::Start()
@@ -24,7 +25,7 @@ void MainMenuButton::Update()
     }
 }
 
-void MainMenuButton::Draw(DFScUpdParams_t &render_data)
+void MainMenuButton::Draw(DFRenderSystem &render_system)
 {
     SDL_Rect pos =
     {
@@ -33,7 +34,8 @@ void MainMenuButton::Draw(DFScUpdParams_t &render_data)
         .w = (int)halign.x * 2,
         .h = (int)halign.y * 2
     };
-    SDL_RenderCopy(render_data.renderer.get(), m_tex, NULL, &pos);
+    // SDL_RenderCopy(render_data.renderer.get(), m_tex, NULL, &pos);
+    render_system.RenderTexture(m_tex, NULL, &pos);
 }
 
 void MainMenuButton::CheckMouseBounds()

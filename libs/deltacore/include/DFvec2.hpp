@@ -13,7 +13,7 @@ struct Vector2
         return os << "[" << vec.x << ", " << vec.y << "]";
     }
 
-    Vector2<T> operator+(const Vector2<T> &other)
+    Vector2<T> operator+(const Vector2<T> &other) const
     {
         return Vector2<T>(x + other.x, y + other.y);
     }
@@ -34,7 +34,7 @@ struct Vector2
         return *this;
     }
 
-    Vector2<T> operator-(const Vector2<T> &other)
+    Vector2<T> operator-(const Vector2<T> &other) const
     {
         return Vector2<T>(x - other.x, y - other.y);
     }
@@ -56,7 +56,7 @@ struct Vector2
     }
 
     // --------------------- multiplication ---------------------
-    Vector2<T> operator*(T scalar)
+    Vector2<T> operator*(T scalar) const
     {
         return Vector2<T>(x * scalar, y * scalar);
     }
@@ -69,7 +69,7 @@ struct Vector2
         return *this;
     }
 
-    Vector2<T> operator*(const Vector2<T> &other)
+    Vector2<T> operator*(const Vector2<T> &other) const
     {
         return Vector2<T>(x * other.x, y * other.y);
     }

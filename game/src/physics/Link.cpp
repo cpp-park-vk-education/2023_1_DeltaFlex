@@ -34,11 +34,11 @@ void Link::solve()
     m_p2.m_pos -= delta * p2Scalar * difference;
 }
 
-void Link::draw(const SDL_Color &color, DFScUpdParams_t &render_data)
+void Link::draw(const SDL_Color &color, DFRenderSystem &render_system)
 {
     if (m_draw)
     {
-        SDL_Renderer *renderer = render_data.renderer.get();
+        SDL_Renderer *renderer = render_system.getRenderer();
         // SDL_SetRenderDrawColor(
         //     renderer,
         //     color.r,

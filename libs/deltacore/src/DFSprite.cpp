@@ -30,15 +30,17 @@ DFSprite::~DFSprite()
     SDL_FreeSurface(surface);
 }
 
-void DFSprite::onRenderTextures(DFScUpdParams_t &render_data)
+void DFSprite::onRenderTextures(DFRenderSystem &render_system)
 {
-    texture = SDL_CreateTextureFromSurface(render_data.renderer.get(), surface);
+    // texture = SDL_CreateTextureFromSurface(render_data.renderer.get(), surface);
+    texture = render_system.CreateTextureFromSurface(surface);
 }
 
-void DFSprite::Draw(DFScUpdParams_t &render_data)
+void DFSprite::Draw(DFRenderSystem &render_system)
 {
     sprite_rect.x = target_transform.position.x + x_offset;
     sprite_rect.y = target_transform.position.y + y_offset;
 
-    SDL_RenderCopy(render_data.renderer.get(), texture, NULL, &sprite_rect);
+    // SDL_RenderCopy(render_data.renderer.get(), texture, NULL, &sprite_rect);
+    render_system.RenderTexture(texture, NULL, &sprite_rect);
 }

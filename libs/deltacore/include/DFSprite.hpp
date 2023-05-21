@@ -24,6 +24,6 @@ public:
 
     int getHeight() { return sprite_rect.h; }
     int getWidth() { return sprite_rect.w; }
-    void onRenderTextures(DFScUpdParams_t &render_data);
-    void Draw(DFScUpdParams_t &render_data);
+    void onRenderTextures(DFRenderSystem &render_system);
+    void Draw(DFRenderSystem &render_system);
 };

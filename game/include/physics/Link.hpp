@@ -18,5 +18,5 @@ public:
     Link(PointMass &pm1, PointMass &pm2, float restingDist, float stiffness, bool draw = true);
     float length() const;
     void solve();
-    void draw(const SDL_Color &color, DFScUpdParams_t &render_data);
+    void draw(const SDL_Color &color, DFRenderSystem &render_system);
 };

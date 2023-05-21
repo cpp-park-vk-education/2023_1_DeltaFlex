@@ -95,14 +95,14 @@ void DFEngine::EngineInit(void)
         renderer_flags |= SDL_RENDERER_ACCELERATED;
     }
     spdlog::debug("render_flasgs={}", renderer_flags);
-    render_data.renderer.reset(SDL_CreateRenderer(render_data.window.get(), 0, renderer_flags));
-    if (render_data.renderer.get() == NULL)
+    render_data.render_system.setRenderer(SDL_CreateRenderer(render_data.window.get(), 0, renderer_flags));
+    if (render_data.render_system.getRenderer() == NULL)
     {
         spdlog::critical("Renderer could not be created!");
         spdlog::throw_spdlog_ex(SDL_GetError());
     }
     spdlog::info("Renderer created successfuly");
-    if (SDL_RenderSetLogicalSize(render_data.renderer.get(), video_params.logicalWidth, video_params.logicalHeight) != 0)
+    if (SDL_RenderSetLogicalSize(render_data.render_system.getRenderer(), video_params.logicalWidth, video_params.logicalHeight) != 0)
     {
         spdlog::error(SDL_GetError());
     }
@@ -128,9 +128,11 @@ void DFEngine::EngineCycle(void)
         DFInputSystem::InputSystemOnFrameStart();
         HandleEvents();
 
-        SDL_RenderClear(render_data.renderer.get());
+        // SDL_RenderClear(render_data.renderer.get());
+        render_data.render_system.Clear();
         sceneManager->handleScene(render_data);
-        SDL_RenderPresent(render_data.renderer.get());
+        render_data.render_system.Present();
+        // SDL_RenderPresent(render_data.renderer.get());
         Input::InputSystemOnFrameEnd();
 
         was_time = cur_time;

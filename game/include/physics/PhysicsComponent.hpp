@@ -33,7 +33,7 @@ public:
 
     void Update() override;
 
-    void Draw(DFScUpdParams_t &render_data) override;
+    void Draw(DFRenderSystem &render_system) override;
 
     void addStickmanCircle(std::shared_ptr<StickmanCircle> &c);
 

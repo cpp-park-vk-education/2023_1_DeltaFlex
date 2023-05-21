@@ -16,9 +16,9 @@ public:
     // DFComponent &operator=(DFComponent &&other) = delete;
 
     virtual void onInit(DFEntity &gameObject) {}
-    virtual void onRenderTextures(DFScUpdParams_t &render_data) {}
+    virtual void onRenderTextures(DFRenderSystem &render_system) {}
     virtual void Start() {}
     virtual void Update() {}
-    virtual void Draw(DFScUpdParams_t &render_data) {}
+    virtual void Draw(DFRenderSystem &render_system) {}
     virtual ~DFComponent() = default;
 };

@@ -16,15 +16,15 @@ public:
         m_gameObjects.reserve(300);
     }
 
-    void onRenderTextures(DFScUpdParams_t &render_data)
+    void onRenderTextures(DFRenderSystem &render_system)
     {
         for (auto &gameObject : m_gameObjects)
         {
-            gameObject.onRenderTextures(render_data);
+            gameObject.onRenderTextures(render_system);
         }
     }
 
-    void onSceneStart(DFScUpdParams_t &render_data)
+    void onSceneStart(DFRenderSystem &render_system)
     {
         for (auto &gameObject : m_gameObjects)
         {
@@ -32,7 +32,7 @@ public:
         }
     }
 
-    void onHandleFrame(DFScUpdParams_t &render_data)
+    void onHandleFrame(DFRenderSystem &render_system)
     {
         for (auto &gameObject : m_gameObjects)
         {
@@ -41,7 +41,7 @@ public:
 
         for (auto &gameObject : m_gameObjects)
         {
-            gameObject.Draw(render_data);
+            gameObject.Draw(render_system);
         }
     }
 

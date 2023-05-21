@@ -77,19 +77,19 @@ PointMass &PointMass::getLinkPoint()
     return links[0]->m_p2;
 }
 
-void PointMass::draw(const SDL_Color &color, DFScUpdParams_t &render_data)
+void PointMass::draw(const SDL_Color &color, DFRenderSystem &render_system)
 {
     if (!links.empty())
     {
         // std::cout << "minigyg)\n";
         for (auto &link : links)
         {
-            link->draw(color, render_data);
+            link->draw(color, render_system);
         }
     }
     else
     {
-        SDL_Renderer *renderer = render_data.renderer.get();
+        SDL_Renderer *renderer = render_system.getRenderer();
         SDL_SetRenderDrawColor(
             renderer,
             color.r,
