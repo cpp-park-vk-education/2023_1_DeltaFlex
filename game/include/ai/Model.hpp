@@ -3,6 +3,8 @@
 #include <array>
 #include <iostream>
 #include <random>
+#include <iostream>
+#include <fstream>
 
 #include "ControlComponents.hpp"
 #include "Evolution.hpp"
@@ -29,6 +31,7 @@ public:
     float getRecord() const;
     void resetRecord();
     bool getActive() const;
+    void save(int stage, int current);
 
 private:
     std::array<std::array<float, H_DIM1>, INPUT_DIM> w1;

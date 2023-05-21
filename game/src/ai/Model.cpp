@@ -61,12 +61,14 @@ std::array<float, OUT_DIM> Model::predict()
 
 void Model::updateRecord()
 {
-    if (stickman->m_pointMasses[0]->m_pos.y > 700)
+    if (stickman->m_pointMasses[0]->m_pos.y > 680)
         active = false;
     if (active)
-        best_record += 50 +
-        (stickman->m_pointMasses[10]->m_pos.y - stickman->m_pointMasses[2]->m_pos.y) +
-        (stickman->m_pointMasses[9]->m_pos.y - stickman->m_pointMasses[2]->m_pos.y);
+        best_record += 100 +
+        (stickman->m_pointMasses[2]->m_pos.y - stickman->m_pointMasses[0]->m_pos.y) +
+        (stickman->m_pointMasses[10]->m_pos.y - stickman->m_pointMasses[8]->m_pos.y) +
+        (stickman->m_pointMasses[9]->m_pos.y - stickman->m_pointMasses[7]->m_pos.y) +
+        (stickman->m_pointMasses[0]->m_pos.x/2);
 }
 
 float Model::getRecord() const
@@ -83,4 +85,73 @@ void Model::resetRecord()
 bool Model::getActive() const
 {
     return active;
+}
+
+void Model::save(int stage, int current)
+{
+    std::ofstream output_file("../complete_models/model" + std::to_string(stage) + " " + std::to_string(current) + ".txt", std::ios::out);
+
+    if (output_file.is_open()){
+
+        output_file << "w1 = {";
+        for (const auto& row: w1) {
+            for (const auto& val: row) {
+                output_file << val << ", ";
+            }
+        }
+        output_file << "}" << std::endl;
+
+        output_file << "b1 = {";
+        for (const auto& val : b1) {
+            output_file << val << ", ";
+        }
+        output_file << "}" << std::endl;
+
+        output_file << "w2 = {";
+        for (const auto& row: w1) {
+            for (const auto& val: row) {
+                output_file << val << ", ";
+            }
+        }
+        output_file << "}" << std::endl;
+
+        output_file << "b2 = {";
+        for (const auto& val : b1) {
+            output_file << val << ", ";
+        }
+        output_file << "}" << std::endl;
+
+        output_file << "w3 = {";
+        for (const auto& row: w1) {
+            for (const auto& val: row) {
+                output_file << val << ", ";
+            }
+        }
+        output_file << "}" << std::endl;
+
+        output_file << "b3 = {";
+        for (const auto& val : b1) {
+            output_file << val << ", ";
+        }
+        output_file << "}" << std::endl;
+
+        output_file << "w4 = {";
+        for (const auto& row: w1) {
+            for (const auto& val: row) {
+                output_file << val << ", ";
+            }
+        }
+        output_file << "}" << std::endl;
+
+        output_file << "b4 = {";
+        for (const auto& val : b1) {
+            output_file << val << ", ";
+        }
+        output_file << "}" << std::endl;
+
+        output_file.close();
+    }
+    else {
+        std::cout << "Не удалось открыть файл." << std::endl;
+    }
 }

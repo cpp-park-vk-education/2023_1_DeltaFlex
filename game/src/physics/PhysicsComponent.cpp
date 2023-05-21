@@ -12,7 +12,7 @@ void StickmanPhysicsComponent::onInit(DFEntity &gameObject)
 
     m_pointMasses.reserve(INITIAL_POINTMASSES);
 
-    float bodyHeight = 200;
+    float bodyHeight = 300;
 
     float headLength = bodyHeight / 7.5f;
     float headWidth = headLength * .75f;
@@ -46,15 +46,15 @@ void StickmanPhysicsComponent::onInit(DFEntity &gameObject)
 
     std::shared_ptr<PointMass> kneeL = std::make_shared<PointMass>(pos + Vector2<float>(-10, -40));
     std::shared_ptr<PointMass> kneeR = std::make_shared<PointMass>(pos + Vector2<float>(+10, -40));
-    kneeL->m_mass = 2;
-    kneeR->m_mass = 2;
+    kneeL->m_mass = 3;
+    kneeR->m_mass = 3;
     kneeL->attachTo(*pelvis, headLength * 2, 1);
     kneeR->attachTo(*pelvis, headLength * 2, 1);
 
     std::shared_ptr<PointMass> footL = std::make_shared<PointMass>(pos + Vector2<float>(10, 20));
     std::shared_ptr<PointMass> footR = std::make_shared<PointMass>(pos + Vector2<float>(10, 20));
-    footL->m_mass = 2;
-    footR->m_mass = 2;
+    footL->m_mass = 3;
+    footR->m_mass = 3;
     footL->attachTo(*kneeL, headLength * 2, 1);
     footR->attachTo(*kneeR, headLength * 2, 1);
 
@@ -176,7 +176,13 @@ void StickmanPhysicsComponent::MoveAll(std::array<float, 11> angles)
     int i = 0;
     for (float angle : angles)
     {
-        Move(i, angle/1.7);
+        if (i != 2 && i < 7)
+            angle /= 2;
+        if (i >= 7)
+            angle /= 4;
+        if (i == 2)
+            angle /= 0.8;
+        Move(i, angle);
         i++;
     }
 

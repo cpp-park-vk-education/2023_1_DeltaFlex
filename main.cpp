@@ -74,8 +74,7 @@ int main(void)
 
     std::unique_ptr<DFEngine> engine = std::make_unique<DFEngine>();
 
-    engine->AppendSceneAllocator("default", menu_scene);
-    engine->AppendSceneAllocator("game", default_scene);
+    engine->AppendSceneAllocator("default", default_scene);
 
     engine->EngineInit();
     engine->EngineCycle();
