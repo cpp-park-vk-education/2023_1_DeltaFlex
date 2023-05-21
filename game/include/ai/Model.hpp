@@ -5,6 +5,7 @@
 #include <random>
 #include <iostream>
 #include <fstream>
+#include <string>
 
 #include "ControlComponents.hpp"
 #include "Evolution.hpp"
@@ -23,15 +24,18 @@ class Model
 {
 
 friend class Evolution;
+friend class EraComponent;
 
 public:
     Model(StickmanPhysicsComponent *stickman);
+    Model(StickmanPhysicsComponent *stickman, std::string file);
     std::array<float, OUT_DIM> predict();
     void updateRecord();
     float getRecord() const;
     void resetRecord();
     bool getActive() const;
     void save(int stage, int current);
+    void load(std::string file);
 
 private:
     std::array<std::array<float, H_DIM1>, INPUT_DIM> w1;

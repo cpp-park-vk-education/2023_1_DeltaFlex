@@ -36,6 +36,11 @@ Model::Model(StickmanPhysicsComponent *stickman): best_record(0), stickman(stick
 
 }
 
+Model::Model(StickmanPhysicsComponent *stickman, std::string file): best_record(0), stickman(stickman)
+{
+    load(file);
+}
+
 std::array<float, OUT_DIM> Model::predict()
 {
     auto input_layout = stickman->GetCoords();
@@ -64,11 +69,9 @@ void Model::updateRecord()
     if (stickman->m_pointMasses[0]->m_pos.y > 680)
         active = false;
     if (active)
-        best_record += 100 +
-        (stickman->m_pointMasses[2]->m_pos.y - stickman->m_pointMasses[0]->m_pos.y) +
-        (stickman->m_pointMasses[10]->m_pos.y - stickman->m_pointMasses[8]->m_pos.y) +
-        (stickman->m_pointMasses[9]->m_pos.y - stickman->m_pointMasses[7]->m_pos.y) +
-        (stickman->m_pointMasses[0]->m_pos.x/2);
+        best_record +=
+        (stickman->m_pointMasses[0]->m_pos.x) * (stickman->m_pointMasses[0]->m_pos.x) / 1000;
+
 }
 
 float Model::getRecord() const
@@ -93,63 +96,106 @@ void Model::save(int stage, int current)
 
     if (output_file.is_open()){
 
-        output_file << "w1 = {";
         for (const auto& row: w1) {
             for (const auto& val: row) {
-                output_file << val << ", ";
+                output_file << val << " ";
             }
         }
-        output_file << "}" << std::endl;
+        output_file << std::endl;
 
-        output_file << "b1 = {";
         for (const auto& val : b1) {
-            output_file << val << ", ";
+            output_file << val << " ";
         }
-        output_file << "}" << std::endl;
+        output_file << std::endl;
 
-        output_file << "w2 = {";
         for (const auto& row: w1) {
             for (const auto& val: row) {
-                output_file << val << ", ";
+                output_file << val << " ";
             }
         }
-        output_file << "}" << std::endl;
+        output_file << std::endl;
 
-        output_file << "b2 = {";
         for (const auto& val : b1) {
-            output_file << val << ", ";
+            output_file << val << " ";
         }
-        output_file << "}" << std::endl;
+        output_file << std::endl;
 
-        output_file << "w3 = {";
         for (const auto& row: w1) {
             for (const auto& val: row) {
-                output_file << val << ", ";
+                output_file << val << " ";
             }
         }
-        output_file << "}" << std::endl;
+        output_file << std::endl;
 
-        output_file << "b3 = {";
         for (const auto& val : b1) {
-            output_file << val << ", ";
+            output_file << val << " ";
         }
-        output_file << "}" << std::endl;
+        output_file << std::endl;
 
-        output_file << "w4 = {";
         for (const auto& row: w1) {
             for (const auto& val: row) {
-                output_file << val << ", ";
+                output_file << val << " ";
             }
         }
-        output_file << "}" << std::endl;
+        output_file << std::endl;
 
-        output_file << "b4 = {";
         for (const auto& val : b1) {
-            output_file << val << ", ";
+            output_file << val << " ";
         }
-        output_file << "}" << std::endl;
+        output_file << std::endl;
 
         output_file.close();
+    }
+    else {
+        std::cout << "Не удалось открыть файл." << std::endl;
+    }
+}
+
+void Model::load(std::string file)
+{
+    std::ifstream input_file(file);
+
+    if (input_file.is_open()){
+
+        for (size_t i = 0; i < w1.size(); i++) {
+            for (size_t j = 0; j < w1[0].size(); j++) {
+                input_file >> w1[i][j];
+            }
+        }
+
+        for (size_t i = 0; i < b1.size(); i++) {
+            input_file >> b1[i];
+        }
+
+        for (size_t i = 0; i < w2.size(); i++) {
+            for (size_t j = 0; j < w2[0].size(); j++) {
+                input_file >> w2[i][j];
+            }
+        }
+
+        for (size_t i = 0; i < b2.size(); i++) {
+            input_file >> b2[i];
+        }
+
+        for (size_t i = 0; i < w3.size(); i++) {
+            for (size_t j = 0; j < w3[0].size(); j++) {
+                input_file >> w3[i][j];
+            }
+        }
+
+        for (size_t i = 0; i < b3.size(); i++) {
+            input_file >> b3[i];
+        }
+
+        for (size_t i = 0; i < w4.size(); i++) {
+            for (size_t j = 0; j < w4[0].size(); j++) {
+                input_file >> w4[i][j];
+            }
+        }
+
+        for (size_t i = 0; i < b4.size(); i++) {
+            input_file >> b4[i];
+        }
     }
     else {
         std::cout << "Не удалось открыть файл." << std::endl;

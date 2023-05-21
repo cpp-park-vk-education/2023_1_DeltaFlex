@@ -9,7 +9,11 @@ void StickmanRestarter::onInit(DFEntity &gameObject)
 
 void StickmanRestarter::RestartStickman()
 {
-    Vector2<float> align(-400, 475.873 - 20);
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist(0, 500);
+
+    Vector2<float> align(-450, 475.873 - 20);
     my_stickman->m_pointMasses[0]->m_pos = align + Vector2<float>(619.665, 23.703);
     my_stickman->m_pointMasses[1]->m_pos = align + Vector2<float>(619.665, 43.6235);
     my_stickman->m_pointMasses[2]->m_pos = align + Vector2<float>(619.659, 137.391);
@@ -87,10 +91,10 @@ void EraComponent::Update()
     
     
     if (!active)
-        time = 3600;
+        time = 420;
     
     time++;
-    if (time > 3600)
+    if (time > 420)
     {
         auto models = GetModels();
         int current = models[0]->getRecord();
@@ -103,12 +107,12 @@ void EraComponent::Update()
 
         models[max_i]->save(era, current);
 
-        if (current > best || (current / static_cast<float>(best) > 0.5))
+        if (current > best || (current / static_cast<float>(best) > 0.4))
         {
             Evolution evo(models);
             evo.Selection_Tournament(2, 5);
             evo.Crossing();
-            evo.Mutation(10, 80);
+            evo.Mutation(10, 50);
         }
         if (current > best)
             best = current;
