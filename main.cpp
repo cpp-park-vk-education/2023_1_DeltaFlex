@@ -26,7 +26,7 @@
 #include <BattleController.hpp>
 
 #include "game/include/options_volume/OptionsVolumeBack.hpp"
-#include "game/include/options_volume/OptionsVolumeButton.hpp"
+#include "game/include/options_volume/OptionsVolumeControl.hpp"
 
 DFScene *default_scene(void)
 {
@@ -81,15 +81,34 @@ DFScene *options_volume_control(void)
     bg.addComponent(new OptionsVolumeBack());
     bg.onInit();
 
+    // кнопка перемещения на следующий экран
     DFEntity &next_button = sc->addNewObject("OptionsButtonNext");
-    next_button.transform.position = {1280 - 255, 720 - 71};
-    
+    next_button.transform.position = {1280 - 245 / 2 - 10, 720 - 71};
     next_button.addComponent(new OptionsNextButton());
     auto *tmp = next_button.getComponent<OptionsNextButton>();
     tmp->img_path = "./resources/images/menu-next-button.png";
     tmp->halign = {245 / 2, 61 / 2};
 
+    // кнопка перемещения на предыдущий экран
+    DFEntity &prev_button = sc->addNewObject("OptionsButtonPrev");
+    prev_button.transform.position = {266 / 2 + 20, 720 - 73};
+    prev_button.addComponent(new OptionsPrevButton());
+    auto *tmp2 = prev_button.getComponent<OptionsPrevButton>();
+    tmp2->img_path = "./resources/images/menu-back-button.png";
+    tmp2->halign = {266 / 2, 63 / 2};
+
+    // чек боксы
+    DFEntity &cb = sc->addNewObject("OptionsMusicCB");
+    cb.transform.position = { 100, 100 };
+    cb.addComponent(new OptionsMusicCB());
+    auto *tmp3 = cb.getComponent<OptionsMusicCB>();
+    tmp3->img_path_checked = "./resources/images/menu-next-button.png";
+    tmp3->imp_path_unchecked = "./resources/images/menu-back-button.png";
+    tmp3->halign = {266 / 2, 63 / 2};
+
     next_button.onInit();
+    prev_button.onInit();
+    cb.onInit();
 
     return sc;
 }

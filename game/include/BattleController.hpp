@@ -18,7 +18,7 @@ public:
         tx_rect.x = 0;
         tx_rect.y = 0;
         tx_rect.w = 2280;
-        tx_rect.h = 1080;
+        tx_rect.h = 720;
         tex = render_system.CreateTextureFromFile("./resources/images/level_temple.png");
     }
 
