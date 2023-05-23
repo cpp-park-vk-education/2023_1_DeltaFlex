@@ -8,33 +8,27 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include "MainMenuCheckBox.hpp"
 
-class MainMenuButton: public DFComponent
+class MainMenuCheckBox: public DFComponent
 {
 public:
-    std::string img_path;
+    std::string img_path_body;
+    std::string img_path_tick;
     Vector2<float> halign;
 
+public:
     void onInit(DFEntity &gameObject);
-
     void onRenderTextures(DFRenderSystem &render_system);
-
     void Start();
-
     void Update();
-
     void Draw(DFRenderSystem &render_system);
-
-    virtual void onClick()
-    {
-        // std::cout << "nigger\n";
-        // DFEngine::Instance->SwitchScene("game");
-    }
+    virtual void onClick();
+    bool isChecked() const;
 
 private:
     void CheckMouseBounds();
-    SDL_Texture *m_tex;
+    SDL_Texture *m_tex_body, *m_tex_tick;
     Vector2<float> *m_gameObjPos;
+    bool m_checked;
     bool is_active;
 };

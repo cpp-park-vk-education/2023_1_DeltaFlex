@@ -157,6 +157,11 @@ struct Vector2
         return x == other.x && y == other.y;
     }
 
+    bool operator!=(const Vector2<T> &other) const
+    {
+        return !(*this == other);
+    }
+
     float lengthSquared()
     {
         return x * x + y * y;
