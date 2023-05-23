@@ -29,6 +29,7 @@ friend EraComponent;
 
 private:
     StickmanPhysicsComponent *my_stickman;
+    
     Model *model;
 
 public:

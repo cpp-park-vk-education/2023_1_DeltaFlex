@@ -15,24 +15,16 @@ const size_t OUT_DIM = 6;
 
 class StickmanPhysicsComponent;
 
-class Model
+class BaseModel
 {
 
-friend class Evolution;
-friend class EraComponent;
-
 public:
-    Model(StickmanPhysicsComponent *stickman);
-    Model(StickmanPhysicsComponent *stickman, std::string file);
-    std::array<float, OUT_DIM> predict();
-    void updateRecord();
-    float getRecord() const;
-    void resetRecord();
-    bool getActive() const;
+    BaseModel(StickmanPhysicsComponent *stickman);
+    BaseModel(StickmanPhysicsComponent *stickman, std::string file);
     void save(int stage, int current);
     void load(std::string file);
 
-private:
+protected:
     std::array<std::array<float, H_DIM1>, INPUT_DIM> w1;
     std::array<float, H_DIM1> b1;
     std::array<std::array<float, H_DIM2>, H_DIM1> w2;
@@ -43,7 +35,5 @@ private:
     std::array<float, OUT_DIM> b4;
 
     StickmanPhysicsComponent *stickman;
-    bool active;
-    float best_record;
 
 };

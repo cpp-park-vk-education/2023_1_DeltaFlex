@@ -16,7 +16,6 @@
 #include "ControlComponents.hpp"
 #include "Evolution.hpp"
 #include "MatrixActions.hpp"
-#include "Model.hpp"
 #include "PlayerControl.hpp"
 
 #include <SDL2/SDL.h>

@@ -1,5 +1,6 @@
 #include "Evolution.hpp"
-
+#include <DFEntity.hpp>
+#include <ControlComponents.hpp>
 Evolution::Evolution(std::vector<Model*> models): models(models), best_count(0) {}
 
 void Evolution::Crossing_One(Model *child, Model *parent1, Model *parent2)
