@@ -6,6 +6,8 @@
 #include "PlayerControl.hpp"
 
 class Model;
+class EraComponent;
+
 class StickmanPhysicsComponent;
 class StickmanPlayer;
 
@@ -17,24 +19,6 @@ private:
 public:
     void onInit(DFEntity &gameObject);
     void RestartStickman();
-};
-
-class EraComponent: public DFComponent
-{
-
-private:
-    std::vector<DFEntity*> stickmans;
-    int era;
-    int time;
-    int best;
-    int multi;
-
-public:
-    EraComponent(std::vector<DFEntity*> stickmans): stickmans(stickmans){}
-    void onInit(DFEntity &gameObject);
-    void Restart();
-    std::vector<Model*> GetModels();
-    void Update();
 };
 
 class StickmanAI: public DFComponent

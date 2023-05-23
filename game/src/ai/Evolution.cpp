@@ -241,3 +241,81 @@ size_t Evolution::getBestCount()
 {
     return best_count;
 }
+
+void EraComponent::onInit(DFEntity &gameObject)
+{
+    era = 1;
+    time = 0;
+    best = 0;
+    multi = 1;
+    Restart();
+}
+
+void EraComponent::Restart()
+{
+    for (size_t i = 0; i < stickmans.size(); i++)
+    {
+        stickmans[i]->getComponent<StickmanRestarter>()->RestartStickman();
+        stickmans[i]->getComponent<StickmanAI>()->model->resetRecord();
+    }
+}
+
+std::vector<Model*> EraComponent::GetModels()
+{
+    std::vector<Model*> models;
+    for (size_t i = 0; i < stickmans.size(); i++)
+    {
+        models.push_back(stickmans[i]->getComponent<StickmanAI>()->model);
+    }
+    return models;
+}
+
+void EraComponent::Update()
+{
+    auto models = GetModels();
+    bool active = false;
+    for (auto &model: models)
+        if (model->getActive())
+        {
+            active = true;
+            break;
+        }
+    
+    
+    if (!active)
+        time = 6000;
+    
+    time++;
+    if (time > 6000)
+    {
+        auto models = GetModels();
+        int current = models[0]->getRecord();
+        int max_i;
+        for (size_t i = 0; i < models.size(); i++)
+        {
+            max_i = i;
+            current = std::max(static_cast<int>(models[i]->getRecord()), current);
+        }
+
+        models[max_i]->save(era, current);
+
+        if (current > best || (current / static_cast<float>(best) > 0.4))
+        {
+            Evolution evo(models);
+            evo.Selection_Tournament(2, 5);
+            evo.Crossing();
+            evo.Mutation(10, 60);
+        }
+        if (current > best)
+            best = current;
+
+        std::cout << current << std::endl;
+
+        DFEngine::setWindowTitle(std::to_string(era) +
+        " " + std::to_string(current) +
+        " " + std::to_string(best));
+        Restart();
+        time = 0;
+        era++;
+    }
+}
