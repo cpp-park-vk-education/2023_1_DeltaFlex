@@ -40,13 +40,13 @@ void MainMenuSlider::Update()
         CheckMouseBounds();
     }
 
-    if (Input::GetMouseButtonDown(MouseCode::MOUSE_LEFT))
+    if (is_active && Input::GetMouseButtonDown(MouseCode::MOUSE_LEFT))
     {
         is_dragged = true;
         onMouseDrag();
     }
     
-    if (Input::GetMouseButtonUp(MouseCode::MOUSE_LEFT))
+    if (is_dragged && Input::GetMouseButtonUp(MouseCode::MOUSE_LEFT))
     {
         is_dragged = false;
     }
@@ -86,5 +86,6 @@ void MainMenuSlider::Draw(DFRenderSystem &render_system)
 void MainMenuSlider::CheckMouseBounds()
 {
     Vector2<float> mouse_pos(Input::GetMouseX(), Input::GetMouseY());
-    is_active = (*m_gameObjPos - halign_slider < mouse_pos && mouse_pos < *m_gameObjPos + halign_slider);
+    Vector2<float> bounding_box{halign_line.x, halign_slider.y};
+    is_active = (*m_gameObjPos - bounding_box < mouse_pos && mouse_pos < *m_gameObjPos + bounding_box);
 }

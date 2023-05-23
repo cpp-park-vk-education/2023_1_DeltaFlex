@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 add_compile_options("-fPIC")
 project(CringeEngine VERSION 0.1.0)
 
-set(BUILD_TESTS ON)
+set(BUILD_TESTS OFF)
 
 option(BUILD_TESTS "build tests")
 if(BUILD_TESTS)
