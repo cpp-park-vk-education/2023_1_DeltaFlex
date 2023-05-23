@@ -12,11 +12,11 @@
 #include "PhysicsComponent.hpp"
 #include "MatrixActions.hpp"
 
-const size_t INPUT_DIM = 22;
+const size_t INPUT_DIM = 12;
 const size_t H_DIM1 = 31;
 const size_t H_DIM2 = 23;
 const size_t H_DIM3 = 17;
-const size_t OUT_DIM = 11;
+const size_t OUT_DIM = 6;
 
 class StickmanPhysicsComponent;
 

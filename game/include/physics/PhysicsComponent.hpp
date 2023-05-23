@@ -40,8 +40,8 @@ public:
 
     void Move(int limb, double angle);
 
-    void MoveAll(std::array<float, 11> angles);
+    void MoveAll(std::array<float, 6> angles);
 
-    std::array<float, 22> GetCoords();
+    std::array<float, 12> GetCoords();
 
 };

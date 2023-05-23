@@ -66,11 +66,12 @@ std::array<float, OUT_DIM> Model::predict()
 
 void Model::updateRecord()
 {
-    if (stickman->m_pointMasses[0]->m_pos.y > 680)
+    if (stickman->m_pointMasses[0]->m_pos.y > 650)
         active = false;
     if (active)
         best_record +=
-        (stickman->m_pointMasses[0]->m_pos.x) * (stickman->m_pointMasses[0]->m_pos.x) / 1000;
+        (stickman->m_pointMasses[2]->m_pos.y - stickman->m_pointMasses[1]->m_pos.y) +
+        (stickman->m_pointMasses[1]->m_pos.y - stickman->m_pointMasses[0]->m_pos.y);
 
 }
 
@@ -108,38 +109,38 @@ void Model::save(int stage, int current)
         }
         output_file << std::endl;
 
-        for (const auto& row: w1) {
+        for (const auto& row: w2) {
             for (const auto& val: row) {
                 output_file << val << " ";
             }
         }
         output_file << std::endl;
 
-        for (const auto& val : b1) {
+        for (const auto& val : b2) {
             output_file << val << " ";
         }
         output_file << std::endl;
 
-        for (const auto& row: w1) {
+        for (const auto& row: w3) {
             for (const auto& val: row) {
                 output_file << val << " ";
             }
         }
         output_file << std::endl;
 
-        for (const auto& val : b1) {
+        for (const auto& val : b3) {
             output_file << val << " ";
         }
         output_file << std::endl;
 
-        for (const auto& row: w1) {
+        for (const auto& row: w4) {
             for (const auto& val: row) {
                 output_file << val << " ";
             }
         }
         output_file << std::endl;
 
-        for (const auto& val : b1) {
+        for (const auto& val : b4) {
             output_file << val << " ";
         }
         output_file << std::endl;

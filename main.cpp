@@ -17,6 +17,7 @@
 #include "Evolution.hpp"
 #include "MatrixActions.hpp"
 #include "Model.hpp"
+#include "PlayerControl.hpp"
 
 #include <SDL2/SDL.h>
 #include <string>
@@ -25,6 +26,7 @@
 #include <MainMenuBack.hpp>
 #include <BattleController.hpp>
 
+#include "PlayerControl.hpp"
 #include "game/include/options_volume/OptionsVolumeBack.hpp"
 #include "game/include/options_volume/OptionsVolumeButton.hpp"
 
@@ -35,12 +37,13 @@ DFScene *default_scene(void)
     tmp.addComponent(new BattleController());
     tmp.onInit();
     std::vector<DFEntity *> stickmans;
-    for (int i = 0; i < 200; i++)
+    for (int i = 0; i < 1; i++)
     {
         DFEntity &stickman = sc->addNewObject("stickman_" + std::to_string(i));
         stickman.addComponent(new StickmanPhysicsComponent());
         stickman.addComponent(new StickmanRestarter());
         stickman.addComponent(new StickmanAI());
+        stickman.addComponent(new StickmanPlayer());
         stickmans.push_back(&stickman);
         // stickman.transform.position.x = 50;
         // stickman.transform.position.y = 50;

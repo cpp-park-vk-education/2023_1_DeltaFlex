@@ -3,9 +3,11 @@
 #include "Model.hpp"
 #include "Evolution.hpp"
 #include "PhysicsComponent.hpp"
+#include "PlayerControl.hpp"
 
 class Model;
 class StickmanPhysicsComponent;
+class StickmanPlayer;
 
 class StickmanRestarter: public DFComponent
 {
@@ -38,6 +40,7 @@ public:
 class StickmanAI: public DFComponent
 {
 
+friend StickmanPlayer;
 friend EraComponent;
 
 private:
