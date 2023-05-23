@@ -2,17 +2,16 @@
 
 #include <memory>
 #include <list>
-#include <stack>
 #include <unordered_map>
 #include <algorithm>
+#include <iostream>
+
+#include "DFESceneObject.hpp"
 
 /*!
     \brief Список деревьев для создания иерархии между объектами.
     \warning Не может содержать два одинаковых объекта.
-    \warning Для объектов должна быть определена операция сравнения.
-    \param[in] T Тип объектов.
-    \param[in] Hash Функция хеширования объектов, по умолчанию std::hash<T>
-    \todo Добавление детей к родителям, а не только создание корней.
+    \todo Работа с детьми, а не только с корнями.
 
     Данный класс создаёт иерархию между объектами, при этом у одного узла может быть сколько угодно прямых потомоков.
     Особенности:
@@ -20,91 +19,132 @@
     - Дерево получает сырые указатели на объекты и делает из них shared_ptr.
     - При удалении узла также удаляются все его потомки.
 */
-template<typename T, typename Hash = std::hash<T>>
 class DFEHierarchy
 {
-    using TSPtr = std::shared_ptr<T>;
+    struct Node;
+    using NodeSPtr = std::shared_ptr<Node>;
+    using ISPtr = std::shared_ptr<IDFESceneObject>;
 
     struct Node
     {
         Node() : mp_value(nullptr) { mp_parent.reset(); }
-        explicit Node(T *value) : mp_value(value) { mp_parent.reset(); }
-        explicit Node(T *value, const std::shared_ptr<Node> &parent) : mp_value(value), mp_parent(parent) {}
+        explicit Node(IDFESceneObject *value) : mp_value(value) { mp_parent.reset(); }
+        explicit Node(const ISPtr &value) : mp_value(value) { mp_parent.reset(); }
+        explicit Node(IDFESceneObject *value, const NodeSPtr &parent) : mp_value(value), mp_parent(parent) {}
+        explicit Node(const ISPtr &value, const NodeSPtr &parent) : mp_value(value), mp_parent(parent) {}
 
-        TSPtr mp_value;
-        std::weak_ptr<Node>mp_parent;
-        std::list<std::shared_ptr<Node>>mp_children;
+        ISPtr mp_value;
+        NodeSPtr mp_parent;
+        std::list<NodeSPtr>mp_children;
     };
-
-    using NodeSPtr = std::shared_ptr<Node>;
-    using NodeWPtr = std::shared_ptr<Node>;
 
 public:
     DFEHierarchy() : nodes(new Node()) {}
-    ~DFEHierarchy();
+    ~DFEHierarchy() = default;
 
-    bool AddRoot(T *object);
-    bool Has(const TSPtr &object);
+    bool AddRoot(IDFESceneObject *object)
+    {
+        auto elem = existing_nodes.find(object->GetSName());
+
+        if (elem != existing_nodes.end())
+            return false;
+
+        NodeSPtr new_node{new Node(object, nodes)};
+
+        nodes->mp_children.push_back(new_node);
+        
+        existing_nodes[new_node->mp_value->GetSName()] = new_node;
+
+        return true;
+    }
+
+    bool AddRoot(const ISPtr &object)
+    {
+        auto elem = existing_nodes.find(object->GetSName());
+
+        if (elem != existing_nodes.end())
+            return false;
+
+        NodeSPtr new_node{new Node(object, nodes)};
+
+        nodes->mp_children.push_back(new_node);
+        
+        existing_nodes[new_node->mp_value->GetSName()] = new_node;
+
+        return true;
+    }
+    
+    bool Has(const QString &object_name)
+    {
+        auto elem = existing_nodes.find(object_name.toStdString());
+
+        if (elem == existing_nodes.end())
+            return false;
+        
+        return true;
+    }
+
+    bool Has(const IDFESceneObject *object)
+    {
+        auto elem = existing_nodes.find(object->GetSName());
+
+        if (elem == existing_nodes.end() || elem->second->mp_value.get() != object)
+            return false;
+        
+        return true;
+    }
+
+    bool Has(const ISPtr &object)
+    {
+        auto elem = existing_nodes.find(object->GetSName());
+
+        if (elem == existing_nodes.end() || elem->second->mp_value != object)
+            return false;
+        
+        return true;
+    }
+
+    bool Delete(const IDFESceneObject *object)
+    {
+        auto elem = existing_nodes.find(object->GetSName());
+
+        if (elem == existing_nodes.end() || elem->second->mp_value.get() != object)
+            return false;
+
+        ClearNode(existing_nodes[object->GetSName()]);
+
+        return true;
+    }
+
+    ISPtr &Get(const QString &object_name)
+    {
+        auto elem = existing_nodes.find(object_name.toStdString());
+
+        if (elem == existing_nodes.end())
+            throw std::runtime_error("Try to get not existing element of DFEHierarchy.");
+
+        return elem->second->mp_value;
+    }
+
+    // Only root drawing
+    void Draw(QPainter &painter)
+    {
+        for (const auto &elem: nodes->mp_children)
+            elem->mp_value->Draw(painter);
+    }
+
 private:
-    void ClearNode(NodeSPtr &node);
+    // Only root deleting, because children's existing_nodes must be cleared too
+    void ClearNode(const NodeSPtr &node)
+    {    
+        if (node->mp_parent != nullptr)
+        {
+            Node *parent = node->mp_parent.get();
+            parent->mp_children.erase(std::find(parent->mp_children.begin(), parent->mp_children.end(), node));
+            existing_nodes.erase(node->mp_value->GetSName());
+        }
+    }
 
     NodeSPtr nodes;
-    std::unordered_map<TSPtr, std::pair<bool, NodeWPtr>>existing_nodes;
+    std::unordered_map<std::string, NodeSPtr>existing_nodes;
 };
-
-template<typename T, typename Hash>
-DFEHierarchy<T, Hash>::~DFEHierarchy()
-{
-    ClearNode(nodes);
-}
-
-template<typename T, typename Hash>
-bool DFEHierarchy<T, Hash>::AddRoot(T *object)
-{
-    bool has = existing_nodes.at(TSPtr(object)).first;
-
-    if (has)
-        return false;
-
-    NodeSPtr new_node{new Node(object)};
-
-    nodes->mp_children.push_back(new_node);
-    
-    existing_nodes.at(new_node->mp_value) = std::make_pair(true, new_node);
-
-    return true;
-}
-
-template<typename T, typename Hash>
-bool DFEHierarchy<T, Hash>::Has(const TSPtr &object)
-{
-    bool has = existing_nodes.at(object).first;
-
-    if (!has)
-        existing_nodes.erase(existing_nodes.find(object));
-    
-    return has;
-}
-
-template<typename T, typename Hash>
-void DFEHierarchy<T, Hash>::ClearNode(NodeSPtr &node)
-{    
-    std::stack<NodeSPtr>stack;
-
-    while (!stack.empty())
-    {
-        NodeSPtr cur_node = stack.top();
-        stack.pop();
-
-        for (auto &elem: cur_node->mp_children)
-            stack.push(elem);
-
-        existing_nodes.erase(existing_nodes.find(cur_node->mp_value));
-    }
-
-    if (node->mp_parent.expired())
-    {
-        Node *parent = node->mp_parent.lock().get();
-        parent->mp_children.erase(std::find(parent->mp_children.begin(), parent->mp_children.end(), node));
-    }
-}

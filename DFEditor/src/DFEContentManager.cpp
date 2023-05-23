@@ -54,6 +54,7 @@ void DFEContentManager::OpenDirectory()
     );
 
     UpdateViews(dir);
+    emit ChangedDirectory(dir);
 }
 
 void DFEContentManager::UpdateAssetViewer(const QModelIndex &index)

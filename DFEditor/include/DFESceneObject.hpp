@@ -1,6 +1,8 @@
 #pragma once
 
+#include <iostream>
 #include <QString>
+#include <QPainter>
 
 enum class IDFESO_ERR
 {
@@ -14,8 +16,9 @@ public:
     IDFESceneObject() = default;
 
     QString GetName() const { return m_name; }
+    std::string GetSName() const { return m_name.toStdString(); }
     
-    virtual IDFESO_ERR Rename(QString new_name)
+    virtual IDFESO_ERR Rename(const QString &new_name)
     {
         if (new_name.isEmpty())
             return IDFESO_ERR::ERR_EMPTY_NAME;
@@ -24,6 +27,11 @@ public:
 
         return IDFESO_ERR::SUCCESS;
     }
+
+    virtual void Draw(QPainter &painter) const
+    {
+    }
+
 protected:
     QString m_name;
 };
@@ -31,14 +39,33 @@ protected:
 class MocSceneObject: public IDFESceneObject
 {
 public:
-    MocSceneObject(QString name) { m_name = name; }
+    MocSceneObject(const QString &name) { m_name = name; }
 };
 
-template<>
-struct std::hash<IDFESceneObject>
+class VisibleSceneObject : public IDFESceneObject
 {
-    std::size_t operator()(const IDFESceneObject *&object)
+public:
+    VisibleSceneObject(const QString &name, const QString &path, int x, int y)
     {
-        return std::hash<std::string>{}(object->GetName().toStdString());
+        m_name = name;
+        m_path = path;
+
+        image.load(path);
+
+        m_x = x;
+        m_y = y;
     }
+
+    void Draw(QPainter &painter) const override
+    {
+        if (!image.isNull())
+        {
+            painter.drawImage(m_x, m_y, image);
+        }
+    }
+private:
+    QImage image;
+    QString m_path;
+    int m_x;
+    int m_y;
 };

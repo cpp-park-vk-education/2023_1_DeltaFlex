@@ -21,6 +21,9 @@ public slots:
     void OpenDirectory();
     void UpdateAssetViewer(const QModelIndex &index);
 
+signals:
+    void ChangedDirectory(const QString &dir);
+
 protected:
     void UpdateViews(const QString &dir);
 

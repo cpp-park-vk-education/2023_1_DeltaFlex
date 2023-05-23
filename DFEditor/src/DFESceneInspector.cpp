@@ -23,10 +23,10 @@ DFESI_ERR DFESceneInspector::AddSceneObject(std::shared_ptr<IDFESceneObject> &ne
 
 DFESI_ERR DFESceneInspector::AddChildSceneObject(std::shared_ptr<IDFESceneObject> &parent_object, std::shared_ptr<IDFESceneObject> &child_object)
 {
-    if (m_objects[child_object->GetName()])
+    if (m_objects.find(child_object->GetName()) != m_objects.end())
         return DFESI_ERR::REPEATED_NAME;
 
-    if (!m_objects[parent_object->GetName()])
+    if (m_objects.find(parent_object->GetName()) == m_objects.end())
         return DFESI_ERR::PARENT_NOT_EXIST;
 
     m_objects[child_object->GetName()] = child_object;
@@ -43,4 +43,9 @@ bool DFESceneInspector::HasObject(const QString &object_name) const
 void DFESceneInspector::ChangePropertiesHandler(const QModelIndex &index)
 {
     emit ChangedProperties(m_objects[index.data().toString()]);
+}
+
+void DFESceneInspector::AddSceneObjectBySignal(std::shared_ptr<IDFESceneObject> &new_object)
+{
+    AddSceneObject(new_object);
 }

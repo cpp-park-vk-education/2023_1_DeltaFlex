@@ -27,7 +27,6 @@ public slots:
     void ChangePropertiesHandler(std::shared_ptr<IDFESceneObject> &object);
 protected:
     Ui::DFEMainWindow  *ui;
-    // DFEViewport        *mp_viewport;
     DFEContentManager  *mp_contentManager;
     DFESceneInspector  *mp_sceneInspector;
     DFEPropertiesPanel *mp_propertiesPanel;

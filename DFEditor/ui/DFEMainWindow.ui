@@ -21,14 +21,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QGraphicsView" name="graphicsView">
-      <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Plain</enum>
-      </property>
-     </widget>
+     <widget class="DFEViewport" name="viewport" native="true"/>
     </item>
    </layout>
   </widget>
@@ -38,7 +31,7 @@
      <x>0</x>
      <y>0</y>
      <width>1315</width>
-     <height>26</height>
+     <height>34</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -71,7 +64,7 @@
   <action name="actionSave">
    <property name="icon">
     <iconset theme="document-save">
-     <normaloff>.</normaloff>.</iconset>
+     <normaloff>../../../../.designer/backup</normaloff>../../../../.designer/backup</iconset>
    </property>
    <property name="text">
     <string>Save</string>
@@ -112,13 +105,22 @@
   </action>
   <action name="actionOpen_Project">
    <property name="icon">
-    <iconset theme="folder-open"/>
+    <iconset theme="folder-open">
+     <normaloff>../../../../.designer/backup</normaloff>../../../../.designer/backup</iconset>
    </property>
    <property name="text">
     <string>Open Project</string>
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DFEViewport</class>
+   <extends>QWidget</extends>
+   <header>DFEViewport.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -27,6 +27,7 @@ public:
     bool HasObject(const QString &object_name) const;
 public slots:
     void ChangePropertiesHandler(const QModelIndex &index);
+    void AddSceneObjectBySignal(std::shared_ptr<IDFESceneObject> &new_object);
 signals:
     void ChangedProperties(std::shared_ptr<IDFESceneObject> &object);
 protected:
