@@ -35,7 +35,7 @@ DFScene *default_scene(void)
     tmp.addComponent(new BattleController());
     tmp.onInit();
     std::vector<DFEntity *> stickmans;
-    for (int i = 0; i < 200; i++)
+    for (int i = 0; i < 10; i++)
     {
         DFEntity &stickman = sc->addNewObject("stickman_" + std::to_string(i));
         stickman.addComponent(new StickmanPhysicsComponent());

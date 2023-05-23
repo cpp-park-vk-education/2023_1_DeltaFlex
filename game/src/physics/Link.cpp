@@ -39,11 +39,19 @@ void Link::draw(const SDL_Color &color, DFRenderSystem &render_system)
     if (m_draw)
     {
         // render_system.SetColor(color.r, color.g, color.b, color.a);
+        // render_system.SetColor(color);
+        // render_system.RenderLine(m_p1.m_pos, m_p2.m_pos);
+#ifndef DEVELOPMENT
+        filledCircleRGBA(render_system.getRenderer(),
+            m_p1.m_pos.x, m_p1.m_pos.y, 10 / 2,
+            color.r, color.g, color.b, color.a);
+        thickLineRGBA(render_system.getRenderer(),
+            m_p1.m_pos.x, m_p1.m_pos.y,
+            m_p2.m_pos.x, m_p2.m_pos.y,
+            10, color.r, color.g, color.g, color.a);
+#else
         render_system.SetColor(color);
         render_system.RenderLine(m_p1.m_pos, m_p2.m_pos);
-        // thickLineRGBA(renderer,
-        //     m_p1.m_pos.x, m_p1.m_pos.y,
-        //     m_p2.m_pos.x, m_p2.m_pos.y,
-        //     1, color.r, color.g, color.g, color.a);
+#endif
     }
 }

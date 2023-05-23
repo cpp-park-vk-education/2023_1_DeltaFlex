@@ -2,6 +2,7 @@
 
 #include "PointMass.hpp"
 
+#include <SDL2/SDL2_gfxPrimitives.h>
 void DrawCircle(SDL_Renderer *renderer, int32_t centreX, int32_t centreY, int32_t radius);
 
 class StickmanCircle
@@ -62,13 +63,19 @@ public:
         //     color.b,
         //     color.a
         // );
+#ifndef DEVELOPMENT
+        filledCircleRGBA(render_system.getRenderer(),
+            m_attachedPointMass->m_pos.x, m_attachedPointMass->m_pos.y, m_radius,
+            color.r, color.g, color.b, color.a);
+#else
         render_system.SetColor(color);
         render_system.RenderCircle(
             m_attachedPointMass->m_pos.x,
             m_attachedPointMass->m_pos.y,
             m_radius
         );
-        render_system.SetColor(0, 0, 0);
+#endif
+        // render_system.SetColor(0, 0, 0);
         // SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     }
 };
