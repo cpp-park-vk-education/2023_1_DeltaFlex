@@ -116,8 +116,8 @@ void StickmanPhysicsComponent::Draw(DFRenderSystem &render_system)
     // auto *r = render_data.renderer.get();
     // SDL_RenderDrawLine(r, 0, 0, 100, 100);
     // std::cout << "MINI RYR PISHE)\n";
-    if (!ai->getActive())
-        return;
+    // if (!ai->getActive())
+    //     return;
 
     for (auto &pm : m_pointMasses)
     {

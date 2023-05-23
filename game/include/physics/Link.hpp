@@ -2,6 +2,7 @@
 
 #include "PointMass.hpp"
 #include "DFScUpdParams.hpp"
+#include "../SatCollider.hpp"
 
 class Link
 {
@@ -19,4 +20,5 @@ public:
     float length() const;
     void solve();
     void draw(const SDL_Color &color, DFRenderSystem &render_system);
+    SATCollider m_collider;
 };

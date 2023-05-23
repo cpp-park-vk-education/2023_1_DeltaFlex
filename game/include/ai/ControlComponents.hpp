@@ -5,6 +5,8 @@
 #include "PhysicsComponent.hpp"
 #include "PlayerControl.hpp"
 
+#include <DFInputSystem.hpp>
+
 class Model;
 class EraComponent;
 
@@ -19,6 +21,14 @@ private:
 public:
     void onInit(DFEntity &gameObject);
     void RestartStickman();
+
+    void Update()
+    {
+        if (Input::GetKeyDown(KEYCODE_R))
+        {
+            RestartStickman();
+        }
+    }
 };
 
 class StickmanAI: public DFComponent

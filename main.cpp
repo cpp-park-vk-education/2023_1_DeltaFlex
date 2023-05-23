@@ -29,6 +29,34 @@
 #include "game/include/options_volume/OptionsVolumeBack.hpp"
 #include "game/include/options_volume/OptionsVolumeControl.hpp"
 
+#include "game/include/SatCollider.hpp"
+class TestRect : public DFComponent
+{
+public:
+    Vector2<float> p1, p2;
+
+    SATCollider m_collider;
+    TestRect() : m_collider(p1, p2) {}
+
+    void Update()
+    {
+        Vector2<float> mpos(Input::GetMouseX(), Input::GetMouseY());
+        p1 = mpos - Vector2<float>{10, 0};
+        p2 = mpos + Vector2<float>{10, 0};
+        m_collider.RecalcPoints(5);
+    }
+    void Draw(DFRenderSystem &render_system)
+    {
+        if (DFEntity::Find("stickman_0")->getComponent<StickmanPhysicsComponent>()->CheckCollision(m_collider))
+        {
+            render_system.SetColor(255, 0, 0);
+        }
+        m_collider.Draw(render_system);
+        render_system.SetColor(0, 0, 0);
+
+    }
+};
+
 DFScene *default_scene(void)
 {
     DFWorldScene *sc = new DFWorldScene();
@@ -50,9 +78,15 @@ DFScene *default_scene(void)
         // std::cout << "after construction" << &stickman;
     }
 
-    DFEntity &era = sc->addNewObject("era");
-    era.addComponent(new EraComponent(stickmans));
-    era.onInit();
+    {
+        DFEntity &t = sc->addNewObject("skibidi");
+        t.addComponent(new TestRect());
+        t.onInit();
+    }
+
+    // DFEntity &era = sc->addNewObject("era");
+    // era.addComponent(new EraComponent(stickmans));
+    // era.onInit();
 
     // {
     //     DFEntity &stickman = sc->addNewObject("controller");
@@ -85,20 +119,20 @@ DFScene *options_volume_control(void)
 
     // кнопка перемещения на следующий экран
     DFEntity &next_button = sc->addNewObject("OptionsButtonNext");
-    next_button.transform.position = {1280 - 245 / 2 - 10, 720 - 71};
+    next_button.transform.position = { 1280 - 245 / 2 - 10, 720 - 71 };
     next_button.addComponent(new OptionsNextButton());
     auto *tmp = next_button.getComponent<OptionsNextButton>();
     tmp->img_path = "./resources/images/menu-next-button.png";
-    tmp->halign = {245 / 2, 61 / 2};
+    tmp->halign = { 245 / 2, 61 / 2 };
     next_button.onInit();
 
     // кнопка перемещения на предыдущий экран
     DFEntity &prev_button = sc->addNewObject("OptionsButtonPrev");
-    prev_button.transform.position = {266 / 2 + 20, 720 - 73};
+    prev_button.transform.position = { 266 / 2 + 20, 720 - 73 };
     prev_button.addComponent(new OptionsPrevButton());
     auto *tmp2 = prev_button.getComponent<OptionsPrevButton>();
     tmp2->img_path = "./resources/images/menu-back-button.png";
-    tmp2->halign = {266 / 2, 63 / 2};
+    tmp2->halign = { 266 / 2, 63 / 2 };
     prev_button.onInit();
 
     // // чек боксы

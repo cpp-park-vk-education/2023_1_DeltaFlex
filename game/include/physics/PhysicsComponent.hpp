@@ -9,6 +9,8 @@
 #include <math.h>
 #include "ControlComponents.hpp"
 
+#include <SatCollider.hpp>
+#include <Link.hpp>
 constexpr int WIDTH = 1280;
 constexpr int HEIGHT = 720;
 
@@ -42,6 +44,21 @@ public:
 
     void MoveAll(std::array<float, 6> angles);
 
-    std::array<float, 12> GetCoords();
+    bool CheckCollision(const SATCollider &collider)
+    {
+        for(auto &p_mass: m_pointMasses)
+        {
+            for (auto &p_link: p_mass->links)
+            {
+                if (p_link->m_collider.isColliding(collider))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    };
+
+    std::array<float, 22> GetCoords();
 
 };
