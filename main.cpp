@@ -88,6 +88,7 @@ DFScene *options_volume_control(void)
     auto *tmp = next_button.getComponent<OptionsNextButton>();
     tmp->img_path = "./resources/images/menu-next-button.png";
     tmp->halign = {245 / 2, 61 / 2};
+    next_button.onInit();
 
     // кнопка перемещения на предыдущий экран
     DFEntity &prev_button = sc->addNewObject("OptionsButtonPrev");
@@ -96,19 +97,27 @@ DFScene *options_volume_control(void)
     auto *tmp2 = prev_button.getComponent<OptionsPrevButton>();
     tmp2->img_path = "./resources/images/menu-back-button.png";
     tmp2->halign = {266 / 2, 63 / 2};
-
+    prev_button.onInit();
     // чек боксы
     DFEntity &cb = sc->addNewObject("OptionsMusicCB");
     cb.transform.position = { 100, 100 };
     cb.addComponent(new OptionsMusicCB());
     auto *tmp3 = cb.getComponent<OptionsMusicCB>();
-    tmp3->img_path_checked = "./resources/images/menu-next-button.png";
-    tmp3->imp_path_unchecked = "./resources/images/menu-back-button.png";
-    tmp3->halign = {266 / 2, 63 / 2};
-
-    next_button.onInit();
-    prev_button.onInit();
+    tmp3->img_path_body = "./resources/images/menu-checkbox-unchecked.png";
+    tmp3->img_path_tick = "./resources/images/menu-checkbox-check.png";
+    tmp3->halign = {40 / 2, 40 / 2};
     cb.onInit();
+
+    // слайдеры
+    DFEntity &slider = sc->addNewObject("OptionsMusicSlider");
+    slider.transform.position = { 500, 500 };
+    slider.addComponent(new OptionsMusicSlider());
+    auto *tmp4 = slider.getComponent<OptionsMusicSlider>();
+    tmp4->img_path_line = "./resources/images/menu-checkbox-unchecked.png";
+    tmp4->halign_line = { 200 / 2, 10 / 2 };
+    tmp4->img_path_slider = "./resources/images/menu-checkbox-unchecked.png";
+    tmp4->halign_slider = { 50 / 2, 70 / 2 };
+    slider.onInit();
 
     return sc;
 }

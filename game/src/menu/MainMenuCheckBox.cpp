@@ -8,11 +8,8 @@ void MainMenuCheckBox::onInit(DFEntity &gameObject)
 
 void MainMenuCheckBox::onRenderTextures(DFRenderSystem &render_system)
 {
-    m_tex_checked = render_system.CreateTextureFromFile(img_path_checked);
-    m_tex_unchecked = render_system.CreateTextureFromFile(imp_path_unchecked);
-    m_tex_active = m_checked ? m_tex_checked : m_tex_unchecked;
-
-    std::cout << (void *)m_tex_checked << "  " << (void *)m_tex_unchecked << "\n";
+    m_tex_body = render_system.CreateTextureFromFile(img_path_body);
+    m_tex_tick = render_system.CreateTextureFromFile(img_path_tick);
 }
 
 void MainMenuCheckBox::Start()
@@ -32,7 +29,6 @@ void MainMenuCheckBox::Update()
 void MainMenuCheckBox::onClick()
 {
     m_checked = !m_checked;
-    m_tex_active = m_checked ? m_tex_checked : m_tex_unchecked;
 }
 
 bool MainMenuCheckBox::isChecked() const
@@ -42,14 +38,26 @@ bool MainMenuCheckBox::isChecked() const
 
 void MainMenuCheckBox::Draw(DFRenderSystem &render_system)
 {
+    if (m_checked)
+    {
+        SDL_Rect pos =
+        {
+            .x = (int)(m_gameObjPos->x - halign.x),
+            .y = (int)(m_gameObjPos->y - halign.y - 10),
+            .w = (int)halign.x * 2,
+            .h = (int)halign.y * 2
+        };
+        render_system.RenderTexture(m_tex_tick, NULL, &pos);
+    }
+
     SDL_Rect pos =
     {
-        .x = (int)(m_gameObjPos->x - halign.x + 10 * is_active),
-        .y = (int)(m_gameObjPos->y - halign.y + 10 * is_active),
+        .x = (int)(m_gameObjPos->x - halign.x),
+        .y = (int)(m_gameObjPos->y - halign.y),
         .w = (int)halign.x * 2,
         .h = (int)halign.y * 2
     };
-    render_system.RenderTexture(m_tex_active, NULL, &pos);
+    render_system.RenderTexture(m_tex_body, NULL, &pos);
 }
 
 void MainMenuCheckBox::CheckMouseBounds()

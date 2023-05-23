@@ -12,8 +12,8 @@
 class MainMenuCheckBox: public DFComponent
 {
 public:
-    std::string img_path_checked;
-    std::string imp_path_unchecked;
+    std::string img_path_body;
+    std::string img_path_tick;
     Vector2<float> halign;
 
 public:
@@ -27,8 +27,7 @@ public:
 
 private:
     void CheckMouseBounds();
-    SDL_Texture *m_tex_checked, *m_tex_unchecked;
-    SDL_Texture *m_tex_active;
+    SDL_Texture *m_tex_body, *m_tex_tick;
     Vector2<float> *m_gameObjPos;
     bool m_checked;
     bool is_active;

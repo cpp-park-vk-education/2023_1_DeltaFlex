@@ -1,6 +1,7 @@
 #pragma once
 #include "MainMenuButton.hpp"
 #include "MainMenuCheckBox.hpp"
+#include "MainMenuSlider.hpp"
 
 class OptionsNextButton : public MainMenuButton
 {
@@ -26,5 +27,14 @@ public:
     void onClick()
     {
         MainMenuCheckBox::onClick();
+    }
+};
+
+class OptionsMusicSlider : public MainMenuSlider
+{
+public:
+    void onMouseDrag()
+    {
+        MainMenuSlider::onMouseDrag();   
     }
 };
