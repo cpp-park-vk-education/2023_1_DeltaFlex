@@ -7,11 +7,6 @@
 #include <fstream>
 #include <string>
 
-#include "ControlComponents.hpp"
-#include "Evolution.hpp"
-#include "PhysicsComponent.hpp"
-#include "MatrixActions.hpp"
-
 const size_t INPUT_DIM = 12;
 const size_t H_DIM1 = 31;
 const size_t H_DIM2 = 23;

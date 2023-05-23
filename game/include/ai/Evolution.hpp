@@ -7,6 +7,8 @@
 #include <Model.hpp>
 #include <cmath>
 
+#include "DFComponent.hpp"
+
 class Model;
 
 class Evolution
@@ -26,4 +28,22 @@ public:
     size_t getBestCount();
     std::vector<Model*> getModels(int k);
 
+};
+
+class EraComponent: public DFComponent
+{
+
+private:
+    std::vector<DFEntity*> stickmans;
+    int era;
+    int time;
+    int best;
+    int multi;
+
+public:
+    EraComponent(std::vector<DFEntity*> stickmans): stickmans(stickmans){}
+    void onInit(DFEntity &gameObject);
+    void Restart();
+    std::vector<Model*> GetModels();
+    void Update();
 };

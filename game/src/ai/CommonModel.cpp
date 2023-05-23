@@ -58,9 +58,10 @@ std::array<float, OUT_DIM> Model::predict()
     auto inv_layout9 = activeFunc(inv_layout8);
 
     auto inv_layout10 = matrixMultiplication(inv_layout9, w4);
-    auto inv_layout11 = matrixAddition(inv_layout10, b4);
-    auto result = activeFunc(inv_layout11);
+    auto result = matrixAddition(inv_layout10, b4);    
     
+
+
     return result;
 }
 

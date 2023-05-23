@@ -17,6 +17,7 @@
 #include "Evolution.hpp"
 #include "MatrixActions.hpp"
 #include "Model.hpp"
+#include "PlayerControl.hpp"
 
 #include <SDL2/SDL.h>
 #include <string>
@@ -25,6 +26,7 @@
 #include <MainMenuBack.hpp>
 #include <BattleController.hpp>
 
+#include "PlayerControl.hpp"
 #include "game/include/options_volume/OptionsVolumeBack.hpp"
 #include "game/include/options_volume/OptionsVolumeControl.hpp"
 
@@ -69,6 +71,7 @@ DFScene *default_scene(void)
         stickman.addComponent(new StickmanPhysicsComponent());
         stickman.addComponent(new StickmanRestarter());
         stickman.addComponent(new StickmanAI());
+        stickman.addComponent(new StickmanPlayer());
         stickmans.push_back(&stickman);
         // stickman.transform.position.x = 50;
         // stickman.transform.position.y = 50;

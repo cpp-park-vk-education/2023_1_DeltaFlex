@@ -42,7 +42,7 @@ public:
 
     void Move(int limb, double angle);
 
-    void MoveAll(std::array<float, 11> angles);
+    void MoveAll(std::array<float, 6> angles);
 
     bool CheckCollision(const SATCollider &collider)
     {

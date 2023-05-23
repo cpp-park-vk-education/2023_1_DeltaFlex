@@ -3,11 +3,15 @@
 #include "Model.hpp"
 #include "Evolution.hpp"
 #include "PhysicsComponent.hpp"
+#include "PlayerControl.hpp"
 
 #include <DFInputSystem.hpp>
 
 class Model;
+class EraComponent;
+
 class StickmanPhysicsComponent;
+class StickmanPlayer;
 
 class StickmanRestarter: public DFComponent
 {
@@ -27,27 +31,10 @@ public:
     }
 };
 
-class EraComponent: public DFComponent
-{
-
-private:
-    std::vector<DFEntity*> stickmans;
-    int era;
-    int time;
-    int best;
-    int multi;
-
-public:
-    EraComponent(std::vector<DFEntity*> stickmans): stickmans(stickmans){}
-    void onInit(DFEntity &gameObject);
-    void Restart();
-    std::vector<Model*> GetModels();
-    void Update();
-};
-
 class StickmanAI: public DFComponent
 {
 
+friend StickmanPlayer;
 friend EraComponent;
 
 private:

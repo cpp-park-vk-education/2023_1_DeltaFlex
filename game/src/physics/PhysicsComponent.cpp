@@ -12,49 +12,49 @@ void StickmanPhysicsComponent::onInit(DFEntity &gameObject)
 
     m_pointMasses.reserve(INITIAL_POINTMASSES);
 
-    float bodyHeight = 200;
+    float bodyHeight = 300;
 
     float headLength = bodyHeight / 7.5f;
     float headWidth = headLength * .75f;
 
     std::shared_ptr<PointMass> head = std::make_shared<PointMass>(pos + Vector2<float>(0, 20));
-    head->m_mass = 2;
+    head->m_mass = 0.5;
 
     std::shared_ptr<PointMass> shoulder = std::make_shared<PointMass>(pos + Vector2<float>(0, 0));
-    shoulder->m_mass = 2;
+    shoulder->m_mass = 1;
 
     head->attachTo(*shoulder, 5 / 4 * headLength, 1);
 
     std::shared_ptr<PointMass> elbowL = std::make_shared<PointMass>(pos + Vector2<float>(-10, 0));
     std::shared_ptr<PointMass> elbowR = std::make_shared<PointMass>(pos + Vector2<float>(+10, 0));
-    elbowL->m_mass = 2;
-    elbowR->m_mass = 2;
+    elbowL->m_mass = 1;
+    elbowR->m_mass = 1;
     elbowL->attachTo(*shoulder, headLength * 3 / 2, 1);
     elbowR->attachTo(*shoulder, headLength * 3 / 2, 1);
 
     std::shared_ptr<PointMass> handL = std::make_shared<PointMass>(pos + Vector2<float>(-10, -20));
     std::shared_ptr<PointMass> handR = std::make_shared<PointMass>(pos + Vector2<float>(+10, +20));
-    handL->m_mass = 2;
-    handR->m_mass = 2;
+    handL->m_mass = 0.5;
+    handR->m_mass = 0.5;
     handL->attachTo(*elbowL, headLength * 2, 1);
     handR->attachTo(*elbowR, headLength * 2, 1);
 
     std::shared_ptr<PointMass> pelvis = std::make_shared<PointMass>(pos + Vector2<float>(0, -40));
-    pelvis->m_mass = 2;
+    pelvis->m_mass = 1;
     pelvis->attachTo(*shoulder, headLength * 3.5, 0.8);
     pelvis->attachTo(*head, headLength * 4.f, 0.02, false);
 
     std::shared_ptr<PointMass> kneeL = std::make_shared<PointMass>(pos + Vector2<float>(-10, -40));
     std::shared_ptr<PointMass> kneeR = std::make_shared<PointMass>(pos + Vector2<float>(+10, -40));
-    kneeL->m_mass = 2;
-    kneeR->m_mass = 2;
+    kneeL->m_mass = 3;
+    kneeR->m_mass = 3;
     kneeL->attachTo(*pelvis, headLength * 2, 1);
     kneeR->attachTo(*pelvis, headLength * 2, 1);
 
     std::shared_ptr<PointMass> footL = std::make_shared<PointMass>(pos + Vector2<float>(10, 20));
     std::shared_ptr<PointMass> footR = std::make_shared<PointMass>(pos + Vector2<float>(10, 20));
-    footL->m_mass = 2;
-    footR->m_mass = 2;
+    footL->m_mass = 3;
+    footR->m_mass = 3;
     footL->attachTo(*kneeL, headLength * 2, 1);
     footR->attachTo(*kneeR, headLength * 2, 1);
 
@@ -172,30 +172,38 @@ void StickmanPhysicsComponent::Move(int limb, double angle)
     m_pointMasses[limb]->m_pos.y = sin(angle) * (x - x_c) + cos(angle) * (y - y_c) + y_c;
 }
 
-void StickmanPhysicsComponent::MoveAll(std::array<float, 11> angles)
+void StickmanPhysicsComponent::MoveAll(std::array<float, 6> angles)
 {
     int i = 0;
     for (float angle : angles)
     {
-        Move(i, angle/1.7);
+        if (i != 2)
+            angle /= 3;
+        else
+            angle /= 2;
+        m_pointMasses[0]->m_pos.y -= 1.4;
+        Move(i, angle);
         i++;
     }
 
+    Move(7, angles[2]/4);
+    Move(8, angles[2]/4);
+
 }
 
-std::array<float, 22> StickmanPhysicsComponent::GetCoords()
+std::array<float, 12> StickmanPhysicsComponent::GetCoords()
 {
-    std::array<float, 22> coords;
-    for (size_t i = 0; i < 11; i++)
+    std::array<float, 12> coords;
+    for (size_t i = 0; i < 6; i++)
     {
-        coords[i * 2] = (m_pointMasses[i]->m_pos.x - m_pointMasses[1]->m_pos.x);
-        coords[i * 2 + 1] = m_pointMasses[i]->m_pos.y - m_pointMasses[1]->m_pos.y;
+        coords[i * 2] = (m_pointMasses[i]->m_pos.x - m_pointMasses[2]->m_pos.x);
+        coords[i * 2 + 1] = m_pointMasses[i]->m_pos.y - m_pointMasses[2]->m_pos.y;
     }
 
     float min = *std::min(coords.begin(), coords.end());
     float max = *std::max(coords.begin(), coords.end());
 
-    for (size_t i = 0; i < 22; i++)
+    for (size_t i = 0; i < 12; i++)
         coords[i] = (coords[i] - min) / (max - min);
     
     return coords;
