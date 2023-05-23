@@ -10,8 +10,11 @@ static T Map(T value, T min_from, T max_from, T min_to, T max_to)
 void MainMenuSlider::onInit(DFEntity &gameObject)
 {
     m_gameObjPos = &gameObject.transform.position;
-    m_pos = 0;
-    m_mouse_pos = {0, 0};
+
+    m_start_pix = m_gameObjPos->x - halign_line.x;
+    m_end_pix = m_gameObjPos->x + halign_line.x;
+
+    m_pos_pix = m_start_pix;
 }
 
 void MainMenuSlider::onRenderTextures(DFRenderSystem &render_system)
@@ -51,29 +54,29 @@ void MainMenuSlider::Update()
 
 void MainMenuSlider::onMouseDrag()
 {
-    m_pos = std::max<int>(halign_line.x, Input::GetMouseX());
+    m_pos_pix = std::max<int>(std::min<int>(m_end_pix, Input::GetMouseX()), m_start_pix);
 }
 
 int MainMenuSlider::getValue() const
 {
-    return Map<int>(m_pos, s_map_range.first, s_map_range.second, m_start, m_end);
+    return Map<int>(m_pos_pix, m_start_pix, m_end_pix, m_start, m_end);
 }
 
 void MainMenuSlider::Draw(DFRenderSystem &render_system)
 {
     SDL_Rect line_pos =
     {
-        .x = (int)(m_gameObjPos->x - halign_line.x),
+        .x = (int)(m_start_pix),
         .y = (int)(m_gameObjPos->y - halign_line.y),
         .w = (int)halign_line.x * 2,
         .h = (int)halign_line.y * 2
     };
-    render_system.RenderTexture(m_tex_slider, NULL, &line_pos);
+    render_system.RenderTexture(m_tex_line, NULL, &line_pos);
 
     SDL_Rect slider_pos =
     {
-        .x = (int)(m_gameObjPos->x - halign_slider.x + m_pos),
-        .y = (int)(m_gameObjPos->y - halign_slider.y),
+        .x = (int)(m_pos_pix - halign_slider.x),
+        .y = (int)(line_pos.y - halign_slider.y),
         .w = (int)halign_slider.x * 2,
         .h = (int)halign_slider.y * 2
     };
@@ -85,15 +88,3 @@ void MainMenuSlider::CheckMouseBounds()
     Vector2<float> mouse_pos(Input::GetMouseX(), Input::GetMouseY());
     is_active = (*m_gameObjPos - halign_slider < mouse_pos && mouse_pos < *m_gameObjPos + halign_slider);
 }
-
-// bool MainMenuSlider::GetMouseMoved()
-// {
-//     Vector2<float> new_pos(Input::GetMouseX(), Input::GetMouseY());
-//     std::cout << new_pos;
-//     if (new_pos != m_mouse_pos)
-//     {
-//         m_mouse_pos = new_pos;
-//         return true;
-//     }
-//     return false;
-// }

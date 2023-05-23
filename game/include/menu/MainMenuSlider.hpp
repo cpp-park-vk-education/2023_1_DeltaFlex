@@ -18,6 +18,8 @@ public:
     Vector2<float> halign_line;
     Vector2<float> halign_slider;
 
+    int m_start, m_end;
+
 public:
     void onInit(DFEntity &gameObject);
     void onRenderTextures(DFRenderSystem &render_system);
@@ -29,18 +31,14 @@ public:
 
 private:
     void CheckMouseBounds();
-    bool GetMouseMoved();
 
 private:
     bool is_active;
     bool is_dragged;
 
-    int m_start, m_end;
-
-    int m_pos;
-    static constexpr std::pair<int, int> s_map_range{0, 100}; 
+    int m_pos_pix;
+    int m_start_pix, m_end_pix;
 
     SDL_Texture *m_tex_line, *m_tex_slider;
     Vector2<float> *m_gameObjPos;
-    Vector2<float> m_mouse_pos;
 };
