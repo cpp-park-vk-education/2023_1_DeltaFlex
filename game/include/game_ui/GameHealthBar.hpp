@@ -14,6 +14,7 @@ class GameHealthBar: public DFComponent
 public:
     Vector2<float> halign;
     const int *current_health;
+    bool right_icon_place;
 
 public:
     void onInit(DFEntity &gameObject);

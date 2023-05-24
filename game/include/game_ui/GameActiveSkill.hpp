@@ -9,13 +9,10 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-class GameStaminaBar : public DFComponent
+class GameActiveSkill: public DFComponent
 {
 public:
-    Vector2<float> halign;
-    const int *current_health;
-    bool right_icon_place;
-
+    bool is_up_skill;
 public:
     void onInit(DFEntity &gameObject);
     void onRenderTextures(DFRenderSystem &render_system);
@@ -25,8 +22,4 @@ public:
 
 private:
     Vector2<float> *m_game_object_pos;
-    DFTexture icon;
-
-    static int m_margin;
-    static int m_thickness;
 };

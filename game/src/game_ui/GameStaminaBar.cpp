@@ -65,9 +65,11 @@ void GameStaminaBar::Draw(DFRenderSystem &render_system)
 
     render_system.RenderRectFilledUI(health_pos);
 
+    int dx = right_icon_place ? halign_x + 10: - halign_x - 10 - icon.width;
+
     render_system.RenderTextureUI(icon,
         {
-            m_game_object_pos->x - halign_x - 10 - icon.width,
+            m_game_object_pos->x + dx,
             m_game_object_pos->y - halign_y + 5
         });
 }
