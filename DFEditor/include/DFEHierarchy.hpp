@@ -104,6 +104,18 @@ public:
         return true;
     }
 
+    bool Delete(const QString &object_name)
+    {
+        auto elem = existing_nodes.find(object_name.toStdString());
+
+        if (elem == existing_nodes.end() )
+            return false;
+
+        ClearNode(existing_nodes[object_name.toStdString()]);
+
+        return true;
+    }
+
     bool Delete(const IDFESceneObject *object)
     {
         auto elem = existing_nodes.find(object->GetSName());

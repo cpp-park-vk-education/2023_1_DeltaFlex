@@ -44,6 +44,13 @@ DFEMainWindow::DFEMainWindow(QWidget *parent)
         &DFESceneInspector::AddSceneObjectBySignal
     );
 
+    connect(
+        mp_sceneInspector,
+        &DFESceneInspector::DeletedObject,
+        ui->viewport,
+        &DFEViewport::DeleteObject
+    );
+
     connect(mp_sceneInspector, &DFESceneInspector::ChangedProperties, this, &DFEMainWindow::ChangePropertiesHandler);
 }
 

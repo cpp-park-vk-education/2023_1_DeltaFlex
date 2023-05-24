@@ -82,3 +82,19 @@ QStandardItem *DFESceneInspectorTree::SearchObjectRec(const QString &object_name
     
     return nullptr;
 }
+
+void DFESceneInspectorTree::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_X || event->key() == Qt::Key_Backspace)
+    {
+        QModelIndexList indices = selectedIndexes();
+
+        for (int index = indices.count() - 1; index >= 0; index--)
+        {
+            QString object_name = indices.at(index).data().toString();
+
+            RemoveObject(object_name);
+            emit DeletedObject(object_name);
+        }
+    }
+}

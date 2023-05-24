@@ -19,6 +19,8 @@ public slots:
     void dragEnterEvent(QDragEnterEvent *event) override;
     // void dragMoveEvent(QDragMoveEvent *event) override;
     void dropEvent(QDropEvent *event) override;
+
+    void DeleteObject(const QString &objectName);
     void ChangeRootDirectory(const QString &dir);
 
 signals:

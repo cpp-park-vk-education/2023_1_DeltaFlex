@@ -192,3 +192,9 @@ void DFEAssetViewer::HandleElementDeleted()
         }
     }
 }
+
+void DFEAssetViewer::focusOutEvent(QFocusEvent *event)
+{
+    QListView::focusOutEvent(event);
+    clearSelection();
+}

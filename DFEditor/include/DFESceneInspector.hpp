@@ -28,8 +28,10 @@ public:
 public slots:
     void ChangePropertiesHandler(const QModelIndex &index);
     void AddSceneObjectBySignal(std::shared_ptr<IDFESceneObject> &new_object);
+    void DeletedObjectBySignal(const QString &object_name);
 signals:
     void ChangedProperties(std::shared_ptr<IDFESceneObject> &object);
+    void DeletedObject(const QString &object_name);
 protected:
     DFESceneInspectorTree *mp_sceneTree;
     std::unordered_map<QString, std::shared_ptr<IDFESceneObject>> m_objects;

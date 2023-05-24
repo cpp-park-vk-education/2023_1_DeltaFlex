@@ -37,6 +37,11 @@ void DFEViewport::dropEvent(QDropEvent *event)
     event->acceptProposedAction();
 }
 
+void DFEViewport::DeleteObject(const QString &objectName)
+{
+    m_hierarchy.Delete(objectName);
+}
+
 void DFEViewport::ChangeRootDirectory(const QString &dir)
 {
     if (QFileInfo(dir).isDir())

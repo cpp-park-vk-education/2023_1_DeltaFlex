@@ -20,6 +20,7 @@ protected:
     void ContextMenuRequested(const QPoint &pos);
     void HandleElementRenamed();
     void HandleElementDeleted();
+    void focusOutEvent(QFocusEvent *event) override;
 
 protected:
     QFileSystemModel *mp_model;

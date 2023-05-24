@@ -7,6 +7,13 @@ DFESceneInspector::DFESceneInspector(QWidget *parent, Qt::WindowFlags flags)
     setWidget(mp_sceneTree);
     setWindowTitle("Scene Inspector");
 
+    connect(
+        mp_sceneTree,
+        &DFESceneInspectorTree::DeletedObject,
+        this,
+        &DFESceneInspector::DeletedObjectBySignal
+    );
+
     connect(mp_sceneTree, &DFESceneInspectorTree::clicked, this, &DFESceneInspector::ChangePropertiesHandler);
 }
 
@@ -38,6 +45,12 @@ DFESI_ERR DFESceneInspector::AddChildSceneObject(std::shared_ptr<IDFESceneObject
 bool DFESceneInspector::HasObject(const QString &object_name) const
 {
     return static_cast<bool>(m_objects.count(object_name));
+}
+
+void DFESceneInspector::DeletedObjectBySignal(const QString &object_name)
+{
+    m_objects.erase(object_name);
+    emit DeletedObject(object_name);
 }
 
 void DFESceneInspector::ChangePropertiesHandler(const QModelIndex &index)

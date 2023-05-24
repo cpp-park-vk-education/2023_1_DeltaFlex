@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <QtWidgets>
 #include <QButtonGroup>
 
@@ -22,6 +23,14 @@ public:
     DFESV_ERR RemoveObject(const QString &object_name);
     QStandardItem *SearchObject(const QString &object_name);
     QStandardItem *SearchObjectRec(const QString &object_name);
+
+public slots:
+    void keyPressEvent(QKeyEvent *event) override;
+
+signals:
+    void DeletedObject(const QString &object_name);
+
 protected:
+
     QStandardItemModel *mp_model;
 };
