@@ -27,7 +27,7 @@ public:
 
 private:
     void CheckMouseBounds();
-    SDL_Texture *m_tex_body, *m_tex_tick;
+    DFTexture m_tex_body, m_tex_tick;
     Vector2<float> *m_gameObjPos;
     bool m_checked;
     bool is_active;

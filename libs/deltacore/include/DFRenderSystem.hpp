@@ -3,12 +3,15 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL2_gfxPrimitives.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <DFvec2.hpp>
+
+#include "DFTexture.hpp"
 
 class DFRenderSystem
 {
 public:
-    DFRenderSystem() : m_bcs(0, 0), m_renderer(NULL) {}
+    DFRenderSystem() : m_renderer(NULL) {}
     void setRenderer(SDL_Renderer *renderer)
     {
         m_renderer = renderer;
@@ -18,7 +21,6 @@ public:
     {
         return m_renderer;
     }
-
 
     void Clear()
     {
@@ -153,6 +155,19 @@ public:
         }
     }
 
+    int RenderTexture(const DFTexture &texture, SDL_Rect *srcrect, SDL_Rect *dstrect)
+    {
+        return RenderTexture(texture.m_texture, srcrect, dstrect);
+    }
+
+    int RenderTexture(const DFTexture &texture, const Vector2<float> &position, const SDL_Rect *srcrect = NULL)
+    {
+        SDL_Rect fixed_dstrect = { (int)position.x, (int)position.y, texture.width, texture.height };
+        fixed_dstrect.x += m_bcs.x;
+        fixed_dstrect.y += m_bcs.y;
+        return SDL_RenderCopy(m_renderer, texture.m_texture, srcrect, &fixed_dstrect);
+    }
+
     int RenderTexture(SDL_Texture *texture, SDL_Rect *srcrect, SDL_Rect *dstrect)
     {
         SDL_Rect fixed_dstrect = { 0 };
@@ -170,14 +185,40 @@ public:
         return SDL_RenderCopy(m_renderer, texture, srcrect, &fixed_dstrect);
     }
 
-    SDL_Texture *CreateTextureFromSurface(SDL_Surface *surface)
+    DFTexture CreateTextureFromSurface(SDL_Surface *surface)
     {
-        return SDL_CreateTextureFromSurface(m_renderer, surface);
+        return { m_renderer, surface };
     }
 
-    SDL_Texture *CreateTextureFromFile(const std::string &f)
+    DFTexture CreateTextureFromFile(const std::string &f)
     {
-        return IMG_LoadTexture(m_renderer, f.c_str());
+        SDL_Surface *surf = IMG_Load(f.c_str());
+        if (!surf)
+        {
+            throw std::runtime_error("Unable to load surface");
+        }
+        DFTexture tex(m_renderer, surf);
+        SDL_FreeSurface(surf);
+        return std::move(tex);
+
+    }
+
+    DFTexture CreateTextureText(const std::string &text, const std::string &font_path, const int font_size, const SDL_Color &text_color)
+    {
+        TTF_Font *fnt = TTF_OpenFont(font_path.c_str(), font_size);
+        if (!fnt)
+        {
+            throw std::runtime_error(TTF_GetError());
+        }
+        SDL_Surface *surf = TTF_RenderText_Solid(fnt, text.c_str(), text_color);
+        if (!surf)
+        {
+            throw std::runtime_error("Error occured while creating texture");
+        }
+        DFTexture tex(m_renderer, surf);
+        TTF_CloseFont(fnt);
+        SDL_FreeSurface(surf);
+        return std::move(tex);
     }
 
     Vector2<float> WorldToScreen(const Vector2<float> &point)
@@ -205,11 +246,16 @@ public:
         m_bcs = new_origin;
     }
 
+    static Vector2<int> const &GetOrigin()
+    {
+        return m_bcs;
+    }
+
     ~DFRenderSystem()
     {
         SDL_DestroyRenderer(m_renderer);
     }
 private:
-    Vector2<int> m_bcs;
+    static Vector2<int> m_bcs;
     SDL_Renderer *m_renderer;
 };

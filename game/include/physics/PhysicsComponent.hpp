@@ -78,8 +78,10 @@ public:
     void Update()
     {
         Vector2<float> mpos(Input::GetMouseX(), Input::GetMouseY());
-        p1 = mpos - Vector2<float>{10, 0};
-        p2 = mpos + Vector2<float>{10, 0};
+        p1 = mpos - Vector2<float>{100, 0};
+        p2 = mpos + Vector2<float>{100, 0};
+        p1 -= DFRenderSystem::GetOrigin();
+        p2 -= DFRenderSystem::GetOrigin();
         m_collider.RecalcPoints(5);
     }
     void Draw(DFRenderSystem &render_system)

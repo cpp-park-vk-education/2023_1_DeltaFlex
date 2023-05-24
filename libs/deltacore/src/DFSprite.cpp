@@ -6,7 +6,7 @@ DFSprite::DFSprite(const char *resoursePath, DFTransform &tt, int _x_offset, int
     y_offset(_y_offset)
 {
     surface = IMG_Load(resoursePath);
-    texture = NULL;
+    // texture = NULL;
     sprite_rect.w = surface->w;
     sprite_rect.h = surface->h;
 }
@@ -15,7 +15,7 @@ DFSprite::DFSprite(const char *resoursePath, DFTransform &tt):
     target_transform(tt)
 {
     surface = IMG_Load(resoursePath);
-    texture = NULL;
+    // texture = NULL;
     sprite_rect.w = surface->w;
     sprite_rect.h = surface->h;
 
@@ -26,7 +26,7 @@ DFSprite::DFSprite(const char *resoursePath, DFTransform &tt):
 
 DFSprite::~DFSprite()
 {
-    SDL_DestroyTexture(texture);
+    // SDL_DestroyTexture(texture);
     SDL_FreeSurface(surface);
 }
 

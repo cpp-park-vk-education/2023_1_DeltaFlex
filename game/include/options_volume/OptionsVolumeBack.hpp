@@ -44,6 +44,6 @@ public:
     }
 
 private:
-    SDL_Texture *bg_texture, *section_texture;
+    DFTexture bg_texture, section_texture;
     DFMusicFile menu_music;
 };
