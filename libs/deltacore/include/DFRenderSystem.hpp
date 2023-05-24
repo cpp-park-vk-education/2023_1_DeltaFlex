@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL2_gfxPrimitives.h>
 #include <SDL2/SDL_image.h>
 #include <DFvec2.hpp>
 
@@ -44,6 +45,53 @@ public:
         auto fixed_beg = begin + m_bcs;
         auto fixed_end = end + m_bcs;
         return SDL_RenderDrawLine(m_renderer, fixed_beg.x, fixed_beg.y, fixed_end.x, fixed_end.y);
+    }
+
+    int RenderRectFilledUI(const SDL_Rect &rect)
+    {
+        return SDL_RenderFillRect(m_renderer, &rect);
+    }
+
+    int RenderRectHollowUI(const SDL_Rect &rect, uint32_t thickness = 1)
+    {
+        if (thickness == 1)
+        {
+            return SDL_RenderDrawRect(m_renderer, &rect);
+        }
+        else
+        {
+            SDL_Color color;
+            SDL_GetRenderDrawColor(m_renderer, &color.r, &color.g, &color.b, &color.a);
+
+            int rc = thickLineRGBA(
+                m_renderer,
+                rect.x - thickness / 2, rect.y, rect.x + rect.w + thickness / 2, rect.y,
+                thickness,
+                color.r, color.g, color.b, color.a
+            );
+
+            rc |= thickLineRGBA(
+                m_renderer,
+                rect.x + rect.w, rect.y, rect.x + rect.w, rect.y + rect.h,
+                thickness,
+                color.r, color.g, color.b, color.a
+            );
+
+            rc |= thickLineRGBA(
+                m_renderer,
+                rect.x + rect.w + thickness / 2, rect.y + rect.h, rect.x - thickness / 2, rect.y + rect.h,
+                thickness,
+                color.r, color.g, color.b, color.a
+            );
+
+            rc |= thickLineRGBA(
+                m_renderer,
+                rect.x, rect.y + rect.h, rect.x, rect.y,
+                thickness,
+                color.r, color.g, color.b, color.a
+            );
+            return rc;
+        }
     }
 
     void RenderCircle(int32_t centreX, int32_t centreY, int32_t radius)

@@ -26,13 +26,13 @@ public:
     {
         auto this_gameobj = DFEntity::Find("BattleController");
         std::cout << "invoke BattleController start" << (void*)this_gameobj << "\n";
-        DFEntity::Find("Camera")->getComponent<DFCameraComponent>()->SetTarget(*this_gameobj);
+        // DFEntity::Find("Camera")->getComponent<DFCameraComponent>()->SetTarget(*pos);
     }
 
     void Update()
     {
-        pos->x += Input::GetAxis(AXIS_HORIZONTAL);
-        pos->y += Input::GetAxis(AXIS_VERTICAL);
+        pos->x += 5 * Input::GetAxis(AXIS_HORIZONTAL);
+        pos->y += 5 * Input::GetAxis(AXIS_VERTICAL);
     }
 
     void Draw(DFRenderSystem &render_system)

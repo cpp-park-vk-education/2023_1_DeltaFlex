@@ -28,6 +28,7 @@
 #include "PlayerControl.hpp"
 #include "game/include/options_volume/OptionsVolumeBack.hpp"
 #include "game/include/options_volume/OptionsVolumeControl.hpp"
+#include "game/include/game_ui/GameHealthBar.hpp"
 
 #include "game/include/SatCollider.hpp"
 class TestRect : public DFComponent
@@ -63,6 +64,7 @@ DFScene *default_scene(void)
     DFEntity &tmp = sc->addNewObject("BattleController");
     tmp.addComponent(new BattleController());
     tmp.onInit();
+
     std::vector<DFEntity *> stickmans;
     for (int i = 0; i < 1; i++)
     {
@@ -87,6 +89,13 @@ DFScene *default_scene(void)
     DFEntity &era = sc->addNewObject("era");
     era.addComponent(new EraComponent(stickmans));
     era.onInit();
+
+    DFEntity &my_hp = sc->addNewObject("MyHealthBar");
+    my_hp.addComponent(new GameHealthBar());
+    auto *my_hp_comp = my_hp.getComponent<GameHealthBar>();
+    my_hp_comp->halign = {400 / 2, 40 / 2};
+    my_hp.transform.position = {250, 50};
+    my_hp.onInit();
 
     // {
     //     DFEntity &stickman = sc->addNewObject("controller");
