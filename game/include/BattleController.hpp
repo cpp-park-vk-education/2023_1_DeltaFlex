@@ -39,7 +39,7 @@ public:
     {
         render_system.RenderTexture(tex, NULL, &tx_rect);
 
-        render_system.RenderCircle(pos->x, pos->y, 10);
+        // render_system.RenderCircle(pos->x, pos->y, 10);
     }
 private:
     SDL_Texture *tex;

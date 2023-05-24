@@ -64,9 +64,7 @@ public:
         //     color.a
         // );
 #ifndef DEVELOPMENT
-        filledCircleRGBA(render_system.getRenderer(),
-            m_attachedPointMass->m_pos.x, m_attachedPointMass->m_pos.y, m_radius,
-            color.r, color.g, color.b, color.a);
+        render_system.RenderFilledCircle(m_attachedPointMass->m_pos, m_radius);
 #else
         render_system.SetColor(color);
         render_system.RenderCircle(

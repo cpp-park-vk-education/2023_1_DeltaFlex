@@ -47,6 +47,18 @@ public:
         return SDL_RenderDrawLine(m_renderer, fixed_beg.x, fixed_beg.y, fixed_end.x, fixed_end.y);
     }
 
+    int RenderThickLine(const Vector2<int> &begin, const Vector2<int> &end, int width = 1)
+    {
+        SDL_Color color;
+        SDL_GetRenderDrawColor(m_renderer, &color.r, &color.g, &color.b, &color.a);
+        auto fixed_beg = begin + m_bcs;
+        auto fixed_end = end + m_bcs;
+        return thickLineRGBA(m_renderer,
+            fixed_beg.x, fixed_beg.y, fixed_end.x, fixed_end.y,
+            width,
+            color.r, color.g, color.b, color.a);
+    }
+
     int RenderRectFilledUI(const SDL_Rect &rect)
     {
         return SDL_RenderFillRect(m_renderer, &rect);
@@ -92,6 +104,16 @@ public:
             );
             return rc;
         }
+    }
+
+    void RenderFilledCircle(const Vector2<float> &center, const int radius)
+    {
+        SDL_Color color;
+        SDL_GetRenderDrawColor(m_renderer, &color.r, &color.g, &color.b, &color.a);
+        auto fixed_center = center + m_bcs;
+        filledCircleRGBA(m_renderer,
+            fixed_center.x, fixed_center.y, radius,
+            color.r, color.g, color.b, color.a);
     }
 
     void RenderCircle(int32_t centreX, int32_t centreY, int32_t radius)
