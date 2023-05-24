@@ -12,22 +12,22 @@
 #include "PhysicsComponent.hpp"
 class StickmanPhysicsComponent;
 
-class Model: public BaseModel
+class WalkModel: public BaseModel
 {
 
 static const size_t INPUT_DIM = 12;
 static const size_t H_DIM1 = 31;
 static const size_t H_DIM2 = 23;
 static const size_t H_DIM3 = 17;
-static const size_t OUT_DIM = 6;
+static const size_t OUT_DIM = 3;
 
 friend class Evolution;
 friend class EraComponent;
 
 public:
-    Model(StickmanPhysicsComponent *stickman);
-    Model(StickmanPhysicsComponent *stickman, std::string file);
-    std::array<float, OUT_DIM> predict();
+    WalkModel(StickmanPhysicsComponent *stickman);
+    WalkModel(StickmanPhysicsComponent *stickman, std::string file);
+    int predict();
     void updateRecord();
     float getRecord() const;
     void resetRecord();

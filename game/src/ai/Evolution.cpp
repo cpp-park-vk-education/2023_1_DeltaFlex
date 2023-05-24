@@ -224,7 +224,6 @@ void Evolution::Mutation(float n, float procent)
             }
         }
     }
-    
 }
 
 std::vector<Model*> Evolution::getModels(int k)

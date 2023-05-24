@@ -39,17 +39,91 @@ void StickmanRestarter::RestartStickman()
 void StickmanAI::onInit(DFEntity &gameObject)
 {
     my_stickman = gameObject.getComponent<StickmanPhysicsComponent>();
-    model = new Model(my_stickman);
+    
+    attack_model = new Model(my_stickman, "../game_base_models/attack.txt");
+    protect_model = new Model(my_stickman, "../game_base_models/protect.txt");
+    idle_model = new Model(my_stickman, "../game_base_models/idle.txt");
+    model = idle_model;
+
+    walk_model = new WalkModel(my_stickman);
+    battle_model = new BattleModel(my_stickman);
+    
+    battle_action = 0;
+    walk_action = 0;
+    walk_flag = false;
+
+    battle_delay = 60;
+    walk_delay = 60;
 }
 
 void StickmanAI::Update()
 {
-    auto result = model->predict();
-    my_stickman->MoveAll(result);
-    model->updateRecord();
+    if (walk_delay > 0)
+    {
+        walk_delay--;
+    }
+    else
+    {
+        walk_action = walk_model->predict();
+        walk_delay = 60;
+    }
+
+    if (battle_delay > 0)
+    {
+        battle_delay--;
+    }
+    else
+    {
+        battle_action = battle_model->predict();
+
+        if (battle_action == 0)
+            model = idle_model;
+        else if (battle_action == 1)
+            model = attack_model;
+        else if (battle_action == 2)
+            model = protect_model;
+        battle_delay = 60;
+    }
+
+    doWalk();
+    doBattle();
 }
 
 bool StickmanAI::getActive()
 {
     return model->getActive();
+}
+
+void StickmanAI::doBattle()
+{
+    auto result = model->predict();
+    my_stickman->MoveAll(result);
+}
+
+void StickmanAI::doWalk()
+{
+    if (walk_action == 1)
+    {
+        my_stickman->m_pointMasses[2]->pinTo({my_stickman->m_pointMasses[2]->m_pinPos.x - 2, my_stickman->m_pointMasses[2]->m_pinPos.y});
+        if (walk_flag)
+            my_stickman->m_pointMasses[9]->pinTo({my_stickman->m_pointMasses[9]->m_pinPos.x - 4, my_stickman->m_pointMasses[9]->m_pinPos.y});
+        else
+            my_stickman->m_pointMasses[10]->pinTo({my_stickman->m_pointMasses[10]->m_pinPos.x - 4, my_stickman->m_pointMasses[10]->m_pinPos.y});
+        if (my_stickman->m_pointMasses[9]->m_pinPos.x - my_stickman->m_pointMasses[10]->m_pinPos.x > 50)
+            walk_flag = true;
+        if (my_stickman->m_pointMasses[10]->m_pinPos.x - my_stickman->m_pointMasses[9]->m_pinPos.x > 50)
+            walk_flag = false;
+    }
+    else if (walk_action == 2)
+    {
+        my_stickman->m_pointMasses[2]->pinTo({my_stickman->m_pointMasses[2]->m_pinPos.x + 2, my_stickman->m_pointMasses[2]->m_pinPos.y});
+        if (walk_flag)
+            my_stickman->m_pointMasses[9]->pinTo({my_stickman->m_pointMasses[9]->m_pinPos.x + 4, my_stickman->m_pointMasses[9]->m_pinPos.y});
+        else
+            my_stickman->m_pointMasses[10]->pinTo({my_stickman->m_pointMasses[10]->m_pinPos.x + 4, my_stickman->m_pointMasses[10]->m_pinPos.y});
+        if (my_stickman->m_pointMasses[9]->m_pinPos.x - my_stickman->m_pointMasses[10]->m_pinPos.x > 50)
+            walk_flag = false;
+        if (my_stickman->m_pointMasses[10]->m_pinPos.x - my_stickman->m_pointMasses[9]->m_pinPos.x > 50)
+            walk_flag = true;
+    }
 }

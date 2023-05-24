@@ -1,39 +1,13 @@
 #pragma once
 
-#include <array>
 #include <iostream>
-#include <random>
-#include <iostream>
-#include <fstream>
 #include <string>
-
-const size_t INPUT_DIM = 12;
-const size_t H_DIM1 = 31;
-const size_t H_DIM2 = 23;
-const size_t H_DIM3 = 17;
-const size_t OUT_DIM = 6;
-
-class StickmanPhysicsComponent;
 
 class BaseModel
 {
 
 public:
-    BaseModel(StickmanPhysicsComponent *stickman);
-    BaseModel(StickmanPhysicsComponent *stickman, std::string file);
-    void save(int stage, int current);
-    void load(std::string file);
-
-protected:
-    std::array<std::array<float, H_DIM1>, INPUT_DIM> w1;
-    std::array<float, H_DIM1> b1;
-    std::array<std::array<float, H_DIM2>, H_DIM1> w2;
-    std::array<float, H_DIM2> b2;
-    std::array<std::array<float, H_DIM3>, H_DIM2> w3;
-    std::array<float, H_DIM3> b3;
-    std::array<std::array<float, OUT_DIM>, H_DIM3> w4;
-    std::array<float, OUT_DIM> b4;
-
-    StickmanPhysicsComponent *stickman;
+    virtual void save(int stage, int current) = 0;
+    virtual void load(std::string file) = 0;
 
 };

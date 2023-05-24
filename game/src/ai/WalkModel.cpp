@@ -1,6 +1,6 @@
-#include "BaseModel.hpp"
+#include "WalkModel.hpp"
 
-BaseModel::BaseModel(StickmanPhysicsComponent *stickman): stickman(stickman)
+WalkModel::WalkModel(StickmanPhysicsComponent *stickman): stickman(stickman)
 {
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -36,14 +36,14 @@ BaseModel::BaseModel(StickmanPhysicsComponent *stickman): stickman(stickman)
 
 }
 
-BaseModel::BaseModel(StickmanPhysicsComponent *stickman, std::string file): stickman(stickman)
+WalkModel::WalkModel(StickmanPhysicsComponent *stickman, std::string file): stickman(stickman)
 {
     load(file);
 }
 
-void BaseModel::save(int stage, int current)
+void WalkModel::save(int stage, int current)
 {
-    std::ofstream output_file("../complete_CommonModels/CommonModel" + std::to_string(stage) + " " + std::to_string(current) + ".txt", std::ios::out);
+    std::ofstream output_file("../complete_WalkModels/WalkModel" + std::to_string(stage) + " " + std::to_string(current) + ".txt", std::ios::out);
 
     if (output_file.is_open()){
 
@@ -102,7 +102,7 @@ void BaseModel::save(int stage, int current)
     }
 }
 
-void BaseModel::load(std::string file)
+void WalkModel::load(std::string file)
 {
     std::ifstream input_file(file);
 
@@ -151,4 +151,55 @@ void BaseModel::load(std::string file)
     else {
         std::cout << "Не удалось открыть файл." << std::endl;
     }
+}
+
+int WalkModel::predict()
+{
+    auto input_layout = stickman->GetCoords();
+
+    auto inv_layout1 = matrixMultiplication(input_layout, w1);
+    auto inv_layout2 = matrixAddition(inv_layout1, b1);
+    auto inv_layout3 = activeFunc(inv_layout2);
+
+    auto inv_layout4 = matrixMultiplication(inv_layout3, w2);
+    auto inv_layout5 = matrixAddition(inv_layout4, b2);
+    auto inv_layout6 = activeFunc(inv_layout5);
+
+    auto inv_layout7 = matrixMultiplication(inv_layout6, w3);
+    auto inv_layout8 = matrixAddition(inv_layout7, b3);
+    auto inv_layout9 = activeFunc(inv_layout8);
+
+    auto inv_layout10 = matrixMultiplication(inv_layout9, w4);
+    auto result = matrixAddition(inv_layout10, b4);
+
+    int action = std::distance(result.begin(), std::max_element(result.begin(), result.end()));
+    
+    return action;
+}
+
+void WalkModel::updateRecord()
+{
+    // if (stickman->m_pointMasses[0]->m_pos.y > 650)
+        // active = false;
+    if (active)
+        best_record +=
+        (stickman->m_pointMasses[2]->m_pos.y - stickman->m_pointMasses[1]->m_pos.y) +
+        (stickman->m_pointMasses[1]->m_pos.y - stickman->m_pointMasses[0]->m_pos.y);
+
+}
+
+float WalkModel::getRecord() const
+{
+    return best_record;
+}
+
+void WalkModel::resetRecord()
+{
+    active = true;
+    best_record = 0;
+}
+
+bool WalkModel::getActive() const
+{
+    return active;
 }

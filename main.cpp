@@ -84,9 +84,9 @@ DFScene *default_scene(void)
         t.onInit();
     }
 
-    // DFEntity &era = sc->addNewObject("era");
-    // era.addComponent(new EraComponent(stickmans));
-    // era.onInit();
+    DFEntity &era = sc->addNewObject("era");
+    era.addComponent(new EraComponent(stickmans));
+    era.onInit();
 
     // {
     //     DFEntity &stickman = sc->addNewObject("controller");

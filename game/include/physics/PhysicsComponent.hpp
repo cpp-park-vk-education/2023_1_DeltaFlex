@@ -59,6 +59,6 @@ public:
         return false;
     };
 
-    std::array<float, 22> GetCoords();
+    std::array<float, 12> GetCoords();
 
 };

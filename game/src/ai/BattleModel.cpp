@@ -1,6 +1,6 @@
-#include "Model.hpp"
+#include "BattleModel.hpp"
 
-Model::Model(StickmanPhysicsComponent *stickman): stickman(stickman)
+BattleModel::BattleModel(StickmanPhysicsComponent *stickman): stickman(stickman)
 {
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -36,14 +36,14 @@ Model::Model(StickmanPhysicsComponent *stickman): stickman(stickman)
 
 }
 
-Model::Model(StickmanPhysicsComponent *stickman, std::string file): stickman(stickman)
+BattleModel::BattleModel(StickmanPhysicsComponent *stickman, std::string file): stickman(stickman)
 {
     load(file);
 }
 
-void Model::save(int stage, int current)
+void BattleModel::save(int stage, int current)
 {
-    std::ofstream output_file("../complete_CommonModels/CommonModel" + std::to_string(stage) + " " + std::to_string(current) + ".txt", std::ios::out);
+    std::ofstream output_file("../complete_BattleModels/BattleModel" + std::to_string(stage) + " " + std::to_string(current) + ".txt", std::ios::out);
 
     if (output_file.is_open()){
 
@@ -102,7 +102,7 @@ void Model::save(int stage, int current)
     }
 }
 
-void Model::load(std::string file)
+void BattleModel::load(std::string file)
 {
     std::ifstream input_file(file);
 
@@ -153,7 +153,7 @@ void Model::load(std::string file)
     }
 }
 
-std::array<float, Model::OUT_DIM> Model::predict()
+int BattleModel::predict()
 {
     auto input_layout = stickman->GetCoords();
 
@@ -170,13 +170,14 @@ std::array<float, Model::OUT_DIM> Model::predict()
     auto inv_layout9 = activeFunc(inv_layout8);
 
     auto inv_layout10 = matrixMultiplication(inv_layout9, w4);
-    auto inv_layout11 = matrixAddition(inv_layout10, b4);
-    auto result = activeFunc(inv_layout11);
+    auto result = matrixAddition(inv_layout10, b4);
+
+    int action = std::distance(result.begin(), std::max_element(result.begin(), result.end()));
     
-    return result;
+    return action;
 }
 
-void Model::updateRecord()
+void BattleModel::updateRecord()
 {
     // if (stickman->m_pointMasses[0]->m_pos.y > 650)
         // active = false;
@@ -187,18 +188,18 @@ void Model::updateRecord()
 
 }
 
-float Model::getRecord() const
+float BattleModel::getRecord() const
 {
     return best_record;
 }
 
-void Model::resetRecord()
+void BattleModel::resetRecord()
 {
     active = true;
     best_record = 0;
 }
 
-bool Model::getActive() const
+bool BattleModel::getActive() const
 {
     return active;
 }
