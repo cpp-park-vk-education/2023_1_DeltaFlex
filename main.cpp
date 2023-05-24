@@ -29,6 +29,7 @@
 #include "game/include/options_volume/OptionsVolumeBack.hpp"
 #include "game/include/options_volume/OptionsVolumeControl.hpp"
 #include "game/include/game_ui/GameHealthBar.hpp"
+#include "game/include/ai/StickmanStatsComponent.hpp"
 
 #include "game/include/SatCollider.hpp"
 class TestRect : public DFComponent
@@ -50,6 +51,7 @@ public:
     {
         if (DFEntity::Find("stickman_0")->getComponent<StickmanPhysicsComponent>()->CheckCollision(m_collider))
         {
+            DFEntity::Find("stickman_0")->getComponent<StickmanStats>()->applyDamage(10);
             render_system.SetColor(255, 0, 0);
         }
         m_collider.Draw(render_system);
@@ -73,6 +75,7 @@ DFScene *default_scene(void)
         stickman.addComponent(new StickmanRestarter());
         stickman.addComponent(new StickmanAI());
         stickman.addComponent(new StickmanPlayer());
+        stickman.addComponent(new StickmanStats());
         stickmans.push_back(&stickman);
         // stickman.transform.position.x = 50;
         // stickman.transform.position.y = 50;
