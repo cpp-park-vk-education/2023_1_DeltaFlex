@@ -24,8 +24,8 @@ class StickmanPhysicsComponent : public DFComponent
 {
 public:
     StickmanAI *ai;
-    std::vector<std::shared_ptr<PointMass>> m_pointMasses;
-    std::vector<std::shared_ptr<StickmanCircle>> m_stickmanCircles;
+    std::vector<PointMass> m_pointMasses;
+    std::vector<StickmanCircle> m_stickmanCircles;
 
 public:
     // SDL_Color m_color{.r = 0xFF, .g = 0xFF, .b = 0xFF, .a = 0xFF};
@@ -39,7 +39,7 @@ public:
 
     void Draw(DFRenderSystem &render_system) override;
 
-    void addStickmanCircle(std::shared_ptr<StickmanCircle> &c);
+    void addStickmanCircle(StickmanCircle &c);
 
     void Move(int limb, double angle);
 
@@ -49,7 +49,7 @@ public:
     {
         for(auto &p_mass: m_pointMasses)
         {
-            for (auto &p_link: p_mass->links)
+            for (auto &p_link: p_mass.links)
             {
                 if (p_link->m_collider.isColliding(collider))
                 {

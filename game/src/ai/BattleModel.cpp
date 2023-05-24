@@ -183,8 +183,8 @@ void BattleModel::updateRecord()
         // active = false;
     if (active)
         best_record +=
-        (stickman->m_pointMasses[2]->m_pos.y - stickman->m_pointMasses[1]->m_pos.y) +
-        (stickman->m_pointMasses[1]->m_pos.y - stickman->m_pointMasses[0]->m_pos.y);
+        (stickman->m_pointMasses[2].m_pos.y - stickman->m_pointMasses[1].m_pos.y) +
+        (stickman->m_pointMasses[1].m_pos.y - stickman->m_pointMasses[0].m_pos.y);
 
 }
 
