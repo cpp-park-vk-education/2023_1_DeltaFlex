@@ -29,6 +29,7 @@
 #include "game/include/options_volume/OptionsVolumeBack.hpp"
 #include "game/include/options_volume/OptionsVolumeControl.hpp"
 #include "game/include/game_ui/GameHealthBar.hpp"
+#include "game/include/game_ui/GameStaminaBar.hpp"
 #include "game/include/ai/StickmanStatsComponent.hpp"
 
 #include "game/include/SatCollider.hpp"
@@ -69,9 +70,16 @@ DFScene *default_scene(void)
     DFEntity &my_hp = sc->addNewObject("MyHealthBar");
     my_hp.addComponent(new GameHealthBar());
     auto *my_hp_comp = my_hp.getComponent<GameHealthBar>();
-    my_hp_comp->halign = { 400 / 2, 40 / 2 };
+    my_hp_comp->halign = { 390 / 2, 40 / 2 };
     my_hp.transform.position = { 250, 50 };
     my_hp.onInit();
+
+    DFEntity &my_sp = sc->addNewObject("MyStaminaBar");
+    my_sp.addComponent(new GameStaminaBar());
+    auto *my_sp_comp = my_sp.getComponent<GameStaminaBar>();
+    my_sp_comp->halign = { 390 / 2, 40 / 2 };
+    my_sp.transform.position = { 250, 2*50 };
+    my_sp.onInit();
 
     // {
     //     DFEntity &stickman = sc->addNewObject("controller");

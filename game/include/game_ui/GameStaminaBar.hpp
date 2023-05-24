@@ -9,7 +9,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-class GameHealthBar: public DFComponent
+class GameStaminaBar : public DFComponent
 {
 public:
     Vector2<float> halign;
@@ -25,7 +25,7 @@ public:
 private:
     Vector2<float> *m_game_object_pos;
     DFTexture icon;
-    
+
     static int m_margin;
     static int m_thickness;
 };

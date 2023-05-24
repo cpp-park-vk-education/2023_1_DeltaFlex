@@ -168,6 +168,12 @@ public:
         return SDL_RenderCopy(m_renderer, texture.m_texture, srcrect, &fixed_dstrect);
     }
 
+    int RenderTextureUI(const DFTexture &texture, const Vector2<float> &position, const SDL_Rect *srcrect = NULL)
+    {
+        SDL_Rect fixed_dstrect = { (int)position.x, (int)position.y, texture.width, texture.height };
+        return SDL_RenderCopy(m_renderer, texture.m_texture, srcrect, &fixed_dstrect);
+    }
+
     int RenderTexture(SDL_Texture *texture, SDL_Rect *srcrect, SDL_Rect *dstrect)
     {
         SDL_Rect fixed_dstrect = { 0 };
