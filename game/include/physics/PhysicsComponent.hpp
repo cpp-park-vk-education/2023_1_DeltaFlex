@@ -16,7 +16,7 @@ constexpr int HEIGHT = 720;
 
 constexpr float BODY_HEIGHT = 50;
 
-constexpr std::size_t INITIAL_POINTMASSES = 10;
+constexpr std::size_t INITIAL_POINTMASSES = 11;
 
 class StickmanAI;
 
