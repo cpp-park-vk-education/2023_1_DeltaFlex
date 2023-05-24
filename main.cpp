@@ -29,6 +29,7 @@
 #include "game/include/options_volume/OptionsVolumeBack.hpp"
 #include "game/include/options_volume/OptionsVolumeControl.hpp"
 #include "game/include/game_ui/GameHealthBar.hpp"
+#include "game/include/ai/StickmanStatsComponent.hpp"
 
 #include "game/include/SatCollider.hpp"
 
@@ -47,6 +48,7 @@ DFScene *default_scene(void)
         stickman.addComponent(new StickmanRestarter());
         stickman.addComponent(new StickmanAI());
         stickman.addComponent(new StickmanPlayer());
+        stickman.addComponent(new StickmanStats());
         stickmans.push_back(&stickman);
         // stickman.transform.position.x = 50;
         // stickman.transform.position.y = 50;

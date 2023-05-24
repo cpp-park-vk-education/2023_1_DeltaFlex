@@ -13,7 +13,7 @@ class GameHealthBar: public DFComponent
 {
 public:
     Vector2<float> halign;
-    int current_health;
+    const int *current_health;
 
 public:
     void onInit(DFEntity &gameObject);
@@ -24,6 +24,7 @@ public:
 
 private:
     Vector2<float> *m_game_object_pos;
+    
     static int m_margin;
     static int m_thickness;
 };

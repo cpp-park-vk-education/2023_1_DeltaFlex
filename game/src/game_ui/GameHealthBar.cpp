@@ -1,4 +1,6 @@
 #include "../../include/game_ui/GameHealthBar.hpp"
+#include "../../include/ai/StickmanStatsComponent.hpp"
+#include <DFEntity.hpp>
 
 int GameHealthBar::m_margin;
 int GameHealthBar::m_thickness;
@@ -13,8 +15,6 @@ void GameHealthBar::onInit(DFEntity &gameObject)
     m_game_object_pos = &gameObject.transform.position;
     m_thickness = 5;
     m_margin = m_thickness + 3;
-
-    current_health = 20;
 }
 
 void GameHealthBar::onRenderTextures(DFRenderSystem &render_system)
@@ -24,7 +24,7 @@ void GameHealthBar::onRenderTextures(DFRenderSystem &render_system)
 
 void GameHealthBar::Start()
 {
-
+    current_health = DFEntity::Find("stickman_0")->getComponent<StickmanStats>()->getHP();
 }
 
 void GameHealthBar::Update()
@@ -47,9 +47,9 @@ void GameHealthBar::Draw(DFRenderSystem &render_system)
     render_system.RenderRectHollowUI(outline_pos, m_thickness);
 
     int hp_mapped = Map(
-        current_health,
+        *current_health,
         0, 100,
-        outline_pos.x + m_margin,
+        outline_pos.x,
         outline_pos.x + outline_pos.w - 2 * m_margin
     );
 
