@@ -1,0 +1,11 @@
+DFEditor/**/build*
+DFEditor/**/.vscode/**
+DFEditor/**/CMakeFiles
+DFEditor/**/Makefile
+DFEditor/**/CMakeCache.txt
+DFEditor/**/*.cmake
+DFEditor/**/dfeditor*
+DFEditor/**/*autogen
+DFEditor/**/*_testing
+
+.vscode/**
