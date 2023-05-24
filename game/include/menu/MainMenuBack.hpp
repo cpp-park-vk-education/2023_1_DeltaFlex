@@ -24,18 +24,23 @@ public:
         game_ver_rect.x = 700;
         game_ver_rect.y = 700;
     }
-    
+
     void onRenderTextures(DFRenderSystem &render_system)
     {
         // ./resources/fonts/sf-mono.otf
-        auto *fnt = TTF_OpenFont("./resources/fonts/corruptor.clean-ldr-regular.ttf", 15);
-        std::cout << TTF_GetError() << "\n";
-        SDL_Color textColor = {255, 255, 255, 0};
-        auto *surf = TTF_RenderText_Solid(fnt, "build: " __TIMESTAMP__, textColor);
+        // auto *fnt = TTF_OpenFont("./resources/fonts/corruptor.clean-ldr-regular.ttf", 15);
+        // std::cout << TTF_GetError() << "\n";
+        // SDL_Color textColor = {255, 255, 255, 0};
+        // auto *surf = TTF_RenderText_Solid(fnt, "build: " __TIMESTAMP__, textColor);
+        game_ver = render_system.CreateTextureText(
+            "build: " __TIMESTAMP__,
+            "./resources/fonts/corruptor.clean-ldr-regular.ttf",
+            // "./resources/fonts/sf-mono.otf",
+            15,
+            { 255, 255, 255, 0 });
         // game_ver = SDL_CreateTextureFromSurface(render_data.renderer.get(), surf);
-        game_ver = render_system.CreateTextureFromSurface(surf);
-        game_ver_rect.w = surf->w;
-        game_ver_rect.h = surf->h;
+        game_ver_rect.w = game_ver.width;
+        game_ver_rect.h = game_ver.height;
         // SDL_FreeSurface(surf);
         // TTF_CloseFont(fnt);
         // std::cout << "load text " << img_path.c_str() << "\n";
@@ -59,21 +64,17 @@ public:
 
     void Draw(DFRenderSystem &render_system)
     {
-        SDL_Rect logo;
-        logo.x = 1280 / 2 - 650 / 2;
-        logo.y = 720 / 6 + (int)logo_y_align - 220 / 2;
-        logo.w = 650;
-        logo.h = 220;
-        // SDL_RenderCopy(render_data.renderer.get(), tex, NULL, NULL);
         render_system.RenderTexture(tex, NULL, NULL);
-        // SDL_RenderCopy(render_data.renderer.get(), logo_tex, NULL, &logo);
-        render_system.RenderTexture(logo_tex, NULL, &logo);
-        // SDL_RenderCopy(render_data.renderer.get(), game_ver, NULL, &game_ver_rect);
-        render_system.RenderTexture(game_ver, NULL, &game_ver_rect);
+        render_system.RenderTexture(logo_tex,
+            {
+                1280 / 2 - 650 / 2,
+                720 / 6 + logo_y_align - 220 / 2
+            });
+        render_system.RenderTexture(game_ver, {700, 700});
     }
 
 private:
-    SDL_Texture *tex, *logo_tex, *game_ver;
+    DFTexture tex, logo_tex, game_ver;
     SDL_Rect game_ver_rect;
     float counter, logo_y_align;
     DFMusicFile menu_music;
