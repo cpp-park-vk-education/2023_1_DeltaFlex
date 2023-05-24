@@ -47,7 +47,7 @@ public:
 
     void Start()
     {
-        // DFAudioManager::PlayMusic(menu_music, -1);
+        DFAudioManager::PlayMusic(menu_music, -1);
         counter = 0;
     }
 

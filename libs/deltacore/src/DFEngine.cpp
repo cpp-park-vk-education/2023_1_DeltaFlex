@@ -32,6 +32,7 @@ DFEngine::DFEngine()
     }
     sceneManager = std::make_unique<DFSceneManager>();
     audioManager = std::make_unique<DFAudioManager>();
+    Mix_VolumeMusic(16);
     Instance = this;
     spdlog::debug("Engine instance created successfuly");
 }

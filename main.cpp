@@ -136,7 +136,7 @@ DFScene *options_volume_control(void)
     slider.addComponent(new OptionsMusicSlider());
     auto *tmp4 = slider.getComponent<OptionsMusicSlider>();
     tmp4->img_path_line = "./resources/images/menu-slider-line.png";
-    tmp4->halign_line = { 500 / 2, 5 / 2 };
+    tmp4->halign_line = { 512 / 2, 5 / 2 };
     tmp4->img_path_slider = "./resources/images/menu-slider-slider.png";
     tmp4->halign_slider = { 20 / 2, 50 / 2 };
     slider.onInit();
