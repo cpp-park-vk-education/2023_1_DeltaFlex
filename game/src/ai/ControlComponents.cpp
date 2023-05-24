@@ -5,6 +5,7 @@
 void StickmanRestarter::onInit(DFEntity &gameObject)
 {
     my_stickman = gameObject.getComponent<StickmanPhysicsComponent>();
+    RestartStickman();
 }
 
 void StickmanRestarter::RestartStickman()
@@ -65,7 +66,7 @@ void StickmanAI::Update()
     else
     {
         walk_action = walk_model->predict();
-        walk_delay = 60;
+        walk_delay = 15;
     }
 
     if (battle_delay > 0)
@@ -82,7 +83,7 @@ void StickmanAI::Update()
             model = attack_model;
         else if (battle_action == 2)
             model = protect_model;
-        battle_delay = 60;
+        battle_delay = 15;
     }
 
     doWalk();
@@ -101,7 +102,10 @@ void StickmanAI::doBattle()
 }
 
 void StickmanAI::doWalk()
-{
+{   
+    if (my_stickman->m_pointMasses[2]->m_pinPos.x < 30)
+        walk_action = 2;
+
     if (walk_action == 1)
     {
         my_stickman->m_pointMasses[2]->pinTo({my_stickman->m_pointMasses[2]->m_pinPos.x - 2, my_stickman->m_pointMasses[2]->m_pinPos.y});

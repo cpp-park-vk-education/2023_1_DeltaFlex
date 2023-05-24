@@ -149,7 +149,7 @@ void Model::load(std::string file)
         }
     }
     else {
-        std::cout << "Не удалось открыть файл." << std::endl;
+        std::cout << "Не удалось открыть файл: " << file << std::endl;
     }
 }
 

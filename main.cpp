@@ -72,10 +72,34 @@ DFScene *default_scene(void)
         stickman.addComponent(new StickmanAI());
         stickman.addComponent(new StickmanPlayer());
         stickmans.push_back(&stickman);
-        // stickman.transform.position.x = 50;
-        // stickman.transform.position.y = 50;
         stickman.onInit();
-        // std::cout << "after construction" << &stickman;
+    }
+
+    {
+        DFEntity &t = sc->addNewObject("skibidi");
+        t.addComponent(new TestRect());
+        t.onInit();
+    }
+
+    return sc;
+}
+
+DFScene *evo_scene(void)
+{
+    DFWorldScene *sc = new DFWorldScene();
+    DFEntity &tmp = sc->addNewObject("BattleController");
+    tmp.addComponent(new BattleController());
+    tmp.onInit();
+    std::vector<DFEntity *> stickmans;
+    for (int i = 0; i < 1; i++)
+    {
+        DFEntity &stickman = sc->addNewObject("stickman_" + std::to_string(i));
+        stickman.addComponent(new StickmanPhysicsComponent());
+        stickman.addComponent(new StickmanRestarter());
+        stickman.addComponent(new StickmanAI());
+        stickman.addComponent(new StickmanPlayer());
+        stickmans.push_back(&stickman);
+        stickman.onInit();
     }
 
     {
@@ -88,19 +112,6 @@ DFScene *default_scene(void)
     era.addComponent(new EraComponent(stickmans));
     era.onInit();
 
-    // {
-    //     DFEntity &stickman = sc->addNewObject("controller");
-    //     stickman.addComponent(new TestAbober());
-    //     stickman.onInit();
-    // }
-
-    // DFEntity &stickman1 = sc->addNewObject();
-    // stickman1.addComponent(new StickmanPhysicsComponent());
-    // stickman1.addComponent(new TestAbober());
-    // stickman1.onInit();
-    // // stickman2.addComponent(new TestAbober());
-    // stickman2.getComponent<StickmanPhysicsComponent>()->m_stickmanCircles[0]->m_attachedPointMass->m_pos.x += 300;
-    // stickman.addComponent(new PlayerControl());
     return sc;
 }
 
