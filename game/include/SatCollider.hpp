@@ -116,7 +116,7 @@ public:
         return true;
     }
 
-private:
+// private:
     Vector2<float> &p1, &p2;
     Vector2<float> points[4];
 };

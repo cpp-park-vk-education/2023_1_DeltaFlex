@@ -31,32 +31,6 @@
 #include "game/include/game_ui/GameHealthBar.hpp"
 
 #include "game/include/SatCollider.hpp"
-class TestRect : public DFComponent
-{
-public:
-    Vector2<float> p1, p2;
-
-    SATCollider m_collider;
-    TestRect() : m_collider(p1, p2) {}
-
-    void Update()
-    {
-        Vector2<float> mpos(Input::GetMouseX(), Input::GetMouseY());
-        p1 = mpos - Vector2<float>{10, 0};
-        p2 = mpos + Vector2<float>{10, 0};
-        m_collider.RecalcPoints(5);
-    }
-    void Draw(DFRenderSystem &render_system)
-    {
-        if (DFEntity::Find("stickman_0")->getComponent<StickmanPhysicsComponent>()->CheckCollision(m_collider))
-        {
-            render_system.SetColor(255, 0, 0);
-        }
-        m_collider.Draw(render_system);
-        render_system.SetColor(0, 0, 0);
-
-    }
-};
 
 DFScene *default_scene(void)
 {
@@ -93,8 +67,8 @@ DFScene *default_scene(void)
     DFEntity &my_hp = sc->addNewObject("MyHealthBar");
     my_hp.addComponent(new GameHealthBar());
     auto *my_hp_comp = my_hp.getComponent<GameHealthBar>();
-    my_hp_comp->halign = {400 / 2, 40 / 2};
-    my_hp.transform.position = {250, 50};
+    my_hp_comp->halign = { 400 / 2, 40 / 2 };
+    my_hp.transform.position = { 250, 50 };
     my_hp.onInit();
 
     // {

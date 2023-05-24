@@ -27,7 +27,7 @@ void StickmanPhysicsComponent::onInit(DFEntity &gameObject)
     PointMass &shoulder = m_pointMasses.back();
     shoulder.m_mass = 1;
 
-     m_pointMasses.emplace_back(pos + Vector2<float>(0, -40));
+    m_pointMasses.emplace_back(pos + Vector2<float>(0, -40));
     PointMass &pelvis = m_pointMasses.back();
     pelvis.m_mass = 1;
 
@@ -62,19 +62,31 @@ void StickmanPhysicsComponent::onInit(DFEntity &gameObject)
     m_stickmanCircles.emplace_back(headLength * .75f, Vector2<float>(40.f, 40.f));
     StickmanCircle &headCircle = m_stickmanCircles.back();
 
-    head.attachTo(shoulder, 5 / 4 * headLength, 1);
-    elbowL.attachTo(shoulder, headLength * 3 / 2, 1);
-    elbowR.attachTo(shoulder, headLength * 3 / 2, 1);
-    handL.attachTo(elbowL, headLength * 2, 1);
-    handR.attachTo(elbowR, headLength * 2, 1);
-    pelvis.attachTo(shoulder, headLength * 3.5, 0.8);
-    pelvis.attachTo(head, headLength * 4.f, 0.02, false);
-    kneeL.attachTo(pelvis, headLength * 2, 1);
-    kneeR.attachTo(pelvis, headLength * 2, 1);
-    footL.attachTo(kneeL, headLength * 2, 1);
-    footR.attachTo(kneeR, headLength * 2, 1);
-    footL.attachTo(shoulder, headLength * 7.5, 1e-3, false);
-    footR.attachTo(shoulder, headLength * 7.5, 1e-3, false);
+
+    std::shared_ptr<Link> lnk;
+    lnk = head.attachTo(shoulder, 5 / 4 * headLength, 1);
+    m_colliders.emplace_back(lnk->m_p1.m_pos, lnk->m_p2.m_pos);
+    lnk = elbowL.attachTo(shoulder, headLength * 3 / 2, 1);
+    m_colliders.emplace_back(lnk->m_p1.m_pos, lnk->m_p2.m_pos);
+    lnk = elbowR.attachTo(shoulder, headLength * 3 / 2, 1);
+    m_colliders.emplace_back(lnk->m_p1.m_pos, lnk->m_p2.m_pos);
+    lnk = handL.attachTo(elbowL, headLength * 2, 1);
+    m_colliders.emplace_back(lnk->m_p1.m_pos, lnk->m_p2.m_pos);
+    lnk = handR.attachTo(elbowR, headLength * 2, 1);
+    m_colliders.emplace_back(lnk->m_p1.m_pos, lnk->m_p2.m_pos);
+    lnk = pelvis.attachTo(shoulder, headLength * 3.5, 0.8);
+    m_colliders.emplace_back(lnk->m_p1.m_pos, lnk->m_p2.m_pos);
+    lnk = pelvis.attachTo(head, headLength * 4.f, 0.02, false);
+    lnk = kneeL.attachTo(pelvis, headLength * 2, 1);
+    m_colliders.emplace_back(lnk->m_p1.m_pos, lnk->m_p2.m_pos);
+    lnk = kneeR.attachTo(pelvis, headLength * 2, 1);
+    m_colliders.emplace_back(lnk->m_p1.m_pos, lnk->m_p2.m_pos);
+    lnk = footL.attachTo(kneeL, headLength * 2, 1);
+    m_colliders.emplace_back(lnk->m_p1.m_pos, lnk->m_p2.m_pos);
+    lnk = footR.attachTo(kneeR, headLength * 2, 1);
+    m_colliders.emplace_back(lnk->m_p1.m_pos, lnk->m_p2.m_pos);
+    lnk = footL.attachTo(shoulder, headLength * 7.5, 1e-3, false);
+    lnk = footR.attachTo(shoulder, headLength * 7.5, 1e-3, false);
     headCircle.attachToPointMass(&head);
 
     // physics.addPoint(headCircle);
@@ -114,6 +126,12 @@ void StickmanPhysicsComponent::Start()
 
 void StickmanPhysicsComponent::Update()
 {
+    // if (!Input::GetKey(KEYCODE_M))
+    // {
+    //     return;
+    // }
+
+
     for (auto &p : m_pointMasses)
     {
         p.solveConstraints(WIDTH, HEIGHT);
@@ -127,6 +145,11 @@ void StickmanPhysicsComponent::Update()
     for (auto &p : m_pointMasses)
     {
         p.updatePhysics();
+    }
+
+    for (auto &p : m_colliders)
+    {
+        p.RecalcPoints(5);
     }
 }
 
@@ -148,7 +171,29 @@ void StickmanPhysicsComponent::Draw(DFRenderSystem &render_system)
         c.draw(m_color, render_system);
     }
     // SDL_SetRenderDrawColor(render_data.renderer.get(), 0, 0, 0, 255);
-    render_system.SetColor(0, 0, 0);
+    auto brick = DFEntity::Find("skibidi")->getComponent<TestRect>();
+    for (auto &p : m_colliders)
+    {
+        if (brick->m_collider.isColliding(p))
+        {
+            render_system.SetColor(255, 0, 0);
+
+            // auto mid_brick = (brick->p1 + brick->p2) / 2;
+
+
+            // auto diff_1 = p.p1 - mid_brick;
+            // auto diff_2 = p.p2 - mid_brick;
+            // p.p1 += (diff_1 / diff_1.length()) * 10;
+            // p.p2 += (diff_2 / diff_2.length()) * 10;
+            // p.p1 += (p.p1 - brick->p1);
+            // p.p2 += (p.p2 - brick->p2);
+        }
+        else
+        {
+            render_system.SetColor(0, 0, 0);
+        }
+        p.Draw(render_system);
+    }
 }
 
 void StickmanPhysicsComponent::addStickmanCircle(StickmanCircle &c)

@@ -52,7 +52,7 @@ public:
     void pinTo(const Vector2<float> &pinPoint);
 
     void solveConstraints(float width, float height);
-    void attachTo(PointMass &p, float restingDist, float stiffness, bool draw = true);
+    std::shared_ptr<Link> attachTo(PointMass &p, float restingDist, float stiffness, bool draw = true);
 
     void draw(const SDL_Color &color, DFRenderSystem &render_system);
     PointMass &getLinkPoint();
