@@ -41,7 +41,7 @@ DFScene *default_scene(void)
     tmp.onInit();
 
     std::vector<DFEntity *> stickmans;
-    for (int i = 0; i < 1; i++)
+    for (int i = 0; i < 100; i++)
     {
         DFEntity &stickman = sc->addNewObject("stickman_" + std::to_string(i));
         stickman.addComponent(new StickmanPhysicsComponent());
@@ -146,6 +146,7 @@ DFScene *options_volume_control(void)
 
 int main(void)
 {
+    // setlocale(LC_ALL, "rus");
     TTF_Init();
     spdlog::set_level(spdlog::level::trace);
     // std::cout << __TIMESTAMP__ << std::endl;

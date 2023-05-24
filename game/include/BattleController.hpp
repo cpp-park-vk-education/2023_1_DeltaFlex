@@ -42,7 +42,7 @@ public:
         // render_system.RenderCircle(pos->x, pos->y, 10);
     }
 private:
-    SDL_Texture *tex;
+    DFTexture tex;
     SDL_Rect tx_rect;
     Vector2<float> *pos;
 };
