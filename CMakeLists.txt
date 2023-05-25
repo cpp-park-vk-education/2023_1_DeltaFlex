@@ -6,7 +6,7 @@ add_compile_options("-fPIC")
 project(DeltaEngine VERSION 0.1.0)
 
 set(BUILD_TESTS OFF)
-add_compile_definitions(DEVELOPMENT)
+# add_compile_definitions(DEVELOPMENT)
 
 option(BUILD_TESTS "build tests")
 if(BUILD_TESTS)

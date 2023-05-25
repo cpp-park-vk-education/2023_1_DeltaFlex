@@ -43,7 +43,7 @@ Model::Model(StickmanPhysicsComponent *stickman, std::string file): stickman(sti
 
 void Model::save(int stage, int current)
 {
-    std::ofstream output_file("../complete_CommonModels/CommonModel" + std::to_string(stage) + " " + std::to_string(current) + ".txt", std::ios::out);
+    std::ofstream output_file("../complete_models/CommonModel" + std::to_string(stage) + " " + std::to_string(current) + ".txt", std::ios::out);
 
     if (output_file.is_open()){
 
@@ -183,8 +183,9 @@ void Model::updateRecord()
     if (active)
         best_record +=
         (stickman->m_pointMasses[2].m_pos.y - stickman->m_pointMasses[1].m_pos.y) +
-        (stickman->m_pointMasses[1].m_pos.y - stickman->m_pointMasses[0].m_pos.y);
-
+        (stickman->m_pointMasses[1].m_pos.y - stickman->m_pointMasses[0].m_pos.y) +
+        (stickman->m_pointMasses[5].m_pos.y - stickman->m_pointMasses[1].m_pos.y) +
+        (stickman->m_pointMasses[6].m_pos.y - stickman->m_pointMasses[1].m_pos.y);
 }
 
 float Model::getRecord() const

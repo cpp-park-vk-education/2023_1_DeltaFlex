@@ -13,6 +13,7 @@ class Model;
 class WalkModel;
 class BattleModel;
 class EraComponent;
+class Evolution;
 
 class StickmanPhysicsComponent;
 class StickmanPlayer;
@@ -40,6 +41,7 @@ class StickmanAI: public DFComponent
 
 friend StickmanPlayer;
 friend EraComponent;
+friend Evolution;
 
 private:
     Model *attack_model;
@@ -54,6 +56,7 @@ private:
     int battle_action;
     int walk_action;
     bool walk_flag;
+    bool legup_flag;
 
     int battle_delay;
     int walk_delay;

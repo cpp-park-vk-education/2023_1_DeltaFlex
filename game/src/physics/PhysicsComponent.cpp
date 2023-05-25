@@ -92,17 +92,17 @@ void StickmanPhysicsComponent::onInit(DFEntity &gameObject)
     // physics.addPoint(headCircle);
     // addStickmanCircle(headCircle);
 
-    // m_pointMasses.emplace_back(std::move(head));
-    // m_pointMasses.emplace_back(std::move(shoulder));
-    // m_pointMasses.emplace_back(std::move(pelvis));
-    // m_pointMasses.emplace_back(std::move(elbowL));
-    // m_pointMasses.emplace_back(std::move(elbowR));
-    // m_pointMasses.emplace_back(std::move(handL));
-    // m_pointMasses.emplace_back(std::move(handR));
-    // m_pointMasses.emplace_back(std::move(kneeL));
-    // m_pointMasses.emplace_back(std::move(kneeR));
-    // m_pointMasses.emplace_back(std::move(footL));
-    // m_pointMasses.emplace_back(std::move(footR));
+    // m_pointMasses.emplace_back(std::move(head)); 0
+    // m_pointMasses.emplace_back(std::move(shoulder)); 1
+    // m_pointMasses.emplace_back(std::move(pelvis)); 2 
+    // m_pointMasses.emplace_back(std::move(elbowL)); 3
+    // m_pointMasses.emplace_back(std::move(elbowR)); 4 
+    // m_pointMasses.emplace_back(std::move(handL)); 5
+    // m_pointMasses.emplace_back(std::move(handR)); 6
+    // m_pointMasses.emplace_back(std::move(kneeL)); 7
+    // m_pointMasses.emplace_back(std::move(kneeR)); 8
+    // m_pointMasses.emplace_back(std::move(footL)); 9
+    // m_pointMasses.emplace_back(std::move(footR)); 10
 }
 
 void StickmanPhysicsComponent::Start()

@@ -16,8 +16,7 @@ void StickmanRestarter::RestartStickman()
 
     Vector2<float> align(dist(gen), 475.873 - 70);
     my_stickman->m_pointMasses[0].m_pos = align + Vector2<float>(619.665, 23.703);
-    my_stickman->m_pointMasses[1].m_pos = align + Vector2<float>(540.665, 153.6235);
-    my_stickman->m_pointMasses[1].m_pos = align + Vector2<float>(700.665, 153.6235);
+    my_stickman->m_pointMasses[1].m_pos = align + Vector2<float>(619.665, 56.6235);
     my_stickman->m_pointMasses[2].m_pos = align + Vector2<float>(619.659, 137.391);
     my_stickman->m_pointMasses[3].m_pos = align + Vector2<float>(619.63, 83.7396);
     my_stickman->m_pointMasses[4].m_pos = align + Vector2<float>(619.669, 83.7609);
@@ -103,7 +102,7 @@ void StickmanAI::doBattle()
 
 void StickmanAI::doWalk()
 {   
-    if (my_stickman->m_pointMasses[2]->m_pinPos.x < 30)
+    if (my_stickman->m_pointMasses[2].m_pinPos.x < 30)
         walk_action = 2;
 
     if (walk_action == 1)

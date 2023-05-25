@@ -61,44 +61,7 @@ DFScene *default_scene(void)
         t.onInit();
     }
 
-    DFEntity &my_hp = sc->addNewObject("MyHealthBar");
-    my_hp.addComponent(new GameHealthBar());
-    auto *my_hp_comp = my_hp.getComponent<GameHealthBar>();
-    my_hp_comp->halign = {400 / 2, 40 / 2};
-    my_hp.transform.position = {250, 50};
-    my_hp.onInit();
-
-    return sc;
-}
-
-DFScene *evo_scene(void)
-{
-    DFWorldScene *sc = new DFWorldScene();
-    DFEntity &tmp = sc->addNewObject("BattleController");
-    tmp.addComponent(new BattleController());
-    tmp.onInit();
-    std::vector<DFEntity *> stickmans;
-    for (int i = 0; i < 100; i++)
-    {
-        DFEntity &stickman = sc->addNewObject("stickman_" + std::to_string(i));
-        stickman.addComponent(new StickmanPhysicsComponent());
-        stickman.addComponent(new StickmanRestarter());
-        stickman.addComponent(new StickmanAI());
-        stickmans.push_back(&stickman);
-        stickman.onInit();
-    }
-
-    {
-        DFEntity &t = sc->addNewObject("skibidi");
-        t.addComponent(new TestRect());
-        t.onInit();
-    }
-
-    DFEntity &era = sc->addNewObject("era");
-    era.addComponent(new EraComponent(stickmans));
-    era.onInit();
-
-    DFEntity &my_hp_me = sc->addNewObject("MyHealthBar");
+        DFEntity &my_hp_me = sc->addNewObject("MyHealthBar");
     my_hp_me.addComponent(new GameHealthBar());
     auto *my_hp_me_comp = my_hp_me.getComponent<GameHealthBar>();
     my_hp_me_comp->halign = { 390 / 2, 40 / 2 };
@@ -133,16 +96,46 @@ DFScene *evo_scene(void)
     DFEntity &active_skill_up = sc->addNewObject("ActiveSkillUp");
     active_skill_up.addComponent(new GameActiveSkill());
     auto *active_skill_up_comp = active_skill_up.getComponent<GameActiveSkill>();
-    active_skill_up.transform.position = { 460, 25 };
+    active_skill_up.transform.position = { 480, 25 };
     active_skill_up_comp->is_up_skill = true;
     active_skill_up.onInit();
 
     DFEntity &active_skill_down = sc->addNewObject("ActiveSkillDown");
     active_skill_down.addComponent(new GameActiveSkill());
     auto *active_skill_down_comp = active_skill_down.getComponent<GameActiveSkill>();
-    active_skill_down.transform.position = { 645, 25 };
+    active_skill_down.transform.position = { 655, 25 };
     active_skill_down_comp->is_up_skill = false;
     active_skill_down.onInit();
+
+    return sc;
+}
+
+DFScene *evo_scene(void)
+{
+    DFWorldScene *sc = new DFWorldScene();
+    DFEntity &tmp = sc->addNewObject("BattleController");
+    tmp.addComponent(new BattleController());
+    tmp.onInit();
+    std::vector<DFEntity *> stickmans;
+    for (int i = 0; i < 81; i++)
+    {
+        DFEntity &stickman = sc->addNewObject("stickman_" + std::to_string(i));
+        stickman.addComponent(new StickmanPhysicsComponent());
+        stickman.addComponent(new StickmanRestarter());
+        stickman.addComponent(new StickmanAI());
+        stickmans.push_back(&stickman);
+        stickman.onInit();
+    }
+
+    // {
+    //     DFEntity &t = sc->addNewObject("skibidi");
+    //     t.addComponent(new TestRect());
+    //     t.onInit();
+    // }
+
+    DFEntity &era = sc->addNewObject("era");
+    era.addComponent(new EraComponent(stickmans));
+    era.onInit();
 
     return sc;
 }
@@ -189,15 +182,29 @@ DFScene *options_volume_control(void)
     // cb.onInit();
 
     // слайдеры
-    DFEntity &slider = sc->addNewObject("OptionsMusicSlider");
-    slider.transform.position = { 800, 470 };
-    slider.addComponent(new OptionsMusicSlider());
-    auto *tmp4 = slider.getComponent<OptionsMusicSlider>();
-    tmp4->img_path_line = "./resources/images/menu-slider-line.png";
-    tmp4->halign_line = { 512 / 2, 5 / 2 };
-    tmp4->img_path_slider = "./resources/images/menu-slider-slider.png";
-    tmp4->halign_slider = { 20 / 2, 50 / 2 };
-    slider.onInit();
+    {
+        DFEntity &slider = sc->addNewObject("OptionsMusicSlider");
+        slider.transform.position = { 800, 370 };
+        slider.addComponent(new OptionsMusicSlider());
+        auto *tmp4 = slider.getComponent<OptionsMusicSlider>();
+        tmp4->img_path_line = "./resources/images/menu-slider-line.png";
+        tmp4->halign_line = { 512 / 2, 5 / 2 };
+        tmp4->img_path_slider = "./resources/images/menu-slider-slider.png";
+        tmp4->halign_slider = { 20 / 2, 50 / 2 };
+        slider.onInit();
+    }
+
+    {
+        DFEntity &slider = sc->addNewObject("OptionsMusicSlider");
+        slider.transform.position = { 800, 470 };
+        slider.addComponent(new OptionsMusicSlider());
+        auto *tmp4 = slider.getComponent<OptionsMusicSlider>();
+        tmp4->img_path_line = "./resources/images/menu-slider-line.png";
+        tmp4->halign_line = { 512 / 2, 5 / 2 };
+        tmp4->img_path_slider = "./resources/images/menu-slider-slider.png";
+        tmp4->halign_slider = { 20 / 2, 50 / 2 };
+        slider.onInit();
+    }
 
     return sc;
 }
@@ -212,7 +219,7 @@ int main(void)
     std::unique_ptr<DFEngine> engine = std::make_unique<DFEngine>();
 
     engine->AppendSceneAllocator("default", menu_scene);
-    engine->AppendSceneAllocator("game", evo_scene);
+    engine->AppendSceneAllocator("game", default_scene);
     engine->AppendSceneAllocator("options-volume", options_volume_control);
 
     engine->EngineInit();
