@@ -4,6 +4,8 @@
 #include "DFEntity.hpp"
 #include <cmath>
 
+#include <DFWorldScene.hpp>
+
 void StickmanPhysicsComponent::onInit(DFEntity &gameObject)
 {
     ai = gameObject.getComponent<StickmanAI>();
@@ -78,6 +80,12 @@ void StickmanPhysicsComponent::onInit(DFEntity &gameObject)
     m_pointMasses.emplace_back(std::move(kneeR));
     m_pointMasses.emplace_back(std::move(footL));
     m_pointMasses.emplace_back(std::move(footR));
+}
+
+void StickmanPhysicsComponent::Start()
+{
+    DFEntity::Find("Camera")->getComponent<DFCameraComponent>()->SetTarget(
+        m_pointMasses[2]->m_pos);
 }
 
 // ~StickmanPhysicsComponent()
@@ -186,8 +194,8 @@ void StickmanPhysicsComponent::MoveAll(std::array<float, 6> angles)
         i++;
     }
 
-    Move(7, angles[2]/4);
-    Move(8, angles[2]/4);
+    Move(7, angles[2] / 4);
+    Move(8, angles[2] / 4);
 
 }
 
@@ -205,6 +213,6 @@ std::array<float, 12> StickmanPhysicsComponent::GetCoords()
 
     for (size_t i = 0; i < 12; i++)
         coords[i] = (coords[i] - min) / (max - min);
-    
+
     return coords;
 }

@@ -28,6 +28,7 @@
 #include "PlayerControl.hpp"
 #include "game/include/options_volume/OptionsVolumeBack.hpp"
 #include "game/include/options_volume/OptionsVolumeControl.hpp"
+#include "game/include/game_ui/GameHealthBar.hpp"
 
 #include "game/include/SatCollider.hpp"
 class TestRect : public DFComponent
@@ -63,6 +64,7 @@ DFScene *default_scene(void)
     DFEntity &tmp = sc->addNewObject("BattleController");
     tmp.addComponent(new BattleController());
     tmp.onInit();
+
     std::vector<DFEntity *> stickmans;
     for (int i = 0; i < 1; i++)
     {
@@ -81,6 +83,13 @@ DFScene *default_scene(void)
         t.onInit();
     }
 
+    DFEntity &my_hp = sc->addNewObject("MyHealthBar");
+    my_hp.addComponent(new GameHealthBar());
+    auto *my_hp_comp = my_hp.getComponent<GameHealthBar>();
+    my_hp_comp->halign = {400 / 2, 40 / 2};
+    my_hp.transform.position = {250, 50};
+    my_hp.onInit();
+
     return sc;
 }
 
@@ -91,13 +100,12 @@ DFScene *evo_scene(void)
     tmp.addComponent(new BattleController());
     tmp.onInit();
     std::vector<DFEntity *> stickmans;
-    for (int i = 0; i < 1; i++)
+    for (int i = 0; i < 100; i++)
     {
         DFEntity &stickman = sc->addNewObject("stickman_" + std::to_string(i));
         stickman.addComponent(new StickmanPhysicsComponent());
         stickman.addComponent(new StickmanRestarter());
         stickman.addComponent(new StickmanAI());
-        stickman.addComponent(new StickmanPlayer());
         stickmans.push_back(&stickman);
         stickman.onInit();
     }
@@ -111,6 +119,13 @@ DFScene *evo_scene(void)
     DFEntity &era = sc->addNewObject("era");
     era.addComponent(new EraComponent(stickmans));
     era.onInit();
+
+    DFEntity &my_hp = sc->addNewObject("MyHealthBar");
+    my_hp.addComponent(new GameHealthBar());
+    auto *my_hp_comp = my_hp.getComponent<GameHealthBar>();
+    my_hp_comp->halign = {400 / 2, 40 / 2};
+    my_hp.transform.position = {250, 50};
+    my_hp.onInit();
 
     return sc;
 }
@@ -179,7 +194,7 @@ int main(void)
     std::unique_ptr<DFEngine> engine = std::make_unique<DFEngine>();
 
     engine->AppendSceneAllocator("default", menu_scene);
-    engine->AppendSceneAllocator("game", default_scene);
+    engine->AppendSceneAllocator("game", evo_scene);
     engine->AppendSceneAllocator("options-volume", options_volume_control);
 
     engine->EngineInit();

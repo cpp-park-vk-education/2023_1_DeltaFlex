@@ -1,4 +1,4 @@
-#include "../../include/menu/MainMenuButton.hpp"
+#include "MainMenuButton.hpp"
 
 void MainMenuButton::onInit(DFEntity &gameObject)
 {

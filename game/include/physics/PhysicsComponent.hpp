@@ -11,7 +11,7 @@
 
 #include <SatCollider.hpp>
 #include <Link.hpp>
-constexpr int WIDTH = 1280;
+constexpr int WIDTH = 2280;
 constexpr int HEIGHT = 720;
 
 constexpr float BODY_HEIGHT = 50;
@@ -34,6 +34,7 @@ public:
 public:
     void onInit(DFEntity &gameObject) override;
 
+    void Start() override;
     void Update() override;
 
     void Draw(DFRenderSystem &render_system) override;

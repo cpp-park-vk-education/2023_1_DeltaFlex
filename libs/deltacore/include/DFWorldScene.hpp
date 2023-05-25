@@ -14,9 +14,10 @@ public:
     {
     }
 
-    void SetTarget(DFEntity &gameObject)
+    void SetTarget(Vector2<float> &pos)
     {
-        target_position = &gameObject.transform.position;
+        std::cout << "set_target" << (void *)&pos << "\n";
+        target_position = &pos;
     }
 
     void Update()
@@ -26,19 +27,31 @@ public:
             return;
         }
 
+        // std::cout << *target_position << "\n";
+
         Vector2<float> topleft = *target_position;
 
-        topleft.x = std::max(0., topleft.x - 1280 / 2.);
-        topleft.y = std::max(0., topleft.y - 720 / 2.);
+        topleft.x = std::max(0.f, topleft.x - 1280.f / 2.f);
+        topleft.y = std::max(0.f, topleft.y - 720.f / 2.f);
 
-        topleft.x = std::min((float)2280, (float)topleft.x + 1280);
-        topleft.y = std::min((float)1080, (float)topleft.y + 720);
+        topleft.x = std::min(2280.f, topleft.x + 1280.f);
+        topleft.y = std::min(720.f, topleft.y + 720.f);
 
         topleft.x = std::max(0.f, topleft.x - 1280);
         topleft.y = std::max(0.f, topleft.y - 720);
 
-        topleft -= topleft * 2;
+        topleft.x = -topleft.x;
+        topleft.y = -topleft.y;
+        // topleft -= topleft * 2;;
         m_render_system.SetOrigin(topleft);
+    }
+
+    void Draw(DFRenderSystem &render_system)
+    {
+        if (!target_position)
+            return;
+        render_system.SetColor(255, 255, 255);
+        render_system.RenderCircle(target_position->x, target_position->y, 10);
     }
 
 private:
@@ -60,12 +73,12 @@ public:
 
     void onRenderTextures(DFRenderSystem &render_system)
     {
-        auto &obj = addNewObject("Camera");
-        obj.addComponent(new DFCameraComponent(render_system));
         for (auto &gameObject : m_gameObjects)
         {
             gameObject.onRenderTextures(render_system);
         }
+        auto &obj = addNewObject("Camera");
+        obj.addComponent(new DFCameraComponent(render_system));
     }
 
     void onSceneStart(DFRenderSystem &render_system)
@@ -104,7 +117,7 @@ public:
 
     DFEntity *findEntity(std::string &name)
     {
-        if (std::count_if(m_gameObjAliaces.begin(), m_gameObjAliaces.end(), [ & ](auto &x) {return x.first == name;}) == 0)
+        if (std::count_if(m_gameObjAliaces.begin(), m_gameObjAliaces.end(), [&](auto &x) {return x.first == name; }) == 0)
         {
             return nullptr;
         }
