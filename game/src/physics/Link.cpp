@@ -6,8 +6,7 @@ Link::Link(PointMass &pm1, PointMass &pm2, float restingDist, float stiffness, b
     m_p2(pm2),
     m_restingDist(restingDist),
     m_stiffness(stiffness),
-    m_draw(draw),
-    m_collider(m_p1.m_pos, m_p2.m_pos)
+    m_draw(draw)
 {
 }
 
@@ -40,20 +39,15 @@ void Link::draw(const SDL_Color &color, DFRenderSystem &render_system)
     if (m_draw)
     {
         // render_system.SetColor(color.r, color.g, color.b, color.a);
-        // render_system.SetColor(color);
         // render_system.RenderLine(m_p1.m_pos, m_p2.m_pos);
-#ifndef DEVELOPMENT
-        filledCircleRGBA(render_system.getRenderer(),
-            m_p1.m_pos.x, m_p1.m_pos.y, 10 / 2,
-            color.r, color.g, color.b, color.a);
-        thickLineRGBA(render_system.getRenderer(),
-            m_p1.m_pos.x, m_p1.m_pos.y,
-            m_p2.m_pos.x, m_p2.m_pos.y,
-            10, color.r, color.g, color.g, color.a);
-#else
-        m_collider.RecalcPoints(5);
-        m_collider.Draw(render_system);
+        // m_collider.RecalcPoints(5);
+        // m_collider.Draw(render_system);
+
         render_system.SetColor(color);
+#ifndef DEVELOPMENT
+        render_system.RenderFilledCircle(m_p1.m_pos, 5);
+        render_system.RenderThickLine(m_p1.m_pos, m_p2.m_pos, 10);
+#else
         render_system.RenderLine(m_p1.m_pos, m_p2.m_pos);
 #endif
     }

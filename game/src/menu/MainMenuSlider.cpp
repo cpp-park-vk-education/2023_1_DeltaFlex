@@ -14,7 +14,7 @@ void MainMenuSlider::onInit(DFEntity &gameObject)
     m_start_pix = m_gameObjPos->x - halign_line.x;
     m_end_pix = m_gameObjPos->x + halign_line.x;
 
-    m_pos_pix = m_start_pix;
+    m_pos_pix = m_start_pix + Mix_VolumeMusic(-1) * 4;
 }
 
 void MainMenuSlider::onRenderTextures(DFRenderSystem &render_system)
@@ -55,6 +55,7 @@ void MainMenuSlider::Update()
 void MainMenuSlider::onMouseDrag()
 {
     m_pos_pix = std::max<int>(std::min<int>(m_end_pix, Input::GetMouseX()), m_start_pix);
+    Mix_VolumeMusic((m_pos_pix - m_start_pix) / 4);
 }
 
 int MainMenuSlider::getValue() const

@@ -16,7 +16,7 @@ private:
     int baseWidth, baseHeight;
 
     SDL_Surface *surface;
-    SDL_Texture *texture;
+    DFTexture texture;
 public:
     DFSprite(const char *resoursePath, DFTransform &tt, int _x_offset, int _y_offset);
     DFSprite(const char *resoursePath, DFTransform &tt);

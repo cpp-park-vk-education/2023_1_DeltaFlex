@@ -16,7 +16,7 @@ public:
 
     void SetTarget(Vector2<float> &pos)
     {
-        std::cout << "set_target" << (void *)&pos << "\n";
+        // std::cout << "set_target" << (void *)&pos << "\n";
         target_position = &pos;
     }
 

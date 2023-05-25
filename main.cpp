@@ -28,35 +28,12 @@
 #include "PlayerControl.hpp"
 #include "game/include/options_volume/OptionsVolumeBack.hpp"
 #include "game/include/options_volume/OptionsVolumeControl.hpp"
+#include "game/include/game_ui/GameActiveSkill.hpp"
 #include "game/include/game_ui/GameHealthBar.hpp"
+#include "game/include/game_ui/GameStaminaBar.hpp"
+#include "game/include/ai/StickmanStatsComponent.hpp"
 
 #include "game/include/SatCollider.hpp"
-class TestRect : public DFComponent
-{
-public:
-    Vector2<float> p1, p2;
-
-    SATCollider m_collider;
-    TestRect() : m_collider(p1, p2) {}
-
-    void Update()
-    {
-        Vector2<float> mpos(Input::GetMouseX(), Input::GetMouseY());
-        p1 = mpos - Vector2<float>{10, 0};
-        p2 = mpos + Vector2<float>{10, 0};
-        m_collider.RecalcPoints(5);
-    }
-    void Draw(DFRenderSystem &render_system)
-    {
-        if (DFEntity::Find("stickman_0")->getComponent<StickmanPhysicsComponent>()->CheckCollision(m_collider))
-        {
-            render_system.SetColor(255, 0, 0);
-        }
-        m_collider.Draw(render_system);
-        render_system.SetColor(0, 0, 0);
-
-    }
-};
 
 DFScene *default_scene(void)
 {
@@ -66,13 +43,14 @@ DFScene *default_scene(void)
     tmp.onInit();
 
     std::vector<DFEntity *> stickmans;
-    for (int i = 0; i < 1; i++)
+    for (int i = 0; i < 2; i++)
     {
         DFEntity &stickman = sc->addNewObject("stickman_" + std::to_string(i));
         stickman.addComponent(new StickmanPhysicsComponent());
         stickman.addComponent(new StickmanRestarter());
         stickman.addComponent(new StickmanAI());
         stickman.addComponent(new StickmanPlayer());
+        stickman.addComponent(new StickmanStats());
         stickmans.push_back(&stickman);
         stickman.onInit();
     }
@@ -120,12 +98,51 @@ DFScene *evo_scene(void)
     era.addComponent(new EraComponent(stickmans));
     era.onInit();
 
-    DFEntity &my_hp = sc->addNewObject("MyHealthBar");
-    my_hp.addComponent(new GameHealthBar());
-    auto *my_hp_comp = my_hp.getComponent<GameHealthBar>();
-    my_hp_comp->halign = {400 / 2, 40 / 2};
-    my_hp.transform.position = {250, 50};
-    my_hp.onInit();
+    DFEntity &my_hp_me = sc->addNewObject("MyHealthBar");
+    my_hp_me.addComponent(new GameHealthBar());
+    auto *my_hp_me_comp = my_hp_me.getComponent<GameHealthBar>();
+    my_hp_me_comp->halign = { 390 / 2, 40 / 2 };
+    my_hp_me.transform.position = { 250, 50 };
+    my_hp_me_comp->right_icon_place = false;
+    my_hp_me.onInit();
+
+    DFEntity &my_hp_enemy = sc->addNewObject("EnemyHealthBar");
+    my_hp_enemy.addComponent(new GameHealthBar());
+    auto *enemy_hp_comp = my_hp_enemy.getComponent<GameHealthBar>();
+    enemy_hp_comp->halign = { 390 / 2, 40 / 2 };
+    my_hp_enemy.transform.position = { 1280 - 250, 50 };
+    enemy_hp_comp->right_icon_place = true;
+    my_hp_enemy.onInit();
+
+    DFEntity &my_sp = sc->addNewObject("MyStaminaBar");
+    my_sp.addComponent(new GameStaminaBar());
+    auto *my_sp_comp = my_sp.getComponent<GameStaminaBar>();
+    my_sp_comp->halign = { 390 / 2, 40 / 2 };
+    my_sp.transform.position = { 250, 2 * 50 };
+    my_sp_comp->right_icon_place = false;
+    my_sp.onInit();
+
+    DFEntity &my_sp_enemy = sc->addNewObject("EnemyHealthBar");
+    my_sp_enemy.addComponent(new GameStaminaBar());
+    auto *enemy_sp_comp = my_sp_enemy.getComponent<GameStaminaBar>();
+    enemy_sp_comp->halign = { 390 / 2, 40 / 2 };
+    my_sp_enemy.transform.position = { 1280 - 250, 2 * 50 };
+    enemy_sp_comp->right_icon_place = true;
+    my_sp_enemy.onInit();
+
+    DFEntity &active_skill_up = sc->addNewObject("ActiveSkillUp");
+    active_skill_up.addComponent(new GameActiveSkill());
+    auto *active_skill_up_comp = active_skill_up.getComponent<GameActiveSkill>();
+    active_skill_up.transform.position = { 460, 25 };
+    active_skill_up_comp->is_up_skill = true;
+    active_skill_up.onInit();
+
+    DFEntity &active_skill_down = sc->addNewObject("ActiveSkillDown");
+    active_skill_down.addComponent(new GameActiveSkill());
+    auto *active_skill_down_comp = active_skill_down.getComponent<GameActiveSkill>();
+    active_skill_down.transform.position = { 645, 25 };
+    active_skill_down_comp->is_up_skill = false;
+    active_skill_down.onInit();
 
     return sc;
 }
@@ -177,7 +194,7 @@ DFScene *options_volume_control(void)
     slider.addComponent(new OptionsMusicSlider());
     auto *tmp4 = slider.getComponent<OptionsMusicSlider>();
     tmp4->img_path_line = "./resources/images/menu-slider-line.png";
-    tmp4->halign_line = { 500 / 2, 5 / 2 };
+    tmp4->halign_line = { 512 / 2, 5 / 2 };
     tmp4->img_path_slider = "./resources/images/menu-slider-slider.png";
     tmp4->halign_slider = { 20 / 2, 50 / 2 };
     slider.onInit();
@@ -187,6 +204,7 @@ DFScene *options_volume_control(void)
 
 int main(void)
 {
+    // setlocale(LC_ALL, "rus");
     TTF_Init();
     spdlog::set_level(spdlog::level::trace);
     // std::cout << __TIMESTAMP__ << std::endl;

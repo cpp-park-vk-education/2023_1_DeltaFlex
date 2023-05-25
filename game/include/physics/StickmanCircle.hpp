@@ -10,7 +10,7 @@ class StickmanCircle
 public:
     // friend PointMass;
     float m_radius;
-    std::shared_ptr<PointMass> m_attachedPointMass;
+    PointMass *m_attachedPointMass;
 
 public:
     StickmanCircle(float radius, Vector2<float> pmLocation)
@@ -48,7 +48,7 @@ public:
         m_attachedPointMass->m_pos = { x, y };
     }
 
-    void attachToPointMass(std::shared_ptr<PointMass> &p)
+    void attachToPointMass(PointMass *p)
     {
         m_attachedPointMass = p;
     }
@@ -64,9 +64,7 @@ public:
         //     color.a
         // );
 #ifndef DEVELOPMENT
-        filledCircleRGBA(render_system.getRenderer(),
-            m_attachedPointMass->m_pos.x, m_attachedPointMass->m_pos.y, m_radius,
-            color.r, color.g, color.b, color.a);
+        render_system.RenderFilledCircle(m_attachedPointMass->m_pos, m_radius);
 #else
         render_system.SetColor(color);
         render_system.RenderCircle(

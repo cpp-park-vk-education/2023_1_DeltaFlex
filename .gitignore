@@ -7,3 +7,4 @@ mentis_bellum/*
 !mentis_bellum/scenes
 experimental/*
 test.cpp
+libs/spdlog/**

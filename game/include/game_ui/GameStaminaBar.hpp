@@ -9,12 +9,12 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-class MainMenuCheckBox: public DFComponent
+class GameStaminaBar : public DFComponent
 {
 public:
-    std::string img_path_body;
-    std::string img_path_tick;
     Vector2<float> halign;
+    const int *current_health;
+    bool right_icon_place;
 
 public:
     void onInit(DFEntity &gameObject);
@@ -22,13 +22,11 @@ public:
     void Start();
     void Update();
     void Draw(DFRenderSystem &render_system);
-    virtual void onClick();
-    bool isChecked() const;
 
 private:
-    void CheckMouseBounds();
-    DFTexture m_tex_body, m_tex_tick;
-    Vector2<float> *m_gameObjPos;
-    bool m_checked;
-    bool is_active;
+    Vector2<float> *m_game_object_pos;
+    DFTexture icon;
+
+    static int m_margin;
+    static int m_thickness;
 };

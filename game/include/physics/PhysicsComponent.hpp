@@ -11,12 +11,13 @@
 
 #include <SatCollider.hpp>
 #include <Link.hpp>
+
 constexpr int WIDTH = 2280;
 constexpr int HEIGHT = 720;
 
 constexpr float BODY_HEIGHT = 50;
 
-constexpr std::size_t INITIAL_POINTMASSES = 10;
+constexpr std::size_t INITIAL_POINTMASSES = 11;
 
 class StickmanAI;
 
@@ -24,8 +25,9 @@ class StickmanPhysicsComponent : public DFComponent
 {
 public:
     StickmanAI *ai;
-    std::vector<std::shared_ptr<PointMass>> m_pointMasses;
-    std::vector<std::shared_ptr<StickmanCircle>> m_stickmanCircles;
+    std::vector<PointMass> m_pointMasses;
+    std::vector<StickmanCircle> m_stickmanCircles;
+    std::vector<SATCollider> m_colliders;
 
 public:
     // SDL_Color m_color{.r = 0xFF, .g = 0xFF, .b = 0xFF, .a = 0xFF};
@@ -39,27 +41,61 @@ public:
 
     void Draw(DFRenderSystem &render_system) override;
 
-    void addStickmanCircle(std::shared_ptr<StickmanCircle> &c);
+    void addStickmanCircle(StickmanCircle &c);
 
     void Move(int limb, double angle);
 
     void MoveAll(std::array<float, 6> angles);
 
-    bool CheckCollision(const SATCollider &collider)
-    {
-        for(auto &p_mass: m_pointMasses)
-        {
-            for (auto &p_link: p_mass->links)
-            {
-                if (p_link->m_collider.isColliding(collider))
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    };
+    // bool CheckCollision(const SATCollider &collider)
+    // {
+    //     for(auto &p_mass: m_pointMasses)
+    //     {
+    //         for (auto &p_link: p_mass.links)
+    //         {
+    //             if (p_link->m_collider.isColliding(collider))
+    //             {
+    //                 return true;
+    //             }
+    //         }
+    //     }
+    //     return false;
+    // };
 
     std::array<float, 12> GetCoords();
 
+};
+#include <DFInputSystem.hpp>
+#include <DFEntity.hpp>
+class TestRect : public DFComponent
+{
+public:
+    Vector2<float> p1, p2;
+
+    SATCollider m_collider;
+    TestRect() : m_collider(p1, p2) {}
+
+    void Update()
+    {
+        Vector2<float> mpos(Input::GetMouseX(), Input::GetMouseY());
+        p1 = mpos - Vector2<float>{100, 0};
+        p2 = mpos + Vector2<float>{100, 0};
+        p1 -= DFRenderSystem::GetOrigin();
+        p2 -= DFRenderSystem::GetOrigin();
+        m_collider.RecalcPoints(5);
+    }
+    void Draw(DFRenderSystem &render_system)
+    {
+        for (auto &collider : DFEntity::Find("stickman_0")->getComponent<StickmanPhysicsComponent>()->m_colliders)
+        {
+            if (collider.isColliding(m_collider))
+            {
+                render_system.SetColor(255, 0, 0);
+                break;
+            }
+        }
+        m_collider.Draw(render_system);
+        render_system.SetColor(0, 0, 0);
+
+    }
 };

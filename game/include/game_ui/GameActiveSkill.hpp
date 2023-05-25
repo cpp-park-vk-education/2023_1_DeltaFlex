@@ -9,26 +9,20 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-class MainMenuCheckBox: public DFComponent
+class GameActiveSkill: public DFComponent
 {
 public:
-    std::string img_path_body;
-    std::string img_path_tick;
-    Vector2<float> halign;
-
+    bool is_up_skill;
 public:
     void onInit(DFEntity &gameObject);
     void onRenderTextures(DFRenderSystem &render_system);
     void Start();
     void Update();
     void Draw(DFRenderSystem &render_system);
-    virtual void onClick();
-    bool isChecked() const;
 
 private:
-    void CheckMouseBounds();
-    DFTexture m_tex_body, m_tex_tick;
-    Vector2<float> *m_gameObjPos;
-    bool m_checked;
-    bool is_active;
+    Vector2<float> *m_game_object_pos;
+    DFTexture neuron_textures[2];
+    DFTexture *m_tex_active, m_tex_one, m_tex_two;
+
 };

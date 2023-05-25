@@ -1,40 +1,39 @@
-#include "../../include/game_ui/GameHealthBar.hpp"
+#include "../../include/game_ui/GameStaminaBar.hpp"
 #include "../../include/ai/StickmanStatsComponent.hpp"
 #include <DFEntity.hpp>
 
-int GameHealthBar::m_margin;
-int GameHealthBar::m_thickness;
+int GameStaminaBar::m_margin;
+int GameStaminaBar::m_thickness;
 
 static int Map(int value, int min_from, int max_from, int min_to, int max_to)
 {
     return min_to + (value - min_from) * (float)(max_to - min_to) / (float)(max_from - min_from);
 }
 
-void GameHealthBar::onInit(DFEntity &gameObject)
+void GameStaminaBar::onInit(DFEntity &gameObject)
 {
     m_game_object_pos = &gameObject.transform.position;
     m_thickness = 5;
     m_margin = m_thickness + 3;
 }
 
-void GameHealthBar::onRenderTextures(DFRenderSystem &render_system)
+void GameStaminaBar::onRenderTextures(DFRenderSystem &render_system)
 {
-    icon = render_system.CreateTextureFromFile("./resources/images/hp-icon.png");
-    icon.width *= 4;
-    icon.height *= 4;
+    icon = render_system.CreateTextureFromFile("./resources/images/stamina-icon.png");
+    icon.width *= 2;
+    icon.height *= 2;
 }
 
-void GameHealthBar::Start()
+void GameStaminaBar::Start()
 {
     current_health = DFEntity::Find("stickman_0")->getComponent<StickmanStats>()->getHP();
 }
 
-void GameHealthBar::Update()
+void GameStaminaBar::Update()
 {
-
 }
 
-void GameHealthBar::Draw(DFRenderSystem &render_system)
+void GameStaminaBar::Draw(DFRenderSystem &render_system)
 {
     int halign_x = (int)halign.x, halign_y = (int)halign.y;
     SDL_Rect outline_pos =
@@ -55,7 +54,7 @@ void GameHealthBar::Draw(DFRenderSystem &render_system)
         outline_pos.x + outline_pos.w - 2 * m_margin
     );
 
-    render_system.SetColor(255, 0, 0);
+    render_system.SetColor(0, 0, 255);
     SDL_Rect health_pos =
     {
         .x = outline_pos.x + m_margin,
@@ -71,6 +70,6 @@ void GameHealthBar::Draw(DFRenderSystem &render_system)
     render_system.RenderTextureUI(icon,
         {
             m_game_object_pos->x + dx,
-            m_game_object_pos->y - halign_y
+            m_game_object_pos->y - halign_y + 5
         });
 }

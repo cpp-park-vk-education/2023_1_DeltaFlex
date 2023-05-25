@@ -87,9 +87,10 @@ void PointMass::solveConstraints(float width, float height)
     }
 }
 
-void PointMass::attachTo(PointMass &p, float restingDist, float stiffness, bool draw)
+std::shared_ptr<Link> PointMass::attachTo(PointMass &p, float restingDist, float stiffness, bool draw)
 {
     links.emplace_back(std::make_shared<Link>(*this, p, restingDist, stiffness, draw)); // TODO
+    return links.back();
 }
 
 PointMass &PointMass::getLinkPoint()

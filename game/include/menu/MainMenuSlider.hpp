@@ -39,6 +39,6 @@ private:
     int m_pos_pix;
     int m_start_pix, m_end_pix;
 
-    SDL_Texture *m_tex_line, *m_tex_slider;
+    DFTexture m_tex_line, m_tex_slider;
     Vector2<float> *m_gameObjPos;
 };
