@@ -12,6 +12,10 @@ void GameActiveSkill::onRenderTextures(DFRenderSystem &render_system)
     // icon = render_system.CreateTextureFromFile("./resources/images/hp-icon.png");
     // icon.width *= 4;
     // icon.height *= 4;
+    m_tex_one = render_system.CreateTextureFromFile("./resources/images/sword-icon.png");
+    m_tex_two = render_system.CreateTextureFromFile("./resources/images/hp-icon.png");
+    render_system.SetColor(255, 255, 255);
+    neuron_textures[0] = render_system.CreateHollowCircleTex(20, 5);
 }
 
 void GameActiveSkill::Start()
@@ -21,12 +25,11 @@ void GameActiveSkill::Start()
 
 void GameActiveSkill::Update()
 {
-
 }
 
 void GameActiveSkill::Draw(DFRenderSystem &render_system)
 {
-    int neuron_radius = 25;
+    int neuron_radius = 20;
     int neuron_distance = 10;
     int neuron_dx = 2 * neuron_radius + neuron_distance;
 
@@ -34,10 +37,10 @@ void GameActiveSkill::Draw(DFRenderSystem &render_system)
     {
         int x;
         int y;
-        int r;
-        int g;
-        int b;
-        int op; // opacity
+        int r = 255;
+        int g = 255;
+        int b = 255;
+        int op = 255; // opacity
     };
 
     struct Line_t
@@ -48,26 +51,26 @@ void GameActiveSkill::Draw(DFRenderSystem &render_system)
         int y1;
     };
 
-    std::vector<Neuron_t> neurons(6, {0, 0, 0, 0, 0, 255});
+    std::vector<Neuron_t> neurons(6);
 
     neurons[0] = {static_cast<int>(m_game_object_pos->x + neuron_radius),
-                    static_cast<int>(m_game_object_pos->y + neuron_radius), 0, 0, 0, 255};
+                  static_cast<int>(m_game_object_pos->y + neuron_radius)};
 
-    neurons[1] = {static_cast<int>(m_game_object_pos->x + neuron_radius), 
-                    static_cast<int>(m_game_object_pos->y + neuron_radius + neuron_dx), 0, 0, 0, 255};
+    neurons[1] = {static_cast<int>(m_game_object_pos->x + neuron_radius),
+                  static_cast<int>(m_game_object_pos->y + neuron_radius + neuron_dx)};
 
-    neurons[2] = {static_cast<int>(m_game_object_pos->x + neuron_radius), 
-                    static_cast<int>(m_game_object_pos->y + neuron_radius + 2 * neuron_dx), 0, 0, 0, 255};
+    neurons[2] = {static_cast<int>(m_game_object_pos->x + neuron_radius),
+                  static_cast<int>(m_game_object_pos->y + neuron_radius + 2 * neuron_dx)};
 
-    neurons[3] = {static_cast<int>(m_game_object_pos->x + neuron_radius + neuron_dx), 
-                    static_cast<int>(m_game_object_pos->y + neuron_radius + neuron_dx / 2), 0, 0, 0, 255};
+    neurons[3] = {static_cast<int>(m_game_object_pos->x + neuron_radius + neuron_dx),
+                  static_cast<int>(m_game_object_pos->y + neuron_radius + neuron_dx / 2)};
 
-    neurons[4] = {static_cast<int>(m_game_object_pos->x + neuron_radius + neuron_dx), 
-                    static_cast<int>(m_game_object_pos->y + neuron_radius + neuron_dx / 2 * 3), 0, 0, 0, 255};
+    neurons[4] = {static_cast<int>(m_game_object_pos->x + neuron_radius + neuron_dx),
+                  static_cast<int>(m_game_object_pos->y + neuron_radius + neuron_dx / 2 * 3)};
 
-    neurons[5] = {static_cast<int>(m_game_object_pos->x + neuron_radius + 2 * neuron_dx), 
-                    static_cast<int>(m_game_object_pos->y + neuron_radius + neuron_dx), 0, 0, 0, 255};
-    
+    neurons[5] = {static_cast<int>(m_game_object_pos->x + neuron_radius + 2 * neuron_dx),
+                  static_cast<int>(m_game_object_pos->y + neuron_radius + neuron_dx)};
+
     std::vector<Line_t> lines(8);
 
     lines[0] = {neurons[0].x, neurons[0].y, neurons[3].x, neurons[3].y};
@@ -79,74 +82,39 @@ void GameActiveSkill::Draw(DFRenderSystem &render_system)
     lines[6] = {neurons[3].x, neurons[3].y, neurons[5].x, neurons[5].y};
     lines[7] = {neurons[4].x, neurons[4].y, neurons[5].x, neurons[5].y};
 
-    for (const auto &line: lines)
-        thickLineRGBA(render_system.getRenderer(), line.x0, line.y0, line.x1, line.y1, 2, 0, 0, 0, 255);
+    for (const auto &line : lines)
+        thickLineRGBA(render_system.getRenderer(), line.x0, line.y0, line.x1, line.y1, 2, 255, 255, 255, 255);
 
-    for (const auto &neuron: neurons)
-        filledCircleRGBA(render_system.getRenderer(), neuron.x, neuron.y, neuron_radius, neuron.r, neuron.g, neuron.b, neuron.op);
-    
+    for (const auto &neuron : neurons)
+    {
+        render_system.SetColor(neuron.r, neuron.g, neuron.b, neuron.op);
+        // render_system.RenderHollowCircleUI({(float)neuron.x, (float)neuron.y}, neuron_radius, 3);
+        render_system.RenderTextureUI(neuron_textures[0], {(float)neuron.x - neuron_radius, (float)neuron.y- neuron_radius});
+
+        // render_system.SetColor(255, 0, 0, 255);
+        // render_system.RenderFilledCircle();
+    }
+
     if (is_up_skill)
     {
-        DFTexture icon = render_system.CreateTextureFromFile("./resources/images/sword-icon.png");
-        icon.width = neuron_radius;
-        icon.height = neuron_radius;
+        // DFTexture icon = render_system.CreateTextureFromFile("./resources/images/sword-icon.png");
+        m_tex_one.width = neuron_radius;
+        m_tex_one.height = neuron_radius;
 
         render_system.RenderTextureUI(
-            icon,
-            {
-                static_cast<float>(neurons[5].x - neuron_radius / 2),
-                static_cast<float>(neurons[5].y - neuron_radius / 2)
-            });
+            m_tex_one,
+            {static_cast<float>(neurons[5].x - neuron_radius / 2),
+             static_cast<float>(neurons[5].y - neuron_radius / 2)});
     }
     else
     {
-        DFTexture icon = render_system.CreateTextureFromFile("./resources/images/hp-icon.png");
-        icon.width = neuron_radius;
-        icon.height = neuron_radius;
+        // DFTexture icon = render_system.CreateTextureFromFile("./resources/images/hp-icon.png");
+        m_tex_two.width = neuron_radius;
+        m_tex_two.height = neuron_radius;
 
         render_system.RenderTextureUI(
-            icon,
-            {
-                static_cast<float>(neurons[5].x - neuron_radius / 2),
-                static_cast<float>(neurons[5].y - neuron_radius / 2)
-            });
+            m_tex_two,
+            {static_cast<float>(neurons[5].x - neuron_radius / 2),
+             static_cast<float>(neurons[5].y - neuron_radius / 2)});
     }
-
-    // int halign_x = (int)halign.x, halign_y = (int)halign.y;
-    // SDL_Rect outline_pos =
-    // {
-    //     .x = (int)(m_game_object_pos->x - halign_x),
-    //     .y = (int)(m_game_object_pos->y - halign_y),
-    //     .w = halign_x * 2,
-    //     .h = halign_y * 2
-    // };
-
-    // render_system.SetColor(255, 255, 255);
-    // render_system.RenderRectHollowUI(outline_pos, m_thickness);
-
-    // int hp_mapped = Map(
-    //     *current_health,
-    //     0, 100,
-    //     outline_pos.x,
-    //     outline_pos.x + outline_pos.w - 2 * m_margin
-    // );
-
-    // render_system.SetColor(255, 0, 0);
-    // SDL_Rect health_pos =
-    // {
-    //     .x = outline_pos.x + m_margin,
-    //     .y = outline_pos.y + m_margin,
-    //     .w = hp_mapped - outline_pos.x,
-    //     .h = outline_pos.h - 2 * m_margin
-    // };
-
-    // render_system.RenderRectFilledUI(health_pos);
-
-    // int dx = right_icon_place ? halign_x + 10: - halign_x - 10 - icon.width;
-
-    // render_system.RenderTextureUI(icon,
-    //     {
-    //         m_game_object_pos->x + dx,
-    //         m_game_object_pos->y - halign_y
-    //     });
 }

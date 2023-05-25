@@ -22,4 +22,7 @@ public:
 
 private:
     Vector2<float> *m_game_object_pos;
+    DFTexture neuron_textures[2];
+    DFTexture *m_tex_active, m_tex_one, m_tex_two;
+
 };
