@@ -11,12 +11,12 @@
 
 #include <SatCollider.hpp>
 #include <Link.hpp>
-
+#include <StickmanStatsComponent.hpp>
 constexpr int WIDTH = 2280;
 constexpr int HEIGHT = 720;
 
 constexpr float BODY_HEIGHT = 50;
-
+class StickmanStats;
 constexpr std::size_t INITIAL_POINTMASSES = 11;
 
 class StickmanAI;
@@ -25,6 +25,8 @@ class StickmanPhysicsComponent : public DFComponent
 {
 public:
     StickmanAI *ai;
+    StickmanPhysicsComponent *enemy;
+    StickmanStats *my_stats;
     std::vector<PointMass> m_pointMasses;
     std::vector<StickmanCircle> m_stickmanCircles;
     std::vector<SATCollider> m_colliders;

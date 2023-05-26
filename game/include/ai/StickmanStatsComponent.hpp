@@ -12,7 +12,7 @@ public:
     void Update();
     void applyDamage(int damage);
     const int *getHP() const;
-    int getStamina() const;
+    const int *getStamina() const;
 
 private:
     int m_health;

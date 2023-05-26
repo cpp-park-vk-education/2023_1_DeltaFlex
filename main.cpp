@@ -49,7 +49,8 @@ DFScene *default_scene(void)
         stickman.addComponent(new StickmanPhysicsComponent());
         stickman.addComponent(new StickmanRestarter());
         stickman.addComponent(new StickmanAI());
-        stickman.addComponent(new StickmanPlayer());
+        if (i == 1)
+            stickman.addComponent(new StickmanPlayer());
         stickman.addComponent(new StickmanStats());
         stickmans.push_back(&stickman);
         stickman.onInit();
@@ -61,7 +62,7 @@ DFScene *default_scene(void)
         t.onInit();
     }
 
-        DFEntity &my_hp_me = sc->addNewObject("MyHealthBar");
+    DFEntity &my_hp_me = sc->addNewObject("MyHealthBar");
     my_hp_me.addComponent(new GameHealthBar());
     auto *my_hp_me_comp = my_hp_me.getComponent<GameHealthBar>();
     my_hp_me_comp->halign = { 390 / 2, 40 / 2 };
