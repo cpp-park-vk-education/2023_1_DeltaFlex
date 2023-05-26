@@ -32,6 +32,7 @@
 #include "game/include/game_ui/GameHealthBar.hpp"
 #include "game/include/game_ui/GameStaminaBar.hpp"
 #include "game/include/ai/StickmanStatsComponent.hpp"
+#include "game/include/pause_menu/PauseMenuBack.hpp"
 
 #include "game/include/SatCollider.hpp"
 
@@ -61,7 +62,7 @@ DFScene *default_scene(void)
         t.onInit();
     }
 
-        DFEntity &my_hp_me = sc->addNewObject("MyHealthBar");
+    DFEntity &my_hp_me = sc->addNewObject("MyHealthBar");
     my_hp_me.addComponent(new GameHealthBar());
     auto *my_hp_me_comp = my_hp_me.getComponent<GameHealthBar>();
     my_hp_me_comp->halign = { 390 / 2, 40 / 2 };

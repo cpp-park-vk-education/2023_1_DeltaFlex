@@ -6,6 +6,8 @@
 
 #include <DFWorldScene.hpp>
 
+bool StickmanPhysicsComponent::m_is_active = true;
+
 void StickmanPhysicsComponent::onInit(DFEntity &gameObject)
 {
     ai = gameObject.getComponent<StickmanAI>();
@@ -62,7 +64,6 @@ void StickmanPhysicsComponent::onInit(DFEntity &gameObject)
     m_stickmanCircles.emplace_back(headLength * .75f, Vector2<float>(40.f, 40.f));
     StickmanCircle &headCircle = m_stickmanCircles.back();
 
-
     std::shared_ptr<Link> lnk;
     lnk = head.attachTo(shoulder, 5 / 4 * headLength, 1);
     m_colliders.emplace_back(lnk->m_p1.m_pos, lnk->m_p2.m_pos);
@@ -94,9 +95,9 @@ void StickmanPhysicsComponent::onInit(DFEntity &gameObject)
 
     // m_pointMasses.emplace_back(std::move(head)); 0
     // m_pointMasses.emplace_back(std::move(shoulder)); 1
-    // m_pointMasses.emplace_back(std::move(pelvis)); 2 
+    // m_pointMasses.emplace_back(std::move(pelvis)); 2
     // m_pointMasses.emplace_back(std::move(elbowL)); 3
-    // m_pointMasses.emplace_back(std::move(elbowR)); 4 
+    // m_pointMasses.emplace_back(std::move(elbowR)); 4
     // m_pointMasses.emplace_back(std::move(handL)); 5
     // m_pointMasses.emplace_back(std::move(handR)); 6
     // m_pointMasses.emplace_back(std::move(kneeL)); 7
@@ -131,25 +132,27 @@ void StickmanPhysicsComponent::Update()
     //     return;
     // }
 
-
-    for (auto &p : m_pointMasses)
+    if (m_is_active)
     {
-        p.solveConstraints(WIDTH, HEIGHT);
-    }
+        for (auto &p : m_pointMasses)
+        {
+            p.solveConstraints(WIDTH, HEIGHT);
+        }
 
-    for (auto &p : m_stickmanCircles)
-    {
-        p.solveConstraints(WIDTH, HEIGHT);
-    }
+        for (auto &p : m_stickmanCircles)
+        {
+            p.solveConstraints(WIDTH, HEIGHT);
+        }
 
-    for (auto &p : m_pointMasses)
-    {
-        p.updatePhysics();
-    }
+        for (auto &p : m_pointMasses)
+        {
+            p.updatePhysics();
+        }
 
-    for (auto &p : m_colliders)
-    {
-        p.RecalcPoints(5);
+        for (auto &p : m_colliders)
+        {
+            p.RecalcPoints(5);
+        }
     }
 }
 
@@ -179,7 +182,6 @@ void StickmanPhysicsComponent::Draw(DFRenderSystem &render_system)
             render_system.SetColor(255, 0, 0);
 
             // auto mid_brick = (brick->p1 + brick->p2) / 2;
-
 
             // auto diff_1 = p.p1 - mid_brick;
             // auto diff_2 = p.p2 - mid_brick;
@@ -252,7 +254,11 @@ void StickmanPhysicsComponent::MoveAll(std::array<float, 6> angles)
 
     Move(7, angles[2] / 4);
     Move(8, angles[2] / 4);
+}
 
+void StickmanPhysicsComponent::SetActiveSim(bool state)
+{
+    m_is_active = state;
 }
 
 std::array<float, 12> StickmanPhysicsComponent::GetCoords()

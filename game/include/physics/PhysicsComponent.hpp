@@ -29,6 +29,9 @@ public:
     std::vector<StickmanCircle> m_stickmanCircles;
     std::vector<SATCollider> m_colliders;
 
+private:
+    static bool m_is_active;
+
 public:
     // SDL_Color m_color{.r = 0xFF, .g = 0xFF, .b = 0xFF, .a = 0xFF};
     SDL_Color m_color{.r = 0x00, .g = 0x00, .b = 0x00, .a = 0xFF};
@@ -47,6 +50,7 @@ public:
 
     void MoveAll(std::array<float, 6> angles);
 
+    static void SetActiveSim(bool state);
     // bool CheckCollision(const SATCollider &collider)
     // {
     //     for(auto &p_mass: m_pointMasses)
