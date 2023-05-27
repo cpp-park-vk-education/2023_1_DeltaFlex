@@ -10,6 +10,7 @@ bool StickmanPhysicsComponent::m_is_active = true;
 
 void StickmanPhysicsComponent::onInit(DFEntity &gameObject)
 {
+    my_stats = gameObject.getComponent<StickmanStats>();
     ai = gameObject.getComponent<StickmanAI>();
 
     Vector2<float> &pos = gameObject.transform.position;
@@ -110,6 +111,12 @@ void StickmanPhysicsComponent::Start()
 {
     DFEntity::Find("Camera")->getComponent<DFCameraComponent>()->SetTarget(
         m_pointMasses[2].m_pos);
+
+    enemy = DFEntity::Find("stickman_0")->getComponent<StickmanPhysicsComponent>();
+    if (enemy == this)
+    {
+        enemy = DFEntity::Find("stickman_1")->getComponent<StickmanPhysicsComponent>();
+    }
 }
 
 // ~StickmanPhysicsComponent()
@@ -174,25 +181,21 @@ void StickmanPhysicsComponent::Draw(DFRenderSystem &render_system)
         c.draw(m_color, render_system);
     }
     // SDL_SetRenderDrawColor(render_data.renderer.get(), 0, 0, 0, 255);
-    auto brick = DFEntity::Find("skibidi")->getComponent<TestRect>();
+    // auto brick = DFEntity::Find("skibidi")->getComponent<TestRect>();
     for (auto &p : m_colliders)
     {
-        if (brick->m_collider.isColliding(p))
+        for (auto &other_p : enemy->m_colliders)
         {
-            render_system.SetColor(255, 0, 0);
-
-            // auto mid_brick = (brick->p1 + brick->p2) / 2;
-
-            // auto diff_1 = p.p1 - mid_brick;
-            // auto diff_2 = p.p2 - mid_brick;
-            // p.p1 += (diff_1 / diff_1.length()) * 10;
-            // p.p2 += (diff_2 / diff_2.length()) * 10;
-            // p.p1 += (p.p1 - brick->p1);
-            // p.p2 += (p.p2 - brick->p2);
-        }
-        else
-        {
-            render_system.SetColor(0, 0, 0);
+            if (other_p.isColliding(p))
+            {
+                my_stats->applyDamage(1);
+                render_system.SetColor(255, 0, 0);
+                break;
+            }
+            else
+            {
+                render_system.SetColor(0, 0, 0);
+            }
         }
         p.Draw(render_system);
     }

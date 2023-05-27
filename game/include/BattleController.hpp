@@ -24,6 +24,8 @@ public:
     void onRenderTextures(DFRenderSystem &render_system)
     {
         tex = render_system.CreateTextureFromFile("./resources/images/level_temple.png");
+        tex.width = 2280;
+        tex.height = 720;
     }
 
     void Draw(DFRenderSystem &render_system)

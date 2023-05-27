@@ -50,7 +50,7 @@ void GameHealthBar::Draw(DFRenderSystem &render_system)
 
     int hp_mapped = Map(
         *current_health,
-        0, 100,
+        0, 1000,
         outline_pos.x,
         outline_pos.x + outline_pos.w - 2 * m_margin
     );

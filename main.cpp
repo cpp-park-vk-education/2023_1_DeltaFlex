@@ -50,7 +50,8 @@ DFScene *default_scene(void)
         stickman.addComponent(new StickmanPhysicsComponent());
         stickman.addComponent(new StickmanRestarter());
         stickman.addComponent(new StickmanAI());
-        stickman.addComponent(new StickmanPlayer());
+        if (i == 1)
+            stickman.addComponent(new StickmanPlayer());
         stickman.addComponent(new StickmanStats());
         stickmans.push_back(&stickman);
         stickman.onInit();
