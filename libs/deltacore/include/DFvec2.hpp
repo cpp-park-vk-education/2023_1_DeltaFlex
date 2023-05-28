@@ -41,6 +41,11 @@ struct Vector2
         return *this;
     }
 
+    Vector2<T> operator+(const T &other) const
+    {
+        return Vector2<T>(x + other, y + other);
+    } 
+
     Vector2<T> operator-(const Vector2<T> &other) const
     {
         return Vector2<T>(x - other.x, y - other.y);

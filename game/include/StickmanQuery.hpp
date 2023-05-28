@@ -42,7 +42,12 @@ public:
 
     void Draw(DFRenderSystem &render_system)
     {
-        render_system.RenderTextureUI(m_tex_message, *parent_position);
+        Vector2<float> pos = 
+        {
+            parent_position->x - m_tex_message.width / 2,
+            parent_position->y - m_tex_message.height / 2,
+        };
+        render_system.RenderTextureUI(m_tex_message, pos);
     }
     
     void Toggle()

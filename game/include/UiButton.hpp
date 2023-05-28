@@ -28,7 +28,7 @@ public:
 
     virtual void onClick() {}
 
-private:
+protected:
     void CheckMouseBounds();
     DFTexture m_tex;
     Vector2<float> *m_gameObjPos;
