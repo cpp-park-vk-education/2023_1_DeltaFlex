@@ -1,7 +1,7 @@
 #pragma once
-#include "MainMenuButton.hpp"
+#include "../UiButton.hpp"
 
-class MainMenuPlay : public MainMenuButton
+class MainMenuPlay : public UiButton
 {
 public:
     void onClick()
@@ -10,7 +10,7 @@ public:
     }
 };
 
-class MainMenuOptions : public MainMenuButton
+class MainMenuOptions : public UiButton
 {
 public:
     void onClick()
@@ -19,7 +19,7 @@ public:
     }
 };
 
-class MainMenuExit : public MainMenuButton
+class MainMenuExit : public UiButton
 {
 public:
     void onClick()

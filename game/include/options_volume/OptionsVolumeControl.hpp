@@ -1,9 +1,9 @@
 #pragma once
-#include "MainMenuButton.hpp"
+#include "UiButton.hpp"
 #include "MainMenuCheckBox.hpp"
 #include "MainMenuSlider.hpp"
 
-class OptionsNextButton : public MainMenuButton
+class OptionsNextButton : public UiButton
 {
 public:
     void onClick()
@@ -12,7 +12,7 @@ public:
     }
 };
 
-class OptionsPrevButton : public MainMenuButton
+class OptionsPrevButton : public UiButton
 {
 public:
     void onClick()
