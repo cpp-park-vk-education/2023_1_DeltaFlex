@@ -1,6 +1,7 @@
 
 file(GLOB game_src
     "src/*/*.cpp"
+    "src/*.cpp"
 )
 
 add_library(game SHARED ${game_src})

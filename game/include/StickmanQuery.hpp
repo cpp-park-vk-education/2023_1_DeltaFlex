@@ -34,6 +34,8 @@ public:
 
     void Start()
     {
+        is_visible = false;
+        parent_position->y = -500;
     }
 
     void Update()
@@ -42,14 +44,14 @@ public:
 
     void Draw(DFRenderSystem &render_system)
     {
-        Vector2<float> pos = 
+        Vector2<float> pos =
         {
             parent_position->x - m_tex_message.width / 2,
             parent_position->y - m_tex_message.height / 2,
         };
         render_system.RenderTextureUI(m_tex_message, pos);
     }
-    
+
     void Toggle()
     {
         is_visible = !is_visible;
@@ -61,6 +63,16 @@ public:
         {
             parent_position->y = -500;
         }
+    }
+
+    bool Toggled() const
+    {
+        return is_visible;
+    }
+
+    void SetToggled(bool flag)
+    {
+        is_visible = flag;
     }
 
 private:
