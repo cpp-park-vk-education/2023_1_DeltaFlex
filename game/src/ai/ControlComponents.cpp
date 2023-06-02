@@ -56,6 +56,8 @@ void StickmanAI::onInit(DFEntity &gameObject)
 
     battle_delay = 60;
     walk_delay = 60;
+
+    is_can_move = true;
 }
 
 void StickmanAI::Start()
@@ -72,6 +74,8 @@ void StickmanAI::doTrain()
         int move = 1;
         if (stickman_1->m_pointMasses[0].m_pos.x - my_stickman->m_pointMasses[0].m_pos.x > 0)
             move = 2;
+        if (!is_can_move)
+            move = 0;
         training_time--;
         if (training_model == 0)
         {

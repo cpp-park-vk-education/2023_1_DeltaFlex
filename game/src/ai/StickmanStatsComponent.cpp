@@ -8,7 +8,7 @@ void StickmanStats::onInit(DFEntity &gameObject)
     my_stickman = gameObject.getComponent<StickmanAI>();
     // std::cout << my_stickman;
     m_health = StickmanHP::max * 10;
-    m_stamina = StickmanHP::max;
+    m_stamina = StickmanHP::max * 5;
 }
 
 void StickmanStats::Update()
@@ -25,7 +25,7 @@ void StickmanStats::Update()
     }
     else
     {
-        m_stamina = std::min(100, m_stamina + 1);
+        m_stamina = std::min(500, m_stamina + 1);
     }
 }
 

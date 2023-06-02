@@ -58,6 +58,7 @@ private:
     int walk_action;
     bool walk_flag;
     bool legup_flag;
+    bool is_can_move;
 
     int battle_delay;
     int walk_delay;
