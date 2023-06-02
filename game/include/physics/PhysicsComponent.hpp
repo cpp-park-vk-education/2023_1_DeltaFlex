@@ -90,18 +90,19 @@ public:
         p2 -= DFRenderSystem::GetOrigin();
         m_collider.RecalcPoints(5);
     }
-    void Draw(DFRenderSystem &render_system)
-    {
-        for (auto &collider : DFEntity::Find("stickman_0")->getComponent<StickmanPhysicsComponent>()->m_colliders)
-        {
-            if (collider.isColliding(m_collider))
-            {
-                render_system.SetColor(255, 0, 0);
-                break;
-            }
-        }
-        m_collider.Draw(render_system);
-        render_system.SetColor(0, 0, 0);
 
-    }
+    // void Draw(DFRenderSystem &render_system)
+    // {
+    //     for (auto &collider : DFEntity::Find("stickman_0")->getComponent<StickmanPhysicsComponent>()->m_colliders)
+    //     {
+    //         if (collider.isColliding(m_collider))
+    //         {
+    //             // render_system.SetColor(255, 0, 0);
+    //             break;
+    //         }
+    //     }
+    //     // m_collider.Draw(render_system);
+    //     // render_system.SetColor(0, 0, 0);
+
+    // }
 };

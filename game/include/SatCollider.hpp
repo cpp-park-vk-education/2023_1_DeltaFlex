@@ -24,12 +24,12 @@ public:
     SATCollider(Vector2<float> &p1, Vector2<float> &p2) :p1(p1), p2(p2) {}
     void Draw(DFRenderSystem &render_system)
     {
-        render_system.RenderPoint(p1);
-        render_system.RenderPoint(p2);
+    //     render_system.RenderPoint(p1);
+    //     render_system.RenderPoint(p2);
 
-        for (size_t i = 0; i < 4 - 1; ++i)
-            render_system.RenderLine(points[i], points[i + 1]);
-        render_system.RenderLine(points[3], points[0]);
+    //     for (size_t i = 0; i < 4 - 1; ++i)
+    //         render_system.RenderLine(points[i], points[i + 1]);
+    //     render_system.RenderLine(points[3], points[0]);
     }
 
     void RecalcPoints(const int width)

@@ -182,11 +182,19 @@ void StickmanPhysicsComponent::Draw(DFRenderSystem &render_system)
     }
     // SDL_SetRenderDrawColor(render_data.renderer.get(), 0, 0, 0, 255);
     // auto brick = DFEntity::Find("skibidi")->getComponent<TestRect>();
-    for (auto &p : m_colliders)
+    
+    constexpr int left_hand_index = 3;
+    constexpr int right_hand_index = 4;
+
+    for (int my_index = 0; my_index < m_colliders.size(); ++my_index)
     {
-        for (auto &other_p : enemy->m_colliders)
+        auto &p = m_colliders[my_index];
+
+        for (int enemy_index = 0; enemy_index < enemy->m_colliders.size(); ++enemy_index)
         {
-            if (other_p.isColliding(p))
+            auto &other_p = enemy->m_colliders[enemy_index];
+
+            if (other_p.isColliding(p) && my_index != left_hand_index && my_index != right_hand_index)
             {
                 my_stats->applyDamage(1);
                 render_system.SetColor(255, 0, 0);
@@ -197,7 +205,7 @@ void StickmanPhysicsComponent::Draw(DFRenderSystem &render_system)
                 render_system.SetColor(0, 0, 0);
             }
         }
-        p.Draw(render_system);
+        // p.Draw(render_system);
     }
 }
 
