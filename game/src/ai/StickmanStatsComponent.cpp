@@ -21,10 +21,13 @@ void StickmanStats::Update()
         {
             m_stamina = 0;
             walk_action = 0;
+            
+            my_stickman->is_can_move = false;
         }
     }
     else
     {
+        my_stickman->is_can_move = true;
         m_stamina = std::min(500, m_stamina + 1);
     }
 }
