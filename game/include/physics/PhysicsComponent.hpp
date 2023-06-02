@@ -36,7 +36,7 @@ private:
 
 public:
     // SDL_Color m_color{.r = 0xFF, .g = 0xFF, .b = 0xFF, .a = 0xFF};
-    SDL_Color m_color{.r = 0x00, .g = 0x00, .b = 0x00, .a = 0xFF};
+    SDL_Color m_color{ .r = 0x00, .g = 0x00, .b = 0x00, .a = 0xFF };
 
 public:
     void onInit(DFEntity &gameObject) override;
@@ -53,6 +53,14 @@ public:
     void MoveAll(std::array<float, 6> angles);
 
     static void SetActiveSim(bool state);
+
+    void setColor(int r, int g, int b, int a = 255)
+    {
+        m_color.r = r;
+        m_color.g = g;
+        m_color.b = b;
+        m_color.a = a;
+    }
     // bool CheckCollision(const SATCollider &collider)
     // {
     //     for(auto &p_mass: m_pointMasses)

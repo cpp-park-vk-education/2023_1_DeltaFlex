@@ -58,6 +58,8 @@ DFScene *default_scene(void)
         stickman.addComponent(new StickmanAI());
         if (i == 1)
             stickman.addComponent(new StickmanPlayer());
+        else
+            stickman.getComponent<StickmanPhysicsComponent>()->setColor(128, 0, 128);
         stickman.addComponent(new StickmanStats());
         sticks_Stats[i] = stickman.getComponent<StickmanStats>();
         stickmans.push_back(&stickman);
