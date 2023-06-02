@@ -4,7 +4,7 @@ Model::Model(StickmanPhysicsComponent *stickman): stickman(stickman)
 {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_real_distribution<> dis(-10.0, 10.0);
+    std::uniform_real_distribution<> dis(0, 0);
 
     for (int i = 0; i < INPUT_DIM; i++)
         for (int j = 0; j < H_DIM1; j++)

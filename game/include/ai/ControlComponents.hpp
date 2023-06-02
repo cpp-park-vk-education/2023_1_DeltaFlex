@@ -50,6 +50,7 @@ private:
     Model *model;
 
     StickmanPhysicsComponent *my_stickman;
+    StickmanPhysicsComponent *stickman_1;
     WalkModel *walk_model;
     BattleModel *battle_model;
 
@@ -70,6 +71,7 @@ protected:
 
 public:
     void onInit(DFEntity &gameObject);
+    void Start();
     void Update();
     bool getActive();
     
