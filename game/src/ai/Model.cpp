@@ -4,7 +4,7 @@ Model::Model(StickmanPhysicsComponent *stickman): stickman(stickman)
 {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_real_distribution<> dis(-10.0, 10.0);
+    std::uniform_real_distribution<> dis(0, 0);
 
     for (int i = 0; i < INPUT_DIM; i++)
         for (int j = 0; j < H_DIM1; j++)
@@ -178,14 +178,25 @@ std::array<float, Model::OUT_DIM> Model::predict()
 
 void Model::updateRecord()
 {
-    // if (stickman->m_pointMasses[0]->m_pos.y > 650)
-        // active = false;
+    // if (stickman->m_pointMasses[3].m_pos.y - stickman->m_pointMasses[1].m_pos.y < 0)
+    //     active = false;
+    // if (stickman->m_pointMasses[4].m_pos.y - stickman->m_pointMasses[1].m_pos.y < 0)
+    //     active = false;
+    // if (stickman->m_pointMasses[5].m_pos.y - stickman->m_pointMasses[1].m_pos.y < 0)
+    //     active = false;
+    // if (stickman->m_pointMasses[6].m_pos.y - stickman->m_pointMasses[1].m_pos.y < 0)
+    //     active = false;
+    // if (std::abs(stickman->m_pointMasses[4].m_pos.y - stickman->m_pointMasses[3].m_pos.y) < 1)
+    //     active = false;
+    // if (std::abs(stickman->m_pointMasses[6].m_pos.y - stickman->m_pointMasses[5].m_pos.y) < 1)
+    //     active = false;
     if (active)
         best_record +=
-        (stickman->m_pointMasses[2].m_pos.y - stickman->m_pointMasses[1].m_pos.y) +
-        (stickman->m_pointMasses[1].m_pos.y - stickman->m_pointMasses[0].m_pos.y) +
-        (stickman->m_pointMasses[5].m_pos.y - stickman->m_pointMasses[1].m_pos.y) +
-        (stickman->m_pointMasses[6].m_pos.y - stickman->m_pointMasses[1].m_pos.y);
+        0.75*(stickman->m_pointMasses[2].m_pos.y - stickman->m_pointMasses[0].m_pos.y) +
+        1.5*(stickman->m_pointMasses[4].m_pos.x - stickman->m_pointMasses[3].m_pos.x) +
+        1.5*(stickman->m_pointMasses[6].m_pos.x - stickman->m_pointMasses[5].m_pos.x) +
+        1.2*(stickman->m_pointMasses[5].m_pos.y - stickman->m_pointMasses[1].m_pos.y) +
+        1.2*(stickman->m_pointMasses[6].m_pos.y - stickman->m_pointMasses[1].m_pos.y);
 }
 
 float Model::getRecord() const

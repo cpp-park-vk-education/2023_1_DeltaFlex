@@ -46,13 +46,13 @@ public:
         m_render_system.SetOrigin(topleft);
     }
 
-    void Draw(DFRenderSystem &render_system)
-    {
-        if (!target_position)
-            return;
-        render_system.SetColor(255, 255, 255);
-        render_system.RenderCircle(target_position->x, target_position->y, 10);
-    }
+    // void Draw(DFRenderSystem &render_system)
+    // {
+    //     if (!target_position)
+    //         return;
+    //     render_system.SetColor(255, 255, 255);
+    //     render_system.RenderCircle(target_position->x, target_position->y, 10);
+    // }
 
 private:
     DFRenderSystem &m_render_system;

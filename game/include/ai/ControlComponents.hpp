@@ -50,6 +50,7 @@ private:
     Model *model;
 
     StickmanPhysicsComponent *my_stickman;
+    StickmanPhysicsComponent *stickman_1;
     WalkModel *walk_model;
     BattleModel *battle_model;
 
@@ -57,20 +58,27 @@ private:
     int walk_action;
     bool walk_flag;
     bool legup_flag;
+    bool is_can_move;
 
     int battle_delay;
     int walk_delay;
 
     static bool m_is_active;
+    friend class StickmanStats;
 
 protected:
     void doWalk();
     void doBattle();
+    void doTrain();
 
 public:
     void onInit(DFEntity &gameObject);
+    void Start();
     void Update();
     bool getActive();
     
     static void setActiveSim(bool state);
+
+    int training_model = 0;
+    int training_time = 0;
 };

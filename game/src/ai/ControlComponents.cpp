@@ -44,7 +44,7 @@ void StickmanAI::onInit(DFEntity &gameObject)
 
     attack_model = new Model(my_stickman, "../game_base_models/attack.txt");
     protect_model = new Model(my_stickman, "../game_base_models/protect.txt");
-    idle_model = new Model(my_stickman, "../game_base_models/idle.txt");
+    idle_model = new Model(my_stickman);
     model = idle_model;
 
     walk_model = new WalkModel(my_stickman);
@@ -56,6 +56,43 @@ void StickmanAI::onInit(DFEntity &gameObject)
 
     battle_delay = 60;
     walk_delay = 60;
+
+    is_can_move = true;
+}
+
+void StickmanAI::Start()
+{
+    stickman_1 = DFEntity::Find("stickman_0")->getComponent<StickmanPhysicsComponent>();
+    if (my_stickman == stickman_1)
+        stickman_1 = DFEntity::Find("stickman_1")->getComponent<StickmanPhysicsComponent>();
+}
+
+void StickmanAI::doTrain()
+{
+    if (training_time > 0)
+    {
+        int move = 1;
+        if (stickman_1->m_pointMasses[0].m_pos.x - my_stickman->m_pointMasses[0].m_pos.x > 0)
+            move = 2;
+        if (!is_can_move)
+            move = 0;
+        training_time--;
+        if (training_model == 0)
+        {
+            battle_action = 0;
+            walk_action = 0;
+        }
+        else if (training_model == 1)
+        {
+            battle_action = 1;
+            walk_action = move;
+        }
+        else if (training_model == 2)
+        {
+            battle_action = 2;
+            walk_action = move;
+        }
+    }
 }
 
 void StickmanAI::Update()
@@ -89,6 +126,7 @@ void StickmanAI::Update()
             battle_delay = 15;
         }
 
+        doTrain();
         doWalk();
         doBattle();
     }
@@ -113,8 +151,18 @@ void StickmanAI::doBattle()
 void StickmanAI::doWalk()
 {
     if (my_stickman->m_pointMasses[2].m_pinPos.x < 30)
+    {
         walk_action = 2;
-
+        training_model = 1;
+        training_time = 180;
+    }
+    if (my_stickman->m_pointMasses[2].m_pinPos.x > 2250)
+    {
+        walk_action = 1;
+        training_model = 1;
+        training_time = 180;
+    }
+    
     if (walk_action == 1)
     {
         my_stickman->m_pointMasses[2].pinTo({my_stickman->m_pointMasses[2].m_pinPos.x - 2, my_stickman->m_pointMasses[2].m_pinPos.y});

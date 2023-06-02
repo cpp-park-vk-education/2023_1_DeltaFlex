@@ -48,6 +48,8 @@ DFScene *default_scene(void)
     tmp.onInit();
 
     std::vector<DFEntity *> stickmans;
+
+    StickmanStats *sticks_Stats[2];
     for (int i = 0; i < 2; i++)
     {
         DFEntity &stickman = sc->addNewObject("stickman_" + std::to_string(i));
@@ -57,6 +59,7 @@ DFScene *default_scene(void)
         if (i == 1)
             stickman.addComponent(new StickmanPlayer());
         stickman.addComponent(new StickmanStats());
+        sticks_Stats[i] = stickman.getComponent<StickmanStats>();
         stickmans.push_back(&stickman);
         stickman.onInit();
     }
@@ -73,6 +76,7 @@ DFScene *default_scene(void)
     my_hp_me_comp->halign = { 390 / 2, 40 / 2 };
     my_hp_me.transform.position = { 250, 50 };
     my_hp_me_comp->right_icon_place = false;
+    my_hp_me_comp->current_health = sticks_Stats[1]->getHP();
     my_hp_me.onInit();
 
     DFEntity &my_hp_enemy = sc->addNewObject("EnemyHealthBar");
@@ -81,6 +85,7 @@ DFScene *default_scene(void)
     enemy_hp_comp->halign = { 390 / 2, 40 / 2 };
     my_hp_enemy.transform.position = { 1280 - 250, 50 };
     enemy_hp_comp->right_icon_place = true;
+    enemy_hp_comp->current_health = sticks_Stats[0]->getHP();
     my_hp_enemy.onInit();
 
     DFEntity &my_sp = sc->addNewObject("MyStaminaBar");
@@ -89,14 +94,16 @@ DFScene *default_scene(void)
     my_sp_comp->halign = { 390 / 2, 40 / 2 };
     my_sp.transform.position = { 250, 2 * 50 };
     my_sp_comp->right_icon_place = false;
+    my_sp_comp->current_health = sticks_Stats[1]->getStamina();
     my_sp.onInit();
 
-    DFEntity &my_sp_enemy = sc->addNewObject("EnemyHealthBar");
+    DFEntity &my_sp_enemy = sc->addNewObject("EnemyStaminaBar");
     my_sp_enemy.addComponent(new GameStaminaBar());
     auto *enemy_sp_comp = my_sp_enemy.getComponent<GameStaminaBar>();
     enemy_sp_comp->halign = { 390 / 2, 40 / 2 };
     my_sp_enemy.transform.position = { 1280 - 250, 2 * 50 };
     enemy_sp_comp->right_icon_place = true;
+    enemy_sp_comp->current_health = sticks_Stats[0]->getStamina();
     my_sp_enemy.onInit();
 
     DFEntity &active_skill_up = sc->addNewObject("ActiveSkillUp");
@@ -165,7 +172,7 @@ DFScene *evo_scene(void)
     tmp.addComponent(new BattleController());
     tmp.onInit();
     std::vector<DFEntity *> stickmans;
-    for (int i = 0; i < 81; i++)
+    for (int i = 0; i < 30; i++)
     {
         DFEntity &stickman = sc->addNewObject("stickman_" + std::to_string(i));
         stickman.addComponent(new StickmanPhysicsComponent());
@@ -259,6 +266,7 @@ DFScene *options_volume_control(void)
 
 int main(void)
 {
+    
     // setlocale(LC_ALL, "rus");
     TTF_Init();
     spdlog::set_level(spdlog::level::trace);
