@@ -240,7 +240,27 @@ public:
         {
             throw std::runtime_error(TTF_GetError());
         }
+
         SDL_Surface *surf = TTF_RenderText_Solid(fnt, text.c_str(), text_color);
+        if (!surf)
+        {
+            throw std::runtime_error("Error occured while creating texture");
+        }
+        DFTexture tex(m_renderer, surf);
+        TTF_CloseFont(fnt);
+        SDL_FreeSurface(surf);
+        return std::move(tex);
+    }
+
+    DFTexture CreateTextureTextWrapped(const std::string &text, const std::string &font_path, const int font_size, const SDL_Color &text_color, const Uint32 wrap_length)
+    {
+        TTF_Font *fnt = TTF_OpenFont(font_path.c_str(), font_size);
+        if (!fnt)
+        {
+            throw std::runtime_error(TTF_GetError());
+        }
+        
+        SDL_Surface *surf = TTF_RenderText_Solid_Wrapped(fnt, text.c_str(), text_color, wrap_length);
         if (!surf)
         {
             throw std::runtime_error("Error occured while creating texture");

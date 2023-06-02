@@ -84,6 +84,19 @@ public:
         return nullptr;
     }
 
+    template<typename T> std::vector<T*> getComponents()
+    {
+        std::vector<T*> found_components;
+        for (auto component : m_components)
+        {
+            if (typeid(*component) == typeid(T))
+            {
+                found_components.emplace_back(dynamic_cast<T *>(component));
+            }
+        }
+        return found_components;
+    }
+
     static DFEntity *Find(std::string name)
     {
         return DFSceneManager::Instance->activeScene.get()->findEntity(name);

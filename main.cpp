@@ -32,6 +32,10 @@
 #include "game/include/game_ui/GameHealthBar.hpp"
 #include "game/include/game_ui/GameStaminaBar.hpp"
 #include "game/include/ai/StickmanStatsComponent.hpp"
+#include "game/include/pause_menu/PauseMenuBack.hpp"
+#include "game/include/game_ui/StickmanQueryButton.hpp"
+#include "game/include/StickmanQuery.hpp"
+#include "game/include/GameStopper.hpp"
 
 #include "game/include/SatCollider.hpp"
 
@@ -107,6 +111,46 @@ DFScene *default_scene(void)
     active_skill_down.transform.position = { 655, 25 };
     active_skill_down_comp->is_up_skill = false;
     active_skill_down.onInit();
+
+    {
+        DFEntity &stickman_query = sc->addNewObject("StickmanQuery");
+        // Vector2<int> pos = DFEngine::GetWindowLogicalSize();
+        stickman_query.transform.position = { 650.f, 350.f };
+
+        stickman_query.addComponent(new StickmanQueryButtonAttack());
+        stickman_query.addComponent(new StickmanQueryButtonIdle());
+        stickman_query.addComponent(new StickmanQueryButtonProtect());
+
+        auto stickman_query_button_components = std::array<StickmanQueryButton *, 3>{};
+        stickman_query_button_components[0] = stickman_query.getComponent<StickmanQueryButtonAttack>();
+        stickman_query_button_components[1] = stickman_query.getComponent<StickmanQueryButtonIdle>();
+        stickman_query_button_components[2] = stickman_query.getComponent<StickmanQueryButtonProtect>();
+
+        stickman_query_button_components[0]->shift = { -160, 230 };
+        stickman_query_button_components[1]->shift = { 0, 230 };
+        stickman_query_button_components[2]->shift = { 160, 230 };
+
+        stickman_query_button_components[0]->icon_path = "./resources/images/sword-icon.png";
+        stickman_query_button_components[1]->icon_path = "./resources/images/idle-icon.png";
+        stickman_query_button_components[2]->icon_path = "./resources/images/shield-icon.png";
+
+        stickman_query.addComponent(new StickmanQuery());
+        auto *stickman_query_comp = stickman_query.getComponent<StickmanQuery>();
+        stickman_query_comp->m_message_path = "./resources/images/query.png";
+
+        for (auto &elem : stickman_query_button_components)
+        {
+            elem->halign = { 50, 25 };
+            elem->img_path = "./resources/images/query-button.png";
+            elem->SetStickmanQuery(stickman_query_comp);
+        }
+
+        stickman_query.onInit();
+    }
+
+    DFEntity &game_stopper = sc->addNewObject("GameStopper");
+    game_stopper.addComponent(new GameStopper());
+    game_stopper.onInit();
 
     return sc;
 }

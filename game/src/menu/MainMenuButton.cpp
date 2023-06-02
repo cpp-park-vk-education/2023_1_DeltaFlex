@@ -1,22 +1,22 @@
-#include "MainMenuButton.hpp"
+#include "UiButton.hpp"
 
-void MainMenuButton::onInit(DFEntity &gameObject)
+void UiButton::onInit(DFEntity &gameObject)
 {
     m_gameObjPos = &gameObject.transform.position;
 }
 
-void MainMenuButton::onRenderTextures(DFRenderSystem &render_system)
+void UiButton::onRenderTextures(DFRenderSystem &render_system)
 {
     // m_tex = IMG_LoadTexture(render_data.renderer.get(), img_path.c_str());
     m_tex = render_system.CreateTextureFromFile(img_path);
 }
 
-void MainMenuButton::Start()
+void UiButton::Start()
 {
     is_active = false;
 }
 
-void MainMenuButton::Update()
+void UiButton::Update()
 {
     CheckMouseBounds();
     if (is_active && Input::GetMouseButtonDown(MouseCode::MOUSE_LEFT))
@@ -25,25 +25,23 @@ void MainMenuButton::Update()
     }
 }
 
-void MainMenuButton::Draw(DFRenderSystem &render_system)
+void UiButton::Draw(DFRenderSystem &render_system)
 {
-    SDL_Rect pos =
+    Vector2<float> pos =
     {
-        .x = (int)(m_gameObjPos->x - halign.x + 10 * is_active),
-        .y = (int)(m_gameObjPos->y - halign.y + 10 * is_active),
-        .w = (int)halign.x * 2,
-        .h = (int)halign.y * 2
+        (m_gameObjPos->x - halign.x + shift.x + 10 * is_active),
+        (m_gameObjPos->y - halign.y + shift.y + 10 * is_active),
     };
     // if(is_active)
     // {
     //     render_system.SetOrigin({-100, -100});
     // }
     // SDL_RenderCopy(render_data.renderer.get(), m_tex, NULL, &pos);
-    render_system.RenderTexture(m_tex, NULL, &pos);
+    render_system.RenderTextureUI(m_tex, pos);
 }
 
-void MainMenuButton::CheckMouseBounds()
+void UiButton::CheckMouseBounds()
 {
     Vector2<float> mouse_pos(Input::GetMouseX(), Input::GetMouseY());
-    is_active = (*m_gameObjPos - halign < mouse_pos && mouse_pos < *m_gameObjPos + halign);
+    is_active = (*m_gameObjPos - halign + shift < mouse_pos && mouse_pos < *m_gameObjPos + halign + shift);
 }
