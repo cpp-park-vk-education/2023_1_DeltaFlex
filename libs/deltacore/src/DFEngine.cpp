@@ -25,6 +25,9 @@ double DFEngine::deltaTime = 1;
 int DFEngine::currentFrameRate = 60;
 
 DFEngine::DFEngine()
+#ifdef EXPERIMENTAL_ALLOCATOR
+    :df_allocator(1024 * 1024 * 10)
+#endif
 {
     if (Instance != nullptr)
     {

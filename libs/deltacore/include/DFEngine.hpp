@@ -4,6 +4,7 @@
 #include <DFSceneManager.hpp>
 #include <DFAudioManager.hpp>
 #include <DFVideoParams.hpp>
+#include <DFLinearAllocator.hpp>
 
 class DFEngine
 {
@@ -17,11 +18,19 @@ private:
     bool gameIsActive;
 
     void HandleEvents(void);
+#ifdef EXPERIMENTAL_ALLOCATOR
+    DFLinearAllocator df_allocator;
+#endif
 
 public:
     static DFEngine *Instance;
     static double deltaTime;
     static int currentFrameRate;
+
+#ifdef EXPERIMENTAL_ALLOCATOR
+    static void *dfalloc(size_t count) { return Instance->df_allocator.allocate(count); }
+    static void dffree() { Instance->df_allocator.deallocate(); }
+#endif
 
     DFEngine();
 
