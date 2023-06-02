@@ -226,7 +226,9 @@ public:
         SDL_Surface *surf = IMG_Load(f.c_str());
         if (!surf)
         {
-            throw std::runtime_error("Unable to load surface");
+            char buff[500];
+            strcpy(buff, SDL_GetError());
+            throw std::runtime_error("Unable to load surface: " + std::string(buff));
         }
         DFTexture tex(m_renderer, surf);
         SDL_FreeSurface(surf);

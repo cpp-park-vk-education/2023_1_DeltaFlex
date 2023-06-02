@@ -10,6 +10,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+#include "RestartGameButton.hpp"
+
 class GameStopper : public DFComponent
 {
 public:
@@ -38,10 +40,17 @@ public:
 
     void Start()
     {
+        m_restart_btn = DFEntity::Find("GameStopper")->getComponent<RestartGameButton>();
+        m_exit_btn = DFEntity::Find("GameStopper")->getComponent<ExitGameButton>();
     }
 
     void Update()
     {
+        if (ptr->winner != NOONE)
+        {
+            m_restart_btn->SetShift({ 640, 500 });
+            m_exit_btn->SetShift({ 640, 600 });
+        }
     }
 
     void Draw(DFRenderSystem &render_system)
@@ -64,8 +73,15 @@ public:
             ptr->winner = NNETWORK;
     }
 
+    // void SetRestartButtonComponent(RestartGameButton *btn)
+    // {
+    //     m_restart_btn = btn;
+    // }
+
 protected:
     DFTexture m_tex_playerwin, m_tex_nnwin;
+    RestartGameButton *m_restart_btn;
+    ExitGameButton *m_exit_btn;
     Winner_t winner;
     static GameStopper *ptr;
 };

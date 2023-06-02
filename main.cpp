@@ -34,6 +34,7 @@
 #include "game/include/ai/StickmanStatsComponent.hpp"
 #include "game/include/pause_menu/PauseMenuBack.hpp"
 #include "game/include/game_ui/StickmanQueryButton.hpp"
+#include "game/include/game_ui/RestartGameButton.hpp"
 #include "game/include/StickmanQuery.hpp"
 #include "game/include/GameStopper.hpp"
 
@@ -150,6 +151,8 @@ DFScene *default_scene(void)
 
     DFEntity &game_stopper = sc->addNewObject("GameStopper");
     game_stopper.addComponent(new GameStopper());
+    game_stopper.addComponent(new RestartGameButton());
+    game_stopper.addComponent(new ExitGameButton());
     game_stopper.onInit();
 
     return sc;

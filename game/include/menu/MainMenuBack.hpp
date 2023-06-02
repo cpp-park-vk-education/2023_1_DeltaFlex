@@ -52,13 +52,13 @@ public:
 
     void Draw(DFRenderSystem &render_system)
     {
-        render_system.RenderTexture(tex, NULL, NULL);
-        render_system.RenderTexture(logo_tex,
+        render_system.RenderTextureUI(tex, {0,0});
+        render_system.RenderTextureUI(logo_tex,
             {
                 1280 / 2 - 650 / 2,
                 720 / 6 + logo_y_align - 220 / 2
             });
-        render_system.RenderTexture(game_ver, {700, 700});
+        render_system.RenderTextureUI(game_ver, {700, 700});
     }
 
 private:
