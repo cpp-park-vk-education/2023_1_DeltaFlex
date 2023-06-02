@@ -197,7 +197,7 @@ void StickmanPhysicsComponent::Draw(DFRenderSystem &render_system)
                 render_system.SetColor(0, 0, 0);
             }
         }
-        p.Draw(render_system);
+        // p.Draw(render_system);
     }
 }
 
