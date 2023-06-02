@@ -62,6 +62,7 @@ private:
     int walk_delay;
 
     static bool m_is_active;
+    friend class StickmanStats;
 
 protected:
     void doWalk();

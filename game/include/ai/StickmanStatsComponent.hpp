@@ -1,10 +1,10 @@
 #pragma once
 
+#include "ControlComponents.hpp"
 #include "DFComponent.hpp"
 #include "DFEntity.hpp"
-#include "ControlComponents.hpp"
 #include "DFInputSystem.hpp"
-
+class StickmanAI;
 class StickmanStats : public DFComponent
 {
 public:
@@ -17,6 +17,7 @@ public:
 private:
     int m_health;
     int m_stamina;
+    StickmanAI *my_stickman;
 
 private:
     struct StickmanHP

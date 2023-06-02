@@ -26,7 +26,7 @@ void GameStaminaBar::onRenderTextures(DFRenderSystem &render_system)
 
 void GameStaminaBar::Start()
 {
-    current_health = DFEntity::Find("stickman_0")->getComponent<StickmanStats>()->getStamina();
+    // current_health = DFEntity::Find("stickman_0")->getComponent<StickmanStats>()->getStamina();
 }
 
 void GameStaminaBar::Update()
