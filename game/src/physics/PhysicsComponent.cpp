@@ -171,29 +171,29 @@ void StickmanPhysicsComponent::Draw(DFRenderSystem &render_system)
         c.draw(m_color, render_system);
     }
     // SDL_SetRenderDrawColor(render_data.renderer.get(), 0, 0, 0, 255);
-    auto brick = DFEntity::Find("skibidi")->getComponent<TestRect>();
-    for (auto &p : m_colliders)
-    {
-        if (brick->m_collider.isColliding(p))
-        {
-            render_system.SetColor(255, 0, 0);
+    // auto brick = DFEntity::Find("skibidi")->getComponent<TestRect>();
+    // for (auto &p : m_colliders)
+    // {
+    //     if (brick->m_collider.isColliding(p))
+    //     {
+    //         render_system.SetColor(255, 0, 0);
 
-            // auto mid_brick = (brick->p1 + brick->p2) / 2;
+    //         // auto mid_brick = (brick->p1 + brick->p2) / 2;
 
 
-            // auto diff_1 = p.p1 - mid_brick;
-            // auto diff_2 = p.p2 - mid_brick;
-            // p.p1 += (diff_1 / diff_1.length()) * 10;
-            // p.p2 += (diff_2 / diff_2.length()) * 10;
-            // p.p1 += (p.p1 - brick->p1);
-            // p.p2 += (p.p2 - brick->p2);
-        }
-        else
-        {
-            render_system.SetColor(0, 0, 0);
-        }
-        p.Draw(render_system);
-    }
+    //         // auto diff_1 = p.p1 - mid_brick;
+    //         // auto diff_2 = p.p2 - mid_brick;
+    //         // p.p1 += (diff_1 / diff_1.length()) * 10;
+    //         // p.p2 += (diff_2 / diff_2.length()) * 10;
+    //         // p.p1 += (p.p1 - brick->p1);
+    //         // p.p2 += (p.p2 - brick->p2);
+    //     }
+    //     else
+    //     {
+    //         render_system.SetColor(0, 0, 0);
+    //     }
+    //     p.Draw(render_system);
+    // }
 }
 
 void StickmanPhysicsComponent::addStickmanCircle(StickmanCircle &c)

@@ -42,7 +42,7 @@ void StickmanAI::onInit(DFEntity &gameObject)
     
     attack_model = new Model(my_stickman, "../game_base_models/attack.txt");
     protect_model = new Model(my_stickman, "../game_base_models/protect.txt");
-    idle_model = new Model(my_stickman, "../game_base_models/idle.txt");
+    idle_model = new Model(my_stickman);
     model = idle_model;
 
     walk_model = new WalkModel(my_stickman);

@@ -256,7 +256,7 @@ void EraComponent::Restart()
     for (size_t i = 0; i < stickmans.size(); i++)
     {
         stickmans[i]->getComponent<StickmanRestarter>()->RestartStickman();
-        stickmans[i]->getComponent<StickmanAI>()->model->resetRecord();
+        stickmans[i]->getComponent<StickmanAI>()->idle_model->resetRecord();
     }
 }
 
@@ -274,16 +274,22 @@ std::vector<Model*> EraComponent::GetModels()
 void EraComponent::Update()
 {
     auto models = GetModels();
+    for (auto &model: models)
+    {
+        model->updateRecord();
+    }
+
     bool active = false;
     for (auto &model: models)
+    {
         if (model->getActive())
         {
-            model->updateRecord();
             active = true;
             break;
         }
+    }
     
-    int time_restart = 60;
+    int time_restart = 300;
     
     if (!active)
         time = time_restart;
@@ -291,7 +297,6 @@ void EraComponent::Update()
     time++;
     if (time > time_restart)
     {
-        auto models = GetModels();
         int current = models[0]->getRecord();
         int max_i;
         for (size_t i = 0; i < models.size(); i++)
@@ -305,9 +310,9 @@ void EraComponent::Update()
         if (current > best || (current / static_cast<float>(best) > 0.4))
         {
             Evolution evo(models);
-            evo.Selection_Tournament(2, 4);
+            evo.Selection_Best();
             evo.Crossing();
-            evo.Mutation(10, 60);
+            evo.Mutation(1, 100);
         }
         if (current > best)
             best = current;
