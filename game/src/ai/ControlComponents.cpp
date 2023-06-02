@@ -58,6 +58,29 @@ void StickmanAI::onInit(DFEntity &gameObject)
     walk_delay = 60;
 }
 
+void StickmanAI::doTrain()
+{
+    if (training_time > 0)
+    {
+        training_time--;
+        if (training_model == 0)
+        {
+            battle_action = 0;
+            walk_action = 0;
+        }
+        else if (training_model == 1)
+        {
+            battle_action = 1;
+            walk_action = 1;
+        }
+        else if (training_model == 2)
+        {
+            battle_action = 2;
+            walk_action = 2;
+        }
+    }
+}
+
 void StickmanAI::Update()
 {
     if (m_is_active)
@@ -89,6 +112,7 @@ void StickmanAI::Update()
             battle_delay = 15;
         }
 
+        doTrain();
         doWalk();
         doBattle();
     }

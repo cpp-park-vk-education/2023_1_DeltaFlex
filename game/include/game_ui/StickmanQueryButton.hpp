@@ -11,6 +11,7 @@
 
 #include "../UiButton.hpp"
 #include "../StickmanQuery.hpp"
+#include "../ai/ControlComponents.hpp"
 
 class StickmanQueryButton : public UiButton
 {
@@ -67,7 +68,9 @@ public:
     void onClick()
     {
         StickmanQueryButton::onClick();
-        // другая логика
+        auto stickman = DFEntity::Find("stickman_1")->getComponent<StickmanAI>();
+        stickman->training_model = 1;
+        stickman->training_time = 300;
     }
 };
 
@@ -77,6 +80,9 @@ public:
     void onClick()
     {
         StickmanQueryButton::onClick();
+        auto stickman = DFEntity::Find("stickman_1")->getComponent<StickmanAI>();
+        stickman->training_model = 0;
+        stickman->training_time = 300;
     }
 };
 
@@ -86,5 +92,8 @@ public:
     void onClick()
     {
         StickmanQueryButton::onClick();
+        auto stickman = DFEntity::Find("stickman_1")->getComponent<StickmanAI>();
+        stickman->training_model = 2;
+        stickman->training_time = 300;
     }
 };

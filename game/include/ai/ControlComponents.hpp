@@ -66,6 +66,7 @@ private:
 protected:
     void doWalk();
     void doBattle();
+    void doTrain();
 
 public:
     void onInit(DFEntity &gameObject);
@@ -73,4 +74,7 @@ public:
     bool getActive();
     
     static void setActiveSim(bool state);
+
+    int training_model = 0;
+    int training_time = 0;
 };
