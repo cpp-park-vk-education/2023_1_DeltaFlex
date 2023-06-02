@@ -28,7 +28,7 @@ void StickmanRestarter::RestartStickman()
     my_stickman->m_pointMasses[10].m_pos = align + Vector2<float>(600.544, 314.127);
     for (auto &x : my_stickman->m_pointMasses)
     {
-        x.m_acceleration = { 0, 0 };
+        x.m_acceleration = {0, 0};
         x.m_oldPos = x.m_pos;
     }
     my_stickman->m_pointMasses[2].pinTo({my_stickman->m_pointMasses[2].m_pos.x, my_stickman->m_pointMasses[2].m_pos.y});
@@ -36,10 +36,12 @@ void StickmanRestarter::RestartStickman()
     my_stickman->m_pointMasses[10].pinTo({my_stickman->m_pointMasses[10].m_pos.x, my_stickman->m_pointMasses[10].m_pos.y});
 }
 
+bool StickmanAI::m_is_active = true;
+
 void StickmanAI::onInit(DFEntity &gameObject)
 {
     my_stickman = gameObject.getComponent<StickmanPhysicsComponent>();
-    
+
     attack_model = new Model(my_stickman, "../game_base_models/attack.txt");
     protect_model = new Model(my_stickman, "../game_base_models/protect.txt");
     idle_model = new Model(my_stickman);
@@ -47,7 +49,7 @@ void StickmanAI::onInit(DFEntity &gameObject)
 
     walk_model = new WalkModel(my_stickman);
     battle_model = new BattleModel(my_stickman);
-    
+
     battle_action = 0;
     walk_action = 0;
     walk_flag = false;
@@ -58,40 +60,48 @@ void StickmanAI::onInit(DFEntity &gameObject)
 
 void StickmanAI::Update()
 {
-    if (walk_delay > 0)
+    if (m_is_active)
     {
-        walk_delay--;
-    }
-    else
-    {
-        walk_action = walk_model->predict();
-        walk_delay = 15;
-    }
+        if (walk_delay > 0)
+        {
+            walk_delay--;
+        }
+        else
+        {
+            walk_action = walk_model->predict();
+            walk_delay = 15;
+        }
 
-    if (battle_delay > 0)
-    {
-        battle_delay--;
-    }
-    else
-    {
-        battle_action = battle_model->predict();
+        if (battle_delay > 0)
+        {
+            battle_delay--;
+        }
+        else
+        {
+            battle_action = battle_model->predict();
 
-        if (battle_action == 0)
-            model = idle_model;
-        else if (battle_action == 1)
-            model = attack_model;
-        else if (battle_action == 2)
-            model = protect_model;
-        battle_delay = 15;
-    }
+            if (battle_action == 0)
+                model = idle_model;
+            else if (battle_action == 1)
+                model = attack_model;
+            else if (battle_action == 2)
+                model = protect_model;
+            battle_delay = 15;
+        }
 
-    doWalk();
-    doBattle();
+        doWalk();
+        doBattle();
+    }
 }
 
 bool StickmanAI::getActive()
 {
     return model->getActive();
+}
+
+void StickmanAI::setActiveSim(bool state)
+{
+    m_is_active = state;
 }
 
 void StickmanAI::doBattle()
@@ -101,7 +111,7 @@ void StickmanAI::doBattle()
 }
 
 void StickmanAI::doWalk()
-{   
+{
     if (my_stickman->m_pointMasses[2].m_pinPos.x < 30)
         walk_action = 2;
 

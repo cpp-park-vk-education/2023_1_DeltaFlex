@@ -11,12 +11,12 @@
 
 #include <SatCollider.hpp>
 #include <Link.hpp>
-
+#include <StickmanStatsComponent.hpp>
 constexpr int WIDTH = 2280;
 constexpr int HEIGHT = 720;
 
 constexpr float BODY_HEIGHT = 50;
-
+class StickmanStats;
 constexpr std::size_t INITIAL_POINTMASSES = 11;
 
 class StickmanAI;
@@ -25,9 +25,14 @@ class StickmanPhysicsComponent : public DFComponent
 {
 public:
     StickmanAI *ai;
+    StickmanPhysicsComponent *enemy;
+    StickmanStats *my_stats;
     std::vector<PointMass> m_pointMasses;
     std::vector<StickmanCircle> m_stickmanCircles;
     std::vector<SATCollider> m_colliders;
+
+private:
+    static bool m_is_active;
 
 public:
     // SDL_Color m_color{.r = 0xFF, .g = 0xFF, .b = 0xFF, .a = 0xFF};
@@ -47,6 +52,7 @@ public:
 
     void MoveAll(std::array<float, 6> angles);
 
+    static void SetActiveSim(bool state);
     // bool CheckCollision(const SATCollider &collider)
     // {
     //     for(auto &p_mass: m_pointMasses)

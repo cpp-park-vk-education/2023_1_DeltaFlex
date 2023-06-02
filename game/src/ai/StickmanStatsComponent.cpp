@@ -3,8 +3,8 @@
 
 void StickmanStats::onInit(DFEntity &gameObject)
 {
-    m_health = StickmanHP::max;
-    m_stamina = 0;
+    m_health = StickmanHP::max * 10;
+    m_stamina = StickmanHP::max;
 }
 
 void StickmanStats::Update()
@@ -16,12 +16,12 @@ void StickmanStats::applyDamage(int damage)
     m_health = std::max(StickmanHP::min, m_health - damage);
 }
 
-const int *StickmanStats::getHP() const 
+const int *StickmanStats::getHP() const
 {
     return &m_health;
 }
 
-int StickmanStats::getStamina() const 
+const int *StickmanStats::getStamina() const
 {
-    return m_stamina;
+    return &m_stamina;
 }

@@ -61,6 +61,8 @@ private:
     int battle_delay;
     int walk_delay;
 
+    static bool m_is_active;
+
 protected:
     void doWalk();
     void doBattle();
@@ -69,4 +71,6 @@ public:
     void onInit(DFEntity &gameObject);
     void Update();
     bool getActive();
+    
+    static void setActiveSim(bool state);
 };
